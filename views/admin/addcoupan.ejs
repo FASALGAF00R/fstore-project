@@ -1,0 +1,70 @@
+<%- include('../admin/partials/header.ejs') %>
+<%- include('../admin/partials/sidebar.ejs') %>
+
+   <!-- Navbar End -->
+   <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        
+        
+        <div class="col-sm-12 col-xl-6" style="margin-left: 300px;">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Add Coupon</h6>
+                <form action="/admin/addcoupan" method="post" onsubmit="return validateForm();">
+                  <div class="form-group">
+                        <label for="exampleInputName1">Coupon Name</label>
+                        <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the Coupon Name" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Coupon Amount</label>
+                        <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter the amount" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Min Cart Amount</label>
+                        <input type="number" class="form-control" id="mincart" name="mincart" placeholder="Enter the Min cart amount " required>
+                      </div>
+                     
+                      <div class="form-group">
+                        <label for="">Limit</label>
+                        <input type="number" class="form-control" id="limit" name="limit" placeholder="Enter the Limit" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Expire Date</label>
+                        <input type="date" class="form-control" id="discription" name="date" placeholder="Enter the Expiredate" required>
+                      </div>
+                    
+                    
+                    <button  type="submit" class="btn btn-primary mt-3">Add</button>
+
+                    <% if(typeof message !=='undefined' ){ %>
+                      <p style="color:#fb4e37">
+                          <%= message %>
+                      </p>
+                      <% } %>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+       
+<script>
+  function validateForm() {
+      const amount = document.getElementById('amount').value;
+      const minCart = document.getElementById('mincart').value;
+      const limit = document.getElementById('limit').value;
+
+      if (amount < 0 || minCart < 0 || limit < 0) {
+          alert('Please enter positive values for Coupon Amount, Min Cart Amount, and Limit.');
+          return false;
+      }
+
+      return true;
+  }
+</script>
+
+   
+<!-- Content End -->
+
+
+
+<%- include('../admin/partials/footer.ejs') %>

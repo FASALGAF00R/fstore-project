@@ -1,0 +1,46 @@
+<%- include('../admin/partials/header.ejs') %>
+<%- include('../admin/partials/sidebar.ejs') %>
+
+<!-- admin/searchproduct.ejs -->
+
+<div style="margin-top: 53px; margin-left: 351px;">
+  <table style="width: 100%; border-collapse: collapse; border: 1px solid rgb(33, 106, 35);">
+    <thead>
+      <tr>
+        <h1>Search results</h1>
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Brand</th>
+        <th>Category</th>
+        <th>Image</th>
+        <!-- Add more table headers as needed -->
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach(function(product, index) { %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= product.productname %></td>
+          <td><%= product.quantity %></td>
+          <td><%= product.price %></td>
+          <td><%= product.description %></td>
+          <td><%= product.brand %></td>
+          <td><%= product.category.name %></td>
+          <!-- Add more table data as needed -->
+
+          <!-- Display product images -->
+          <td>
+            <% product.image.forEach(function(image) { %>
+              <img style="height: 70px;width: 100px;" src="/productimages/<%= product.image[0] %>" width="100px" alt="<%= product.image %>">
+              <% }); %>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../admin/partials/footer.ejs') %>

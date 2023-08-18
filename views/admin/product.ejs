@@ -1,0 +1,111 @@
+<%- include('../admin/partials/header.ejs') %>
+<%- include('../admin/partials/sidebar.ejs') %>
+<style>
+  .btn-green {
+    background-color: rgb(66, 206, 66);
+    color: white; 
+  }
+</style>
+
+<a href="/admin/addproduct" class="btn btn-green mt-50" data-toggle="modal" style="float: right; color: rgb(85, 150, 85);">
+  <span style="color: black;">Add Products</span>
+</a>
+
+<div class="container-fluid pt-4 px-4">
+  <div class="text-center rounded p-4">
+    <div class="d-flex align-items-center justify-content-between mb-4" style="margin-right: -115px; margin-left: 296px;">
+    </div>
+    <div>
+      <form style="margin-left: 200px;" action="/admin/searchproduct" method="GET">
+        <input style="width: 495px;" type="text" name="search" placeholder="Enter product name" required>
+        <button style="margin-left: 24px;" type="submit" class="btn btn-green mt-11">Search</button>
+        <% if (typeof errormessage !== 'undefined') { %>
+          <p style="color:#fb4e37">
+            <%= errormessage %>
+          </p>
+        <% } %>
+      </form>
+    </div>
+    <div class="table-responsive" style="margin-left: 260px;">
+      <div class="col-12">
+        <div class="rounded h-100 p-4">
+          <div class="table-responsive">
+            <table class="table" id="mytable" style="background-color: aliceblue; font-size: 18px;border: 1px solid rgb(48, 76, 44);">
+              <h1 class="mb-5">Products</h1>
+              <thead>
+                <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Brand</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Edit/Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (products.length > 0) { %>
+                  <% products.forEach(function(products, index) { %>
+                    <tr>
+                      <td><%= index + 1 %></td>
+                      <td><%= products.productname %></td>
+                      <td><%= products.brand %></td>
+                      <td><%= products.price %></td>
+                      <td><%= products.description %></td>
+                      <td><%= products.quantity %></td>
+                      <td><%= products.category.name %></td>
+                      <td>
+                        <img style="height: 100px; width: 100px;" src="/productimages/<%= products.image[0] %>" width="100px" alt="<%= products.image %>">
+                      </td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown" style="color: black;">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                          </button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/admin/editproduct?id=<%= products._id %>">Edit</a>
+                            <a class="dropdown-item" href="/admin/deleteproduct?id=<%= products._id %>">Delete</a>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <% if (products.status == false) { %>
+                          <a href="/admin/showproduct?id=<%= products._id %>">
+                            <button class="btn btn-success" onclick="return showconfirm(this)">list</button>
+                          </a>
+                        <% } else { %>
+                          <a href="/admin/showproduct?id=<%= products._id %>">
+                            <button class="btn btn-danger" onclick="return hideconfirm(this)">unlist</button>
+                          </a>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="9">Product Not Found</td>
+                  </tr>
+                <% } %>
+              </tbody>
+            </table>
+            <% if (currentPage > 1 || currentPage < totalPages) { %>
+              <div class="pagination">
+                <% if (currentPage > 1) { %>
+                  <a href="?page=<%= currentPage - 1 %>" class="btn btn-green">Previous</a>
+                <% } %>
+                <% if (currentPage < totalPages) { %>
+                  <a href="?page=<%= currentPage + 1 %>" class="btn btn-green">Next</a>
+                <% } %>
+              </div>
+            <% } %>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../admin/partials/footer.ejs') %>

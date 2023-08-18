@@ -1,0 +1,88 @@
+<%- include('../admin/partials/header.ejs') %>  
+
+<%- include('../admin/partials/sidebar.ejs') %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Category Management</title>
+    <style>
+    table {
+      width:150%;
+      border: 10px rgb(85, 139, 85);
+
+    }
+  </style>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container" style="margin-top: 44px;
+  margin-left: 331px">
+
+
+    <h1>Category</h1>
+    
+    <!-- Category List -->
+    <table >
+      
+        <thead>
+          
+          <tr>
+            <th>No</th>
+            <th>Category Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(function(category, index) { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= category.name %></td>
+                <td>
+                  <% if(category.is_block === false) { %>
+                    <a href="/admin/blockcategory?id=<%= category._id %>" class="btn btn-success btn-sm">Block</a>
+                  <% } else { %>
+                    <a href="/admin/blockcategory?id=<%= category._id %>" class="btn btn-danger btn-sm">Unblock</a>
+                  <% } %>
+             
+                  <td> <a href="/admin/editcategory?id=<%= category._id %>" class="btn btn-primary">Edit</a>
+                  </td>
+                </td>  
+                            
+            </tr>
+           </tbody>
+          <% }); %>
+        </tbody>
+      </table>
+      
+    
+    <!-- Add New Category -->
+    <h3>Add New Category</h3>
+    <form action="/admin/Category" method="post"> 
+      <div class="form-group">
+        <label for="categoryName">Category Name</label>
+        <input type="text" class="form-control" name="name" id="name"  placeholder="Enter category name" required>
+   
+      </div>
+      <button type="submit" class="btn btn-success">Add Category</button> 
+      <% if(typeof message !=='undefined' ){ %>
+        <p style="color:#fb4e37">
+            <%= message %>
+        </p>
+        <% } %>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<%- include('../admin/partials/footer.ejs') %>  
+

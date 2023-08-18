@@ -1,0 +1,63 @@
+<%- include('../admin/partials/header.ejs') %>
+<%- include('../admin/partials/sidebar.ejs') %>
+
+
+<div class="row pt-4 g-4">
+    <div class="col-12" style="margin-left: 100px;">
+        <h2 class="mt-3">Orders</h2>
+        <div class=" rounded h-100 p-4">
+            <table class="table" id="categorytable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">User id</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Method</th>
+                        <th scope="col">status</th>
+                        <th scope="col">View</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% data.reverse().forEach((value,index)=>{ %>
+                        <tr>
+                            <td>
+                                <%= index+1 %>
+                            </td>
+                            <td>
+                                <%= value.Date.toISOString().substring(0,10) %>
+                            </td>
+                            <td>
+                                <%=value.user%>
+                            </td>
+                            <td>
+                                <%= value.totalAmount %>
+                            </td>
+                            <td>
+                                <%= value.paymentMethod %>
+                            </td>
+                            <td>
+                                <%= value.status %>
+                            </td>
+
+                            <td><a href="/admin/singleOrder?id=<%= value._id %>"><button
+                                        class="btn btn-primary">view</button></a></td>
+
+                            <% })%>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<%- include('../admin/partials/footer.ejs') %>

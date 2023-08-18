@@ -1,0 +1,79 @@
+
+<head>
+	<title>Otpverify</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!-- login -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<!-- signup -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- phone -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- verifyotp -->
+
+	<!-- sign in link for admin bootstrap -->
+
+ <!-- Bootstrap CSS -->
+ <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+ <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+ <link rel="stylesheet" href="../assets/libs/css/style.css">
+ <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+ </head>
+ <body style="background-color:lightgrey;">
+    <div class="container">
+    <div class="row justify-content-center" >
+    <div class="col-md-6" style=" margin-top: 90px;max-width:481px;">  
+        <div class="card mt-5">
+            <div class="card-header">
+        <h1 >OTP Verification</h1>
+        </div>
+        <div class="card-body">
+        <form method="POST" action="/otpverify">
+            <div class="form-group">
+                <label for="otp" class="form-label">Enter OTP:</label>
+                <input type="text" class="form-control" id="otp" name="otp" required>
+            </div>
+            <button type="submit" class="btn" style="background-color: green;color: white;">Verify</button>
+            <% if(typeof message !=='undefined' ){ %>
+                <p style="color:#ee0a0a">
+                    <%= message %>
+                </p>
+                <% } %>
+
+                <p id="timer"></p>
+                <a href="/resendOTP" id="resendlink" style="display: none;">Resend OTP</a>
+                <script>
+                     var seconds =60;
+                    console.log('time started');
+                    //to update counter time
+            
+                    function tick(){
+                        if(seconds > 0){
+                            seconds--;
+                            document.getElementById('timer').innerText = `Time left: ${seconds} seconds`;
+                        }else{
+                            document.getElementById('timer').style.display = 'none';
+
+
+                        }
+                    }
+                    function updateTimer(){
+                        setInterval(tick,1000);
+
+                    }
+
+                    updateTimer();
+                </script>
+              
+            <a href="/resendOTP">Resend OTP</a>
+        </form>
+    </div>
+    </div>
+    </div>
+</div>
+</div>
+
+    <!-- Bootstrap JS -->
+</body>
+
