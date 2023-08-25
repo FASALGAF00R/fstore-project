@@ -1,5 +1,7 @@
 const express =require('express');
 const userRoutes=express.Router();
+
+
 const usercontroller =require('../controller/usercontroller');
 const ordercontroller =require('../controller/ordercontroller');
 
@@ -60,7 +62,7 @@ userRoutes.get("/singleOrder", usercontroller.singleOrder);
 userRoutes.get("/returnOrder", ordercontroller.returnOrder)
 userRoutes.get('/cancelOrder', ordercontroller.cancelOrder)
 
-
-
+userRoutes.get("/about",usercontroller.loadabout)
+userRoutes.get("/contact",usercontroller.loadcontact)
 
 module.exports= userRoutes

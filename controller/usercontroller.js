@@ -1146,7 +1146,48 @@ const singleOrder = async (req, res) => {
 };
 
 
+const loadabout = async(req,res)=>{
+  res.render("user/about")
+}
 
+ const loadcontact = async(req,res)=>{
+  res.render("user/contact")
+ }
+ 
+ 
+const verifycontactmail = async(req,res)=>{
+  try {
+   const {email,msg} = req.body
+    
+   const sendOTPEmail = async (email, otp) => {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'fasalgafoor2080@gmail.com',
+          pass: 'qtap pzez uruo dggk',
+        },
+      });
+      const mailOptions = {
+        from: 'fasalgafoor2080@gmail.com',
+        to: email,
+        subject: 'OTP Verification',
+        text: `Your OTP: ${otp}`,
+      };
+      await transporter.sendMail(mailOptions);
+      console.log('OTP email sent successfully!');
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  
+
+    
+
+  } catch (error) {
+    error.message
+  }
+}
 
 
 
@@ -1182,7 +1223,9 @@ module.exports = {
   resetpassword,
   verifyPayment,
   loadorder,
-  singleOrder
+  singleOrder,
+  loadabout,
+  loadcontact
 
 
 
