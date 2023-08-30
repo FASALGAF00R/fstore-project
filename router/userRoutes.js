@@ -46,6 +46,7 @@ userRoutes.post('/changeproductquantity',usercontroller.changeQuantity)
 userRoutes.get('/removecart',usercontroller.removefromcart)
 userRoutes.get('/wishlist',auth.checkblockedstatus,usercontroller.loadwishlist)
 userRoutes.get('/addwishlist',usercontroller.addtowishlist)
+userRoutes.post('/removewish',usercontroller.removewish)
 
 userRoutes.get('/checkout',usercontroller.loadcheckout)
 userRoutes.post('/addAddress', usercontroller.postAddress);
@@ -64,5 +65,6 @@ userRoutes.get('/cancelOrder', ordercontroller.cancelOrder)
 
 userRoutes.get("/about",usercontroller.loadabout)
 userRoutes.get("/contact",usercontroller.loadcontact)
+userRoutes.post("/contact",usercontroller.contactpost)
 
 module.exports= userRoutes

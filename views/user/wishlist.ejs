@@ -215,72 +215,169 @@
 <br>
 <br>
 <br>
+<br>
+<br>
 
-<% if(count > 0){ %>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-10   m-b-50">
-            <div class="m-l-25 m-r--38 m-lr-0-xl">
-                <div class="wrap-table-shopping-cart">
-                    <table class="table-shopping-cart">
-                        <tr class="table_head">
-                            <th class="column-0">No</th>
-                            <th class="column-1">Product</th>
-                            <th class="column-3">Name</th>
-                            <th class="column-3">Price</th>
-                            <th class="column-3">Action</th>
-                            <th class="column-3">Remove</th>
-                        </tr>
-                        <% for(let i=0 ; i< products.length; i++) {%>
-                            <tr class="table_row">
-                                <td class="column-0">
-                                    <%= i+1 %>
-                                </td>
-                                <td class="column-1">
-                                    <div class="how-itemcart1">
-                                        <img src="/productimages/<%= products[i].image[0] %>" alt="IMG">
-                                    </div>
-                                </td>
-                                <td class="column-3">
-                                    <%= products[i].name %>
-                                </td>
-                                <td class="column-3">
-                                    <%= products[i].price %>
-                                </td>
-                                <td class="column-3" >
-                                    <a href="/addcart?id=<%=  products[i]._id %>"><button class="btn btn-dark">Move to Cart</button></a>
-                                </td>
-                                <td class="column-3">
-                                    <a href="/removewishlist?id=<%=products[i]._id %>"><button class="btn btn-dark">Remove</button></a>
-                                </td>
-                            </tr>
-                            <% } %>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<% }else{ %>
-    <div class="container-fluid ">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body cart">
-                        <div class="col-sm-12 empty-cart-cls text-center">
-                            <img src="https://img.icons8.com/ios-filled/256/like.png" width="130" height="130"
-                                class="img-fluid mb-4 mr-3">
-                            <h3><strong>Your Wishlist is Empty</strong></h3><br>
-                            <h4>Add items to it now</h4>
-                            <a href="/shop" class="btn btn-dark cart-btn-transform m-3" data-abc="true">continue
-                                shopping</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <% } %>
+<section class="cart_area">
+	<div class="container">
+		<div class="cart_inner">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Product</th>
+							<th scope="col">Remove</th>
+
+						   
+							<th scope="col">Price</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<% if(typeof data2=='undefined' ){ %>
+							<% data.forEach(function(product,index){ %>
+								<tr>
+									<td>
+										<div class="media">
+											<div class="d-flex">
+												<img width="100px"
+													src="/productimages/<%=product.productId.image[0] %>"
+													alt="">
+											</div>
+											<div class="media-body">
+												<p>
+													<%=product.productId.description%>
+												</p>
+
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="genric-btn danger circle" id="delete"
+											onclick="deletewhishlist('<%= product.productId._id%>')">Remove</a>
+											<br>
+											<br>
+										 <a href="#" class="genric-btn danger circle" id="add"
+										  onclick="addcart('<%= product.productId._id%>')"></a>
+									</td>
+								   
+									
+
+									<td>
+										<h5>$<%=product.price%>
+										</h5>
+
+									</td>
+
+								</tr>
+								<% }) %>
+									<% } else{ %>
+										<span>Wishlist Empty</span>
+
+										<% } %>
+
+											<tr class="bottom_button">
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+											</tr>
+											<tr>
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+												<td>
+													<h5>Subtotal</h5>
+												</td>
+												<%if(typeof total !=='undefined' ){ %>
+													<td>
+														<h5>$<%= total%>
+														</h5>
+													</td>
+													<% } else{ %>
+														<h5></h5>
+														<% }%>
+
+											</tr>
+											<tr class="shipping_area">
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+												<td>
+													<h5>Shipping</h5>
+												</td>
+												<td>
+												 
+												</td>
+											</tr>
+											<tr class="out_button_area">
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+												<td>
+
+												</td>
+												<td>
+												  
+												</td>
+												 <td>
+													<div class="checkout_btn_inner d-flex align-items-center">
+														<a class="gray_btn" href="shop">Continue Shopping</a>
+													  
+													   
+																 
+													</div>
+												</td>
+											</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>
+
 <br><br>
+
+<script>
+
+	function deletewhishlist(id) {
+		$.ajax({
+			url: "/removewish",
+			method: "post",
+			encoded: true,
+			data: {
+				id: id
+			}
+		}).done((data) => {
+			console.log(data);
+			if (data.success === true) {
+				window.location.reload()
+			}
+		})
+	}
+
+</script>
+
+
+
+
+
 
 <%- include('../user/partials/footer.ejs')  %>

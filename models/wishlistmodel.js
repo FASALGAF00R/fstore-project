@@ -1,26 +1,33 @@
-const { ObjectId } = require("mongodb")
-const mongoose = require("mongoose")
-
-const productSchema = new mongoose.Schema({
-
-    productID: {
-        type: ObjectId,
-    },
-    name: {
-        type: String
-    },
-    price: {
-        type: Number,
-    }
-})
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const wishlistSchema = new mongoose.Schema({
-
- userID: {
+  user: {
+    type: ObjectId,
+    ref: 'User', // Make sure you have a 'User' model too
+    required: true,
+  },
+  product: [
+    {
+      productId: {
         type: ObjectId,
-        required: true
+        ref: 'product', // Reference the 'Product' model
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+      price: {
+        type: Number,
+        default: 0,
+      },
+      totalPrice: {
+        type: Number,
+        default: 0,
+      },
     },
-    products: [productSchema],
-})
+  ],
+});
 
-module.exports = mongoose.model('wishlist', wishlistSchema)
+module.exports = mongoose.model('Wishlist', wishlistSchema);

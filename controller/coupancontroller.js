@@ -26,7 +26,11 @@ const postaddcoupon = async (req, res) => {
        // Validate coupon name length
        const minCouponNameLength = 4; // Set your minimum coupon name length here
        if (req.body.name.length < minCouponNameLength) {
-           res.render("admin/addcoupan",{message:'coupan name minimum length needed'});
+           res.render("admin/addcoupan",{
+            message:'coupan name minimum length needed',
+      
+        
+        });
        }
         let coupons = Coupon({
             

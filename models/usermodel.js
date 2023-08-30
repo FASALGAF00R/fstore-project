@@ -28,6 +28,12 @@ const  userSchema=new mongoose.Schema({
         expiry:{
             type:Date //store expiry time
         },
+        messages:[
+        {
+            senderEmail:String,
+            message:String
+        },
+    ],
         address:[{
             name:{
                 type:String,

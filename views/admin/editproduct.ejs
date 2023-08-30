@@ -144,16 +144,19 @@
   });
       </script>
       <script>
-              function priceCheck(){
-                if(document.getElementById('productAmount').value<0 || document.getElementById('productquantity').value<0){
-                  alert("price  or Quantity is negative ")
-                  return false
-                }else{
-                  return true
-                }
-            
-              }
-            </script>
+  function priceCheck() {
+    const productPrice = parseFloat(document.getElementById('productAmount').value);
+    const productQuantity = parseFloat(document.getElementById('productquantity').value);
+
+    if (productPrice < 0 || productQuantity < 0) {
+      swal("Error", "Price or Quantity cannot be negative", "error");
+      return false;
+    } else {
+      return true;
+    }
+  }
+</script>
+
 
 
       <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>

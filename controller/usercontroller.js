@@ -70,7 +70,7 @@ const verifylogin = async (req, res) => {
           res.render('user/login', { message: "Incorrect password" });
         }
       } else {
-        res.render('user/login', { message: "Incorrect email and password" });
+        res.render('user/login', { message: "Incorrect password" });
       }
     } else {
       res.render('user/login', { message: "User not found" });
@@ -88,11 +88,13 @@ const forgotpassword = async (req, res) => {
     console.log(error.message);
   }
 }
+
 const verifyforgotpassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const userData = await user.findOne({ email: email });
 
+    const userData = await user.findOne({ email: email });
+ 
     if (userData) {
       const otp = generateOTP(); // Generate OTP
       await sendOTPEmail(email, otp); // Send OTP email with the dynamically generated OTP
@@ -101,17 +103,23 @@ const verifyforgotpassword = async (req, res) => {
       userData.otp = otp;
       userData.expiry = new Date(Date.now() + 1 * 60 * 1000); // OTP will be valid for 1 minute
       await userData.save();
+      
+      // Define showOTPForm here and set it to true
+   
+
       res.render('user/forgotpassword', {
-        showOTPForm: true,
+        showOTPForm:true,
         message: 'OTP sent to your email. Please enter the OTP. Only 1 minute left'
       });
     } else {
+      console.log("tncorrect");
       res.render('user/forgotpassword', { message: 'Invalid email. Please enter a registered email address.' });
     }
   } catch (error) {
     console.log(error.message);
   }
 };
+
 
 
 const verifyforgototp = async (req, res) => {
@@ -413,7 +421,6 @@ const loadshop = async (req, res) => {
     const perpage = 6;
     const skip = perpage * (pageNO - 1);
     const catData = await category.find({ is_block: false });
-    console.log(catData);
     let cat = catData.map((category) => category._id);
 
 
@@ -452,10 +459,6 @@ const loadshop = async (req, res) => {
         cartCount = countCart.products.length;
       }
     }
-
-
-    console.log(data);
-
 
 
     res.render("user/shop", {
@@ -696,78 +699,156 @@ const removefromcart = async (req, res) => {
 
 const loadwishlist = async (req, res) => {
   try {
-    const userCart = await cart.findOne({ userID: req.session.user_id });
-    const wishlist = await Wishlist.findOne({ userID: req.session.user_id });
+    if (req.session.user_id) {
+      const User = await user.findOne({ _id: req.session.user_id });
+      const id = User._id;
+      const wish = await Wishlist.findOne({ user: id });
+      if (wish) {
 
-    if (!wishlist) {
-      // Handle the case when wishlist is not found for the user
-      const products = [];
-      const count = 0;
-      res.render('user/wishlist', { products, count, userCart, wishlist });
+        const wishData = await Wishlist.findOne({ user: id })
+          .populate("product.productId")
+          .lean();
+        if (wishData) {
+          // console.log(cartData);
+          let total;
+          if (wishData.product.length) {
+            const total = await Wishlist.aggregate([
+              {
+                $match: { user: id },
+              },
+              {
+                $unwind: "$product",
+              },
+              {
+                $project: {
+                  price: "$product.price",
+                  quantity: "$product.quantity",
+                  image: "$product.image",
+                },
+              },
+              {
+                $group: {
+                  _id: null,
+                  total: {
+                    $sum: {
+                      $multiply: ["$quantity", "$price"],
+                    },
+                  },
+                },
+              },
+            ]).exec();
+            // console.log(total);
+            const Total = total[0].total;
+            wishData.product.forEach((element) => { });
+            console.log(wishData);
+            res.render("user/wishlist", {
+              user: req.session.name,
+              data: wishData.product,
+              userId: id,
+              total: Total,
+              // cartData: cartData,
+            });
+          } else {
+            res.render("user/wishlist", { user: req.session.name, data2: "hi" });
+          }
+        } else {
+          res.render("user/wishlist", { user: req.session.name, data2: "hi" });
+        }
+      } else {
+        res.render("user/wishlist", {
+          user: req.session.name,
+          data2: "hi",
+        });
+      }
     } else {
-      const pid = wishlist.products;
-      const wishlistProductsId = pid.map((values) => values.productID);
-      const products = await product.aggregate([
-        {
-          $match: {
-            _id: { $in: wishlistProductsId },
-          },
-        },
-        {
-          $project: {
-            name: 1,
-            image: 1,
-            price: 1,
-            order: { $indexOfArray: [wishlistProductsId, '$_id'] },
-          },
-        },
-        { $sort: { order: 1 } },
-      ]);
-      const count = products.length;
-      res.render('user/wishlist', { products, count, userCart, wishlist });
+      res.redirect("/login");
     }
   } catch (error) {
-    console.log(error.message);
-    // Handle the error gracefully
-    res.render('error-page', { error: 'Error loading wishlist.' });
+    console.log(error);
   }
 };
 
 
+// add to whish list
 const addtowishlist = async (req, res) => {
   try {
-    const singleProduct = await Product.findOne({ _id: req.body.productID })
-    const userWishlist = await Wishlist.findOne({ userID: req.session.user_id })
-    const count = userWishlist.products.length
-    const product = {
-      productID: singleProduct._id,
-      name: singleProduct.name,
-      price: singleProduct.price
-    }
-    var addedToWishList, alreadyExist = false
-    if (userWishlist) {
-      const itemExist = await Wishlist.findOne({ userID: req.session.user_id, "products.productID": req.body.productID })
-      if (!itemExist) {
-        const updateWishlist = await Wishlist.updateOne({ userID: req.session.user_id }, { $push: { products: product } })
-        res.send({ addedToWishList: true, count })
+    if (req.session.user_id) {
+      const productId = req.query.id
+      const userName = req.session.user_id;
+      const userdata = await user.findOne({ _id: userName });
+      const userId = userdata._id;
+
+      const productData = await product.findById(productId);
+      const userwish = await Wishlist.findOne({ user: userId });
+
+      if (userwish) {
+        const productExist = userwish.product.findIndex(
+          (product) => product.productId == productId
+        );
+
+        if (productExist !== -1) {
+          await Wishlist.findOneAndUpdate(
+            { user: userId, "product.productId": productId },
+            { $inc: { "product.$.quantity": 1 } }
+          );
+          res.json({ success: true });
+        } else {
+          await Wishlist.findOneAndUpdate(
+            { user: userId },
+            {
+              $push: {
+                product: {
+                  productId: productId,
+                  price: productData.price,
+                },
+              },
+            }
+          );
+          res.json({ status: true });
+        }
       } else {
-        const updateWishlist = await Wishlist.findByIdAndUpdate(
-          { _id: userWishlist._id },
-          { $pull: { products: { productID: req.body.productID } } })
-        res.send({ alreadyExist: true, count })
+        const data = new Wishlist({
+          user: userId,
+          product: [
+            {
+              productId: productId,
+              price: productData.price,
+            },
+          ],
+        });
+        await data.save();
+        res.json({ status: true });
       }
     } else {
-      const wishlist = new Wishlist({
-        userID: req.session.user_id,
-        products: product
-      })
-      const wishlistData = await wishlist.save()
-      res.send({ addedToWishList: true, count })
+      res.json({ status: false });
     }
   } catch (error) {
-    console.log(error.message)
+    console.log(error.message);
+    res.json({ status: false, error: error.message });
   }
-}
+};
+
+
+
+const removewish = async (req, res) => {
+  try {
+    const id = req.body.id;
+    const data = await Wishlist.findOneAndUpdate(
+      { "product.productId": id },
+      { $pull: { product: { productId: id } } }
+    );
+    if (data) {
+      res.json({ success: true });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
+
+
 
 const loadcheckout = async (req, res) => {
   try {
@@ -776,7 +857,7 @@ const loadcheckout = async (req, res) => {
 
 
       const User = await user.findOne({ _id: req.session.user_id });
-      // console.log(req.body.subto);
+
       const id = User._id;
 
       const cartData = await cart.findOne({ userID: id }).populate(
@@ -1153,41 +1234,61 @@ const loadabout = async(req,res)=>{
  const loadcontact = async(req,res)=>{
   res.render("user/contact")
  }
- 
- 
-const verifycontactmail = async(req,res)=>{
-  try {
-   const {email,msg} = req.body
     
-   const sendOTPEmail = async (email, otp) => {
-    try {
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'fasalgafoor2080@gmail.com',
-          pass: 'qtap pzez uruo dggk',
-        },
-      });
-      const mailOptions = {
-        from: 'fasalgafoor2080@gmail.com',
-        to: email,
-        subject: 'OTP Verification',
-        text: `Your OTP: ${otp}`,
-      };
-      await transporter.sendMail(mailOptions);
-      console.log('OTP email sent successfully!');
-    } catch (error) {
-      console.log(error.message);
-    }
+
+//  contact message
+ 
+const transporter = nodemailer.createTransport({
+  service:"gmail",
+  auth:{
+    user:"fasalgafoor2080@gmail.com",
+    pass:"qtap pzez uruo dggk",
+  }
+});
+
+
+function sendEmail (email,message){
+  const mailOptions={
+    from : email,
+    to:'fasalgafoor2080@gmail.com',
+    subject: "Contact message",
+    text: `message: ${message}`,
+
   };
-  
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+        console.log("Error sending email: " + error);
+    } else {
+        console.log("Email sent: " + info.response);
+    }
+});
+}
 
-    
 
+
+const contactpost = async(req,res)=>{
+  try {
+    console.log("postttttttttt");
+const  {email,message}=req.body
+console.log(email,message);
+const   User = await user.findOne({ email });
+
+if (!User) {
+  return res.status(404).json({ error: "User not found." });
+}
+   sendEmail( email, message);
+res.send("message send succesfully")
+    User.messages.push({
+  senderEmail:email,
+  message:message
+})
+
+ await User.save();
   } catch (error) {
-    error.message
+    return res.status(500).json({ error: error.message });
   }
 }
+
 
 
 
@@ -1212,6 +1313,7 @@ module.exports = {
   removefromcart,
   loadwishlist,
   addtowishlist,
+  removewish,
   loadcheckout,
   postAddress,
   editaddress,
@@ -1225,7 +1327,10 @@ module.exports = {
   loadorder,
   singleOrder,
   loadabout,
-  loadcontact
+  loadcontact,
+  contactpost,
+  sendEmail,
+
 
 
 
