@@ -6,14 +6,30 @@ const productModel = require("../models/productmodel");
 
 const getOrder = async (req, res) => {
     try {
-        console.log("lllllllll");
-        const orderData = await Order.find();
-        console.log(orderData);
-        res.render("admin/order", { data: orderData });
+        console.log(";;;;;;;;;;;;;");
+      const page = parseInt(req.query.page) || 1; // Get the page number from query parameters
+      const perPage = 5; // Set the number of orders per page
+  
+      // Find the total number of orders
+      const totalOrders = await Order.countDocuments();
+  
+      const skip = (page - 1) * perPage;
+  
+      // Find orders for the current page
+      const orderData = await Order.find()
+        .skip(skip)
+        .limit(perPage);
+  
+      res.render("admin/order", {
+        data: orderData,
+        currentPage: page,
+        totalPages: Math.ceil(totalOrders / perPage),
+      });
     } catch (error) {
-        console.log(error.message);
+      console.log(error.message);
     }
-};
+  };
+  
 
 
 const viewOrder = async (req, res) => {

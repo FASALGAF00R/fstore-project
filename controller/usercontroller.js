@@ -83,7 +83,7 @@ const verifylogin = async (req, res) => {
 //forgotpassword
 const forgotpassword = async (req, res) => {
   try {
-    res.render('user/forgotpassword', { showOTPForm: false })
+    res.render('user/forgotpassword', { showOTPForm: false,message:'enter valid email' })
   } catch (error) {
     console.log(error.message);
   }
@@ -113,7 +113,7 @@ const verifyforgotpassword = async (req, res) => {
       });
     } else {
       console.log("tncorrect");
-      res.render('user/forgotpassword', { message: 'Invalid email. Please enter a registered email address.' });
+      res.render('user/forgotpassword', {  showOTPForm:false, message: 'Invalid email. Please enter a registered email address.' });
     }
   } catch (error) {
     console.log(error.message);
@@ -127,8 +127,12 @@ const verifyforgototp = async (req, res) => {
     const { otp } = req.body;
 
     if (!otp) {
-      return res.render('user/forgotpassword', { message: 'Please enter the OTP.' });
+      return res.render('user/forgotpassword', {
+        showOTPForm: false,  
+         message: 'Please enter the OTP.' 
+        });
     }
+  
 
     const storedotp = await user.findOne({ otp: otp });
 
@@ -136,10 +140,14 @@ const verifyforgototp = async (req, res) => {
       if (storedotp.expiry > Date.now()) {
         res.render('user/resetpassword', { userId: storedotp._id }); // Pass the userId
       } else {
-        res.render('user/forgotpassword', { message: 'OTP has expired. Please request a new OTP.' });
+        res.render('user/forgotpassword', {
+          showOTPForm: false,
+           message: 'OTP has expired. Please request a new OTP.' });
       }
     } else {
-      res.render('user/forgotpassword', { message: 'Invalid OTP. Please enter the correct OTP.' });
+      res.render('user/forgotpassword', {
+        showOTPForm: false,
+        message: 'Invalid OTP. Please enter the correct OTP.' });
     }
   } catch (error) {
     console.log(error.message);
@@ -1187,15 +1195,30 @@ const verifyPayment = async (req, res) => {
 
 const loadorder = async (req, res) => {
   try {
-
-    const mongoose = require("mongoose")
+    const mongoose = require("mongoose");
 
     if (req.session.user_id) {
       const userData = await user.findOne({ _id: req.session.user_id });
-      console.log(userData, "------------------");
-      const orderData = await Order.find({ user: userData._id });
-      console.log(orderData, "====================");
-      res.render("user/order", { _id: userData._id, data: orderData });
+
+      const page = parseInt(req.query.page) || 1; // Get the page number from query parameters
+      const perPage = 10; // Set the number of orders per page
+
+      const skip = (page - 1) * perPage;
+
+      // Find the total number of orders for the user
+      const totalOrders = await Order.countDocuments({ user: userData._id });
+
+      // Find orders for the current page
+      const orderData = await Order.find({ user: userData._id })
+        .skip(skip)
+        .limit(perPage);
+
+      res.render("user/order", {
+        _id: userData._id,
+        data: orderData,
+        currentPage: page,
+        totalPages: Math.ceil(totalOrders / perPage),
+      });
     } else {
       res.redirect("/login");
     }
@@ -1203,6 +1226,7 @@ const loadorder = async (req, res) => {
     console.log(error);
   }
 };
+
 
 const singleOrder = async (req, res) => {
   try {

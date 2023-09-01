@@ -6,7 +6,6 @@
 <%- include('../admin/partials/header.ejs') %>  
 <%- include('../admin/partials/sidebar.ejs') %>  
 
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
 crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -59,8 +58,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
                                         <td class="text-center"><%=coupon.status%></td>
 <td class="text-center">
     <a href="/admin/deletecoupan?code=<%=coupon.couponcode%>"
-       onclick="return confirm('Are you sure you want to delete this coupon?')"
-       class="fa fa-trash" style="font-size: 20px; color: rgb(235, 14, 14); text-decoration: none;"></a>
+
+    
+   class="fa fa-trash" style="font-size: 20px; color: rgb(235, 14, 14); text-decoration: none;"></a>
+
 </td>
                                        
                                     </tr>
@@ -97,6 +98,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="/adminside/lib/tempusdominus/js/moment.min.js"></script>
     <script src="/adminside/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="/adminside/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+
+
 
 
 

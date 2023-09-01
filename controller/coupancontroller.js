@@ -15,7 +15,9 @@ const loadcoupan = async (req, res) => {
 
 const addcoupan = async (req, res) => {
     try {
-        res.render("admin/addcoupan");
+        res.render("admin/addcoupan",{
+            formData: {},    
+        });
     } catch (error) {
         console.log(error.message);
     }
@@ -23,17 +25,17 @@ const addcoupan = async (req, res) => {
 
 const postaddcoupon = async (req, res) => {
     try {
-       // Validate coupon name length
-       const minCouponNameLength = 4; // Set your minimum coupon name length here
-       if (req.body.name.length < minCouponNameLength) {
-           res.render("admin/addcoupan",{
-            message:'coupan name minimum length needed',
-      
-        
-        });
-       }
+        // Validate coupon name length
+        const minCouponNameLength = 5;
+        if (req.body.name.length < minCouponNameLength) {
+            return res.render("admin/addcoupan", {
+                message: 'Coupon name minimum length needed',
+                // Pass the valid input values back to the form
+                formData: req.body,
+            });
+        }
+
         let coupons = Coupon({
-            
             couponcode: req.body.name,
             couponamounttype: req.body.coupontype,
             couponamount: req.body.amount,
@@ -42,13 +44,15 @@ const postaddcoupon = async (req, res) => {
             expiredate: req.body.date,
             limit: req.body.limit,
         });
-        console.log("coughg");
+
+        console.log("coupon saved");
         await coupons.save();
         res.redirect("/admin/coupan");
     } catch (error) {
         console.log(error.message);
     }
 };
+
 
 
 const deletecoupan = async (req, res) => {
