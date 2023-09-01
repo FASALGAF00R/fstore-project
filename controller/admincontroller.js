@@ -1,6 +1,7 @@
 const product =require('../models/productmodel')
 const user=require('../models/usermodel');
 const category=require('../models/categorymodel')
+const Order = require("../models/ordermodels");
 const bcrypt =require('bcrypt');
 const loadsignin =async(req,res)=>{
     try{
@@ -24,15 +25,74 @@ const signinVerify =async(req,res)=>{
         console.log(error.message);
     }
 }
+//home----------------------------------------------------
+const adminhome = async (req, res) => {
+    const orderData = await Order.find({ status: { $ne: "cancelled" } });
 
-const adminhome = async (req,res)=>{
-    try {
-        console.log('home');
-        res.render('admin/home');
-    } catch (err) {
-        console.log(err.message)
+    let SubTotal = 0;
+    orderData.forEach(function (value) {
+      SubTotal = SubTotal + value.totalAmount;
+    });
+    const cod = await Order.find({ paymentMethod: "cod" }).count();
+    const online = await Order.find({ paymentMethod: "online" }).count();
+    const totalOrder = await Order.find({ status: { $ne: "cancelled" } }).count();
+    const totalUser = await user.find().count();
+    const totalProducts = await product.find().count();
+    const date = new Date();
+    const year = date.getFullYear();
+    const currentYear = new Date(year, 0, 1);
+    const salesByYear = await Order.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: currentYear },
+          status: { $ne: "cancelled" },
+        },
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%m", date: "$createdAt" } },
+          total: { $sum: "$totalAmount" },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+  
+    let sales = [];
+    for (i = 1; i < 13; i++) {
+      let result = true;
+      for (j = 0; j < salesByYear.length; j++) {
+        result = false;
+        if (salesByYear[j]._id == i) {
+          sales.push(salesByYear[j]);
+          break;
+        } else {
+          result = true;
+        }
+      }
+      if (result) {
+        sales.push({ _id: i, total: 0, count: 0 });
+      }
     }
-}
+  
+    let yearChart = [];
+    for (let i = 0; i < sales.length; i++) {
+      yearChart.push(sales[i].total);
+    }
+  
+    res.render("admin/home", {
+      data: orderData,
+      total: SubTotal,
+      cod,
+      online,
+      totalOrder,
+      totalUser,
+      totalProducts,
+      yearChart,
+    });
+  };
+
+
 
 const userlist = async(req,res) =>{
     try {
@@ -70,6 +130,52 @@ const blockuser = async (req, res) => {
 }
 
 
+//getSales Report
+const getSalesReport = async (req, res) => {
+  try {
+    let start;
+    let end;
+    req.query.start ? (start = new Date(req.query.start)) : (start = "ALL");
+    req.query.end ? (end = new Date(req.query.end)) : (end = "ALL");
+    if (start != "ALL" && end != "ALL") {
+      const data = await Order.aggregate([
+        {
+          $match: {
+            $and: [
+              { Date: { $gte: start } },
+              { Date: { $lte: end } },
+              { status: { $eq: "Delivered" } },
+            ],
+          },
+        },
+      ]);
+      let SubTotal = 0;
+      data.forEach(function (value) {
+        SubTotal = SubTotal + value.totalAmount;
+      });
+      res.render("admin/salesReport", { data, total: SubTotal });
+    } else {
+      const orderData = await Order.find({ status: { $eq: "Delivered" } });
+      let SubTotal = 0;
+      orderData.forEach(function (value) {
+        SubTotal = SubTotal + value.totalAmount;
+      });
+      res.render("admin/salesReport", { data: orderData, total: SubTotal });
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
+
+
+
+
+
+
+
 
 module.exports={
     loadsignin,
@@ -78,6 +184,7 @@ module.exports={
     userlist,
     blockuser,
     unblockuser,
+    getSalesReport
     
 }
 

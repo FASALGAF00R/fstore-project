@@ -52,5 +52,5 @@ adminRoutes.post("/updateStatus",ordercontroller.updatestatus)
 
 // sales
 adminRoutes.get('/sales',ordercontroller.sales)
-
+adminRoutes.get("/salesReport", admincontroller.getSalesReport)
 module.exports=adminRoutes
