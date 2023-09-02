@@ -40,7 +40,7 @@ const adminRoutes=require('./router/adminRoutes');
 app.use('/admin',adminRoutes);
 
 app.listen(process.env.port,function(){
-    console.log('server is running in 3001 port');
+    console.log('server is running in 3000 port');
 })
 
 // app.use((error,req,res,next)=>{

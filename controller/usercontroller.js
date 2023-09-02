@@ -1202,7 +1202,7 @@ const loadorder = async (req, res) => {
       const userData = await user.findOne({ _id: req.session.user_id });
 
       const page = parseInt(req.query.page) || 1; // Get the page number from query parameters
-      const perPage = 6; // Set the number of orders per page
+      const perPage = 5; // Set the number of orders per page
 
       const skip = (page - 1) * perPage;
 
