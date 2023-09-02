@@ -235,7 +235,8 @@
 	<form class="bg0 p-t-75 p-b-85">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50" >
+					
 					<div class="m-l-25 m-r--38 m-lr-0-xl">
 						<div class="wrap-table-shopping-cart">
 							<table class="table-shopping-cart">
@@ -290,7 +291,7 @@
 											class="fa fa-close"></i></td></a>
 								<td class="column-6"><a href="/cart-to-wishlist?id=<%= products[i]._id %>"><img
 											class="icon-heart1 dis-block trans-04"
-											src="user/images/icons/icon-heart-02.png" alt="ICON"></a>
+											></a>
 								</td>
 								
 
@@ -299,23 +300,19 @@
 							</table>
 						</div>
 
-						<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-									
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Apply coupon
-								</div>
-							</div>
-
-							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Update Cart
-							</div>
-						</div>
+		
 					</div>
+					
 				</div>
-
-				<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+				
+				<style>
+					.cart-content {
+						margin-bottom: 2px; /* Adjust the margin value as needed */
+					}
+				</style>
+				
+				<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50 cart-content">
+				
 					<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
 						<h4 class="mtext-109 cl2 p-b-30">
 							Cart Totals

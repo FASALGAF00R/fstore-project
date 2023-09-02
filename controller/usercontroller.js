@@ -1058,6 +1058,7 @@ const applycoupan = async (req, res) => {
 //cash on deivery--------
 const postplaceorder = async (req, res) => {
   try {
+    console.log("llll");
     if (req.session.user_id) {
       const { address, payment, total } = req.body;
       console.log(address, payment, total);
@@ -1201,7 +1202,7 @@ const loadorder = async (req, res) => {
       const userData = await user.findOne({ _id: req.session.user_id });
 
       const page = parseInt(req.query.page) || 1; // Get the page number from query parameters
-      const perPage = 10; // Set the number of orders per page
+      const perPage = 6; // Set the number of orders per page
 
       const skip = (page - 1) * perPage;
 
