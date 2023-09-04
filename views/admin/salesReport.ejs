@@ -1,0 +1,64 @@
+<%- include('../admin/partials/header.ejs') %>
+<%- include('../admin/partials/sidebar.ejs') %>
+
+ <!-- Recent Sales Start -->
+ <div class="container-fluid pt-5 px-4">
+    <div class="container ">
+        <div class="title">
+            <h1>Sales Report</h1>
+            
+
+            <button type="button" onclick="downloadPDF()" class="btn btn-success m-2">download pdf</button>
+        </div>
+        <div class="info">
+            <table class="table" id="categorytable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">order id</th>
+                        <th scope="col">Total Amount</th>
+                        <th scope="col">Method</th>
+                        <th scope="col">status</th>
+                        
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% data.reverse().forEach((value,index)=>{ %>
+                        <tr>
+                            <td><%= index+1 %></td>
+                            <td><%= value.Date.toISOString().substring(0,10) %></td>
+                            <td><%=value._id %></td>
+                            <td>$<%= value.totalAmount %></td>
+                            <td><%= value.paymentMethod %></td>
+                            <td><%= value.status %></td>
+                            
+                    <% })%>
+                </tbody>
+
+            </table>
+        </div>
+        <h3 >Total Sales = $<%= total%></h3>
+    </div>
+    <!-- Table End -->
+</div>
+<!-- Table End -->
+
+</div>
+<!-- Content End -->
+
+<script>
+    function downloadPDF() {
+        var details = document.getElementById("categorytable");
+        var newWin = window.open('', 'Print-Window');
+        newWin.document.open();
+        newWin.document.write('<html><head><style>@media print { @page { size: A4; margin: 0; } }</style></head><body onload="window.print()">' + details.outerHTML + '</html>'); newWin.document.close();
+        setTimeout(function () { newWin.close(); }, 10);
+    }
+</script>
+
+
+
+
+<%- include('../admin/partials/footer.ejs') %>

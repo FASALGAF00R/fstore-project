@@ -1,0 +1,99 @@
+<%- include('../admin/partials/header.ejs') %>
+<%- include('../admin/partials/sidebar.ejs') %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
+   <!-- Navbar End -->
+   <div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        
+        
+        <div class="col-sm-12 col-xl-6" style="margin-left: 300px;">
+            <div class="bg-light rounded h-100 p-4">
+                <h6 class="mb-4">Add Coupon</h6>
+                <form    action="/admin/addcoupan" method="post" onsubmit="return validateForm();">
+                  <div class="form-group">
+                    <label for="exampleInputName1">Coupon Name</label>
+                    <input type="text" class="form-control" id="name"  name="name" placeholder="Enter the Coupon Name" value="<%= typeof formData !== 'undefined' ? formData.name : '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Coupon Amount</label>
+                    <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter the amount" value="<%= typeof formData !== 'undefined' ? formData.amount : '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Min Cart Amount</label>
+                    <input type="number" class="form-control" id="mincart" name="mincart" placeholder="Enter the Min cart amount" value="<%= typeof formData !== 'undefined' ? formData.mincart : '' %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="">Limit</label>
+                    <input type="number" class="form-control" id="limit" name="limit" placeholder="Enter the Limit" value="<%= typeof formData !== 'undefined' ? formData.limit : '' %>" required>
+                </div>
+                <div class="form-group">
+                    <label for="">Expire Date</label>
+                    <input type="date" class="form-control" id="date" name="date" placeholder="Enter the Expiredate" value="<%= typeof formData !== 'undefined' ? formData.date : '' %>" required>
+                </div>
+                
+                <button  type="submit" class="btn btn-primary mt-3">Add</button>
+              </form>
+                <% if(typeof message !== 'undefined' ){ %>
+                    <p style="color:#fb4e37">
+                        <%= message %>
+                    </p>
+                <% } %>
+              
+            </div>
+        </div>
+        
+    </div>
+</div>
+       
+
+<script>
+  function validateForm() {
+      const couponName = document.getElementById('name').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const minCart = parseFloat(document.getElementById('mincart').value);
+      const limit = parseInt(document.getElementById('limit').value);
+      const expireDate = new Date(document.getElementById('date').value); // Parse the date input
+  
+      const currentDate = new Date();
+      
+      if (couponName.length < 5) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Validation Error',
+              text: 'Coupon name minimum length needed.',
+          });
+          return false;
+      }
+  
+      if (amount < 0 || minCart < 0 || limit < 0) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Validation Error',
+              text: 'Please enter positive values for Coupon Amount, Min Cart Amount, and Limit.',
+          });
+          return false;
+      }
+  
+      if (expireDate <= currentDate) {
+          Swal.fire({
+              icon: 'error',
+              title: 'Validation Error',
+              text: 'Coupon has already expired.',
+          });
+          return false;
+      }
+  
+      return true;
+  }
+  </script>
+  
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!-- Content End -->
+
+
+
+<%- include('../admin/partials/footer.ejs') %>

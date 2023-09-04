@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>singleproduct</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+	<!-- login -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<!-- signup -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- phone -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+	<!-- verifyotp -->
+
+	<!-- sign in link for admin bootstrap -->
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="../assets/libs/css/style.css">
+	<link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+
+
+
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="user/images/icons/favicon.png" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/daterangepicker/daterangepicker.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/slick/slick.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/MagnificPopup/magnific-popup.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="user/css/util.css">
+	<link rel="stylesheet" type="text/css" href="user/css/main.css">
+	<!--===============================================================================================-->
+
+
+
+</head>
+
+
+<body>
+
+
+	<!-- Header -->
+	<header>
+		<!-- Header desktop -->
+		<div class="container-menu-desktop fix-menu-desktop">
+			<!-- Topbar -->
+			<div class="top-bar">
+				<div class="content-topbar flex-sb-m h-full container">
+					<div class="left-top-bar">
+						Free shipping for standard order over $100
+					</div>
+
+					<div class="right-top-bar flex-w h-full">
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							Help & FAQs
+						</a>
+
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							My Account
+						</a>
+
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							EN
+						</a>
+
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							USD
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="wrap-menu-desktop" style="top: 40px;">
+				<nav class="limiter-menu-desktop container">
+
+
+					<!-- Logo desktop -->
+					<a href="#" class="logo">
+						<img src="user/images/icons/logo-01.png" alt="IMG-LOGO">
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li class="active-menu">
+								<a href="/home">Home</a>
+								<ul class="sub-menu">
+									<li><a href="index.html">Homepage 1</a></li>
+									<li><a href="home-02.html">Homepage 2</a></li>
+									<li><a href="home-03.html">Homepage 3</a></li>
+								</ul>
+							</li>
+
+							<li>
+								<a href="/shop">Shop</a>
+							</li>
+
+							<li>
+								<a href="/cart">Cart</a>
+							</li>
+
+							<li>
+								<a href="/order">Order</a>
+							</li>
+
+							<li>
+								<a href="/about">About</a>
+							</li>
+
+							<li>
+								<a href="/contact">Contact</a>
+							</li>
+
+
+
+
+						</ul>
+					</div>
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+						<% if ( typeof isloggedin) { %>
+							<li>
+								<a href="/logout" style="color: #ff0000;">Logout</a>
+							</li>
+							<% } else { %>
+								<li>
+									<b>
+										<a href="/login">
+											<h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
+										</a>
+									</b>
+								</li>
+								<% } %>
+					</div>
+
+
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+						<i class="zmdi zmdi-search"></i>
+
+					</div>
+
+
+					<a href="/cart">
+						<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti "
+							data-notify="0">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						</div>
+
+						<a href="/wishlist"
+							class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
+							data-notify="0">
+							<i class="zmdi zmdi-favorite-outline"></i>
+						</a>
+			</div>
+			</nav>
+		</div>
+		</div>
+
+
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<div class="container-search-header">
+				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
+					<img src="user/images/icons/icon-close2.png" alt="CLOSE">
+				</button>
+
+				<form class="wrap-search-header flex-w p-l-15">
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+					<input class="plh3" type="text" name="search" placeholder="Search...">
+				</form>
+			</div>
+		</div>
+	</header>
+	<br>
+	<br>
+	<!-- /////////// -->
+	<style type="text/css">
+		/* Container for the zoomable image */
+		.wrap-pic-w {
+			overflow: hidden;
+			/* Ensure image doesn't overflow the container */
+		}
+
+		/* The image that will be zoomed */
+		.zoomable-image {
+			width: 100%;
+			/* Ensure the image takes up its container's width */
+			height: auto;
+			/* Maintain the image's aspect ratio */
+			transition: transform 0.2s ease;
+			/* Smooth transition for zoom effect */
+			cursor: pointer;
+			/* Show pointer cursor on the image to indicate it's clickable */
+			image-rendering: pixelated;
+			/* Maintain sharpness during scaling */
+
+		}
+
+		/* Zoom effect on click */
+		.zoomable-image:hover {
+			transform: scale(5.2);
+			/* Zoom in to 20% larger on click */
+		}
+	</style>
+	</head>
+
+	<body>
+
+
+
+		<!-- Product Detail -->
+		<section class="sec-product-detail bg0 p-t-65 p-b-60">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-lg-7 p-b-30">
+						<div class="p-l-25 p-r-30 p-lr-0-lg">
+							<div class="wrap-slick3 flex-sb flex-w">
+								<div class="wrap-slick3-dots"></div>
+								<div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
+
+								<div class="slick3 gallery-lb">
+									<% for(let i=0 ; i < product.image.length ; i++) {%>
+										<div class="item-slick3" data-thumb="/productimages/<%= product.image[i] %>">
+											<div class="wrap-pic-w pos-relative">
+												<img src="/productimages/<%= product.image[i] %>" alt="IMG-PRODUCT"
+													class="zoomable-image">
+
+												<a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
+													href="/productimages/<%= product.image[i] %>"
+													class="zoomable-image">
+													<i class="fa fa-expand"></i>
+												</a>
+											</div>
+										</div>
+										<% } %>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-5 p-b-30">
+						<div class="p-r-50 p-t-5 p-lr-0-lg">
+							<h4 class="mtext-105 cl2 js-name-detail p-b-14">
+								<%= product.name %>
+							</h4>
+							<span class="mtext-106 cl2">
+								<%= product.brand %>
+									₹<%= product.price %>
+							</span>
+							<p class="stext-102 cl3 p-t-23">
+								<%= product.description %>
+							</p>
+							<p class="stext-102 cl3 p-t-23">
+								<%= product.category.name %>
+							</p>
+							<br>
+							<p>stock available : <%=product.quantity %>
+							</p>
+						</div>
+						<div class="p-t-33">
+							<!-- <div class="flex-w flex-r-m p-b-10">
+								<div class="size-203 flex-c-m respon6">
+									Size
+								</div> -->
+
+							<!-- <div class="size-204 respon6-next">
+									<div class="rs1-select2 bor8 bg0">
+										<select class="js-select2" name="time">
+											<option>Choose an option</option>
+											<option>Size S</option>
+											<option>Size M</option>
+											<option>Size L</option>
+											<option>Size XL</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+							</div> -->
+
+							<!-- <div class="flex-w flex-r-m p-b-10">
+								<div class="size-203 flex-c-m respon6">
+									Color
+								</div>
+
+								<div class="size-204 respon6-next">
+									<div class="rs1-select2 bor8 bg0">
+										<select class="js-select2" name="time">
+											<option>Choose an option</option>
+											<option>Red</option>
+											<option>Blue</option>
+											<option>White</option>
+											<option>Grey</option>
+										</select>
+										<div class="dropDownSelect2"></div>
+									</div>
+								</div>
+							</div> -->
+
+							<div class="flex-w flex-r-m p-b-10">
+								<div class="size-204 flex-w flex-m respon6-next">
+									<!-- <div class="wrap-num-product flex-w m-r-20 m-tb-10">
+										<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-minus"></i>
+										</div>
+
+										<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+
+										<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+											<i class="fs-16 zmdi zmdi-plus"></i>
+										</div>
+									</div> -->
+									<% if (product.quantity>0) { %>
+										<a href="/addcart?id=<%=  product._id %>"><button
+												class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+												Add to cart
+											</button></a>
+										<% } else { %>
+											<button
+												class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+												Out Of Stock
+											</button>
+											<% } %>
+								</div>
+							</div>
+						</div>
+
+
+						<% if (wishlistExist==undefined) { %>
+							<div class="flex-w flex-r-m p-b-10">
+								<div class="size-204 flex-w flex-m respon6-next">
+								
+								</div>
+							</div>
+							<% }else{ %>
+
+								<div class="flex-w flex-r-m p-b-10">
+									<div class="size-204 flex-w flex-m respon6-next">
+										<a onclick="addtowishlist('<%=  product._id %>')"><button id="removewishlist"
+												class="flex-c-m stext-101 cl0 size-101 bg10 bor1 hov-btn1 p-lr-15 trans-04 js-addwish-detail">
+												Remove From Wishlist
+											</button></a>
+									</div>
+								</div>
+								<% } %>
+									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+										data-tooltip="Facebook">
+										<i class="fa fa-facebook"></i>
+									</a>
+
+									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+										data-tooltip="Twitter">
+										<i class="fa fa-twitter"></i>
+									</a>
+
+									<a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
+										data-tooltip="Google Plus">
+										<i class="fa fa-google-plus"></i>
+									</a>
+					</div>
+
+				</div>
+			</div>
+			</div>
+		</section>
+
+		<script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
+		<script>
+			function addtowishlist(productID) {
+				const wishlistButton = $(`#removewishlist-${productID}`);
+
+				$.ajax({
+					url: '/addtowishlist',
+					data: { productID: productID },
+					method: 'POST',
+					success: (response) => {
+						if (response.addedToWishList) {
+							wishlistButton.text('Remove From Wishlist');
+							$('a[href="/wishlist"]').attr('data-notify', response.count + 1);
+						} else if (response.alreadyExist) {
+							wishlistButton.text('Add to Wishlist');
+							$('a[href="/wishlist"]').attr('data-notify', response.count - 1);
+						} else {
+							window.location.href = "/login";
+						}
+					}
+				});
+			}
+		</script>
+
+		<%- include('../user/partials/footer.ejs') %>
+	</body>
+
+</html>
