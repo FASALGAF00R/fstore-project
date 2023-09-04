@@ -517,11 +517,9 @@ const singleproduct = async (req, res) => {
 
     if (productData) {
       res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist });
-    } else {
-      res.sendStatus(404);
-    }
+    } 
   } catch (error) {
-    console.log(error.message);
+    res.status(500).render('500')
   }
 };
 

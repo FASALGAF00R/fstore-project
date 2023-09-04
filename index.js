@@ -39,6 +39,15 @@ app.use('/',userRoutes)
 const adminRoutes=require('./router/adminRoutes');
 app.use('/admin',adminRoutes);
 
+app.use((req, res, next) => {
+  res.status(404).render('404');
+});
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).render('500');
+});
+
 app.listen(process.env.port,function(){
     console.log('server is running in 3000 port');
 })
