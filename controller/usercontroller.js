@@ -519,7 +519,7 @@ const singleproduct = async (req, res) => {
       res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist });
     } 
   } catch (error) {
-    console.log(error.message);
+    res.status(500).render('500')
   }
 };
 
