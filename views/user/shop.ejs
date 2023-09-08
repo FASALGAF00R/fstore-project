@@ -57,6 +57,7 @@
 	<!--===============================================================================================-->
 
 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
 
@@ -120,7 +121,7 @@
 								<a href="/shop">Shop</a>
 							</li>
 
-							<li >
+							<li>
 								<a href="/cart">Cart</a>
 							</li>
 
@@ -136,7 +137,12 @@
 								<a href="/contact">Contact</a>
 							</li>
 
+							<li>
+								<a href="/userprofile">
+									<i class="fas fa-user"></i>
 
+								</a>
+							</li>
 
 
 						</ul>
@@ -161,7 +167,7 @@
 
 
 					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-						<i class="zmdi zmdi-search"></i>
+
 
 					</div>
 
@@ -169,21 +175,23 @@
 					<style>
 						/* Add this CSS to remove all hover effects */
 						.icon-header-item:hover {
-							text-decoration: none; /* Remove underline on hover (optional) */
-							cursor: default; /* Remove pointer cursor on hover (optional) */
+							text-decoration: none;
+							/* Remove underline on hover (optional) */
+							cursor: default;
+							/* Remove pointer cursor on hover (optional) */
 						}
 					</style>
-					
+
 					<a href="/cart">
 						<div class="icon-header-item cl2 p-r-11 p-l-10">
 							<i class="zmdi zmdi-shopping-cart"></i>
 						</div>
 					</a>
-					
+
 					<a href="/wishlist" class="dis-block icon-header-item cl2 p-l-22 p-r-11">
 						<i class="zmdi zmdi-favorite-outline"></i>
 					</a>
-					
+
 			</div>
 			</nav>
 		</div>
@@ -193,21 +201,7 @@
 
 
 		<!-- //////////////////////////// -->
-		<!-- Modal Search -->
-		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
-			<div class="container-search-header">
-				<button class="flex-c-m btn-hide-modal-search trans-04 js-hide-modal-search">
-					<img src="user/images/icons/icon-close2.png" alt="CLOSE">
-				</button>
 
-				<form class="wrap-search-header flex-w p-l-15">
-					<button class="flex-c-m trans-04">
-						<i class="zmdi zmdi-search"></i>
-					</button>
-					<input class="plh3" type="text" name="search" placeholder="Search...">
-				</form>
-			</div>
-		</div>
 	</header>
 	<!-- Filter and Search Buttons -->
 	<!-- product -->
@@ -298,6 +292,7 @@
 											<li><a href="?minPrice=5000&maxPrice=10000&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">above Rs 5000</a></li>
 										</ul>
+
 									</div>
 								</div>
 							</div>
@@ -309,15 +304,7 @@
 							<div class="mtext-102 cl2 p-b-15">
 								categories
 							</div>
-							<div class="shop__sidebar__search w-100">
-								<form class="w-100" action="/shop">
-									<input type="hidden" value="<%= filter %>" name="filter">
-									<input type="hidden" value="<%= sort %>" name="sort">
-									<input class="w-96" type="text" name="search" placeholder="Search...">
-									<button type="submit"><span style="margin-left: 197px;"
-											class="fa fa-search"></span></button>
-								</form>
-							</div>
+
 							<div class="head"></div>
 							<ul class="main-categories">
 								<% if(data2.length> 0) { %>
@@ -334,6 +321,28 @@
 												</tr>
 												<% } %>
 							</ul>
+						</div>
+						<div class="filter-col2 p-r-15 p-b-27">
+							<div class="shop__sidebar__search w-100">
+								<form class="w-100" action="/shop">
+									<input type="text" name="search" placeholder="Search...">
+
+									<button type="submit"><span style="margin-left: 197px;"
+											class="fa fa-search"></span></button>
+									<!-- Add input fields for minPrice and maxPrice -->
+									<input type="number" name="minPrice" placeholder="Min Price">
+									<input type="number" name="maxPrice" placeholder="Max Price">
+
+									<input type="hidden" value="<%= filter %>" name="filter">
+									<input type="hidden" value="<%= sort %>" name="sort">
+
+								</form>
+							</div>
+
+
+
+
+
 						</div>
 					</div>
 				</div>
@@ -454,22 +463,35 @@
 			$.ajax({
 				url: "/addwishlist",
 				method: 'get',
-				data: { 
-					id,
+				data: {
+					id: id
 				},
 				success: function (response) {
 					if (response.status) {
 						Swal.fire(
-							'Saved Whishlist!',
-							'You clicked the button!',
+							'Added to Wishlist!',
+							'The product has been added to your wishlist.',
 							'success'
-						)
+						);
 					} else {
-						Swal.fire("please Login to your account")
+						Swal.fire(
+							'Error',
+							response.message || 'An error occurred.',
+							'error'
+						);
 					}
+				},
+				error: function (xhr, status, error) {
+					console.error(error);
+					Swal.fire(
+						'Error',
+						'An error occurred while adding to wishlist.',
+						'error'
+					);
 				}
-			})
+			});
 		}
+
 	</script>
 
 

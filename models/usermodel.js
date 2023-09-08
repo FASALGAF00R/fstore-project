@@ -9,6 +9,11 @@ const  userSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
+    number:{
+        type:String,
+        required:true,
+
+    },
     password:{
         type:String,
         required:true
@@ -62,7 +67,16 @@ const  userSchema=new mongoose.Schema({
 
             date:{
                 type:String
-            }
+            },
+            wallet:{
+                type:Number,
+                default:0,
+            },
+            wallethistory:[{
+                peramount:{
+                    type:Number,
+                },
+            }]
         }
     )
     

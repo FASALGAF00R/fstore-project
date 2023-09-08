@@ -14,6 +14,10 @@ const wishlistSchema = new mongoose.Schema({
         ref: 'product', // Reference the 'Product' model
         required: true,
       },
+      productname:{
+        type:String,
+        required:true
+    },
       quantity: {
         type: Number,
         default: 1,

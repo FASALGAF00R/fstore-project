@@ -53,7 +53,7 @@ const  editcategory = async(req,res)=>{
         console.log(editdata);
     } catch (error) {
         console.log(error.message);
-        res.status(500).send('servor error')
+      
     }
 }
 

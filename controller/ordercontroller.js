@@ -63,14 +63,27 @@ const returnOrder = async (req, res) => {
         if (req.session.user_id) {
             const id = req.query.id;
             const orderData = await Order.findById(id);
-
+            const amount = await User.findOne({ _id: req.session.user_id });
+            const total = amount.wallet + orderData.totalAmount;
             if (
                 orderData.paymentMethod == "cod" ||
                 orderData.paymentMethod == "online"
-            ) {
-
+            )
+            {
+                // Add the order total back to the user's wallet
+                await User.findOneAndUpdate(
+                    { _id: req.session.user_id },
+                    {
+                        $set: { wallet: total },
+                    }
+                ).then((value) => {
+                    console.log(value);
+                });            
+            
+                // Set the order status to "returned" and reset the wallet field to 0
                 const orderDataa = await Order.findByIdAndUpdate(id, {
                     status: "returned",
+                    wallet:0,
                 });
 
                 if (orderDataa) {
@@ -120,7 +133,8 @@ const sales = async (req, res) => {
         } else if (value == "online") {
             const data = await Order.find({ paymentMethod: "online" });
             res.render("admin/sales", { data, message: "Online", status, value });
-        } else {
+        }
+else {
             const data = orderData;
             res.render("admin/sales", { data, status, value, total: SubTotal });
         }
@@ -128,6 +142,24 @@ const sales = async (req, res) => {
         console.log(error.message);
     }
 }
+const checkWallet = async (req, res) => {
+    try {
+
+        if (req.session.user_id) {
+
+            const userData = await User.findOne({ _id: req.session.user_id });
+            const walleta = userData.wallet;
+            if (walleta > 0) {
+                res.json({ success: true, walleta });
+            }
+        } else {
+            res.redirect("/login");
+        }
+    } catch (error) {
+
+        console.log(error.message);
+    }
+};
 
 
 
@@ -139,6 +171,8 @@ module.exports ={
     updatestatus,
      returnOrder ,
      cancelOrder,
-     sales
+     sales,
+     checkWallet
+  
 
 }
