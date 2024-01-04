@@ -407,7 +407,7 @@
 				method: 'post',
 				success: (response) => {
 					if (response.empty) {
-						swal("Product Removed from cart")
+						return("Product Removed from cart")
 						location.reload()
 					} else {
 						document.getElementById(productID).innerHTML = quantity + count

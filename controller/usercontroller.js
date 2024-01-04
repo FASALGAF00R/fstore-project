@@ -1384,6 +1384,7 @@ const userprofile = async (req, res) => {
     if (req.session.user_id) {
       let userdata = await user.findOne({ _id: req.session.user_id });
       let datawallet = await user.find({ _id: req.session.user_id })
+      console.log(datawallet,"wallet");
       const [{ wallehistory }] = datawallet
 
       res.render("user/userprofile", { data: userdata, wallet: wallehistory })
