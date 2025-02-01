@@ -3,6 +3,12 @@ const user=require('../models/usermodel');
 const category=require('../models/categorymodel')
 const Order = require("../models/ordermodels");
 const bcrypt =require('bcrypt');
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
 const loadsignin =async(req,res)=>{
     try{
         res.render('admin/signin');
@@ -10,12 +16,25 @@ const loadsignin =async(req,res)=>{
         console.log(error.message);
     }
 };
+<<<<<<< HEAD
+=======
+
+
+
+
+>>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
 const signinVerify =async(req,res)=>{
     try{
         const email =req.body.email;
         const password = req.body.password;
+<<<<<<< HEAD
         console.log('hhbhbh',req.body,'env',process.env.admin,process.env.password);
         if(email == process.env.admin && password == process.env.password){
+=======
+
+
+        if(email == process.env.ADMIN_MAIL && password == process.env.ADMIN_PASS){
+>>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
             console.log('fghjk');
             res.redirect('/admin/home')
         }else{  
