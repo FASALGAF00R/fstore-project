@@ -1,17 +1,10 @@
 {
   "name": "ecommerec-project",
   "version": "1.0.0",
-<<<<<<< HEAD
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js"
-=======
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
+    "dev":"nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,11 +14,7 @@
     "body-parser": "^1.20.2",
     "chart.js": "^4.4.0",
     "crypto": "^1.0.1",
-<<<<<<< HEAD
     "dotenv": "^16.3.1",
-=======
-    "dotenv": "^16.4.7",
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-ejs-layouts": "^2.5.1",
@@ -33,23 +22,14 @@
     "jquery-zoom": "^1.7.21",
     "js-image-zoom": "^0.7.0",
     "mongodb": "^5.6.0",
-<<<<<<< HEAD
-    "mongoose": "^7.3.1",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.3",
-=======
     "mongoose": "^7.8.6",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.10.0",
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
+    "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22",
     "password-validator": "^5.3.0",
     "razorpay": "^2.9.1",
     "validator": "^13.9.0"
-<<<<<<< HEAD
-  }
-=======
   },
+  "devDependencies": {},
   "description": ""
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
 }

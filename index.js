@@ -1,25 +1,9 @@
-<<<<<<< HEAD
-=======
 require('dotenv').config();
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
 const mongoose =require('mongoose');
 const express =require('express');
 const  session=require('express-session')
 const config =require('./config/config');
 const bodyParser = require('body-parser');
-<<<<<<< HEAD
-require('dotenv').config();
-//public folder
-const path=require('path')
-
-
-mongoose.connect(process.env.mongodb).then(()=>{
-  console.log('database connected successfully!')
-}).catch((e)=>{
-  console.log(e)
-})
-
-=======
 //public folder
 const path=require('path')
 
@@ -39,7 +23,6 @@ mongoose.connect(process.env.MONGO_URI, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
 const app = express();
 
 app.use(session({
@@ -74,17 +57,9 @@ app.use((err, req, res, next) => {
   res.status(500).render('500');
 });
 
-<<<<<<< HEAD
-app.listen(process.env.port,function(){
-=======
 app.listen(process.env.PORT,function(){
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
     console.log('server is running in 3000 port');
 })
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
 //serverside

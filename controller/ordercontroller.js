@@ -61,11 +61,6 @@ const updatestatus = async (req, res) => {
 const returnOrder = async (req, res) => {
     try {
         if (req.session.user_id) {
-<<<<<<< HEAD
-            const id = req.query.id;
-            const orderData = await Order.findById(id);
-            const amount = await User.findOne({ _id: req.session.user_id });
-=======
             console.log("returned");
             
             const id = req.query.id;
@@ -73,7 +68,6 @@ const returnOrder = async (req, res) => {
             const amount = await User.findOne({ _id: req.session.user_id });
             console.log(amount,"kkk");
             
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
             const total = amount.wallet + orderData.totalAmount;
             if (
                 orderData.paymentMethod == "cod" ||
@@ -111,11 +105,8 @@ const returnOrder = async (req, res) => {
 
 const cancelOrder  = async (req, res) => {
     try {
-<<<<<<< HEAD
-=======
         console.log("canceled");
         
->>>>>>> c87bf14 (changed the usersignup issue ,user editprofile issue)
         const orderId = req.query.id
         const order = await Order.findById(orderId)
         order.status = 'cancelled'
