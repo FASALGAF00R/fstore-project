@@ -55,25 +55,11 @@
       <div class="top-bar">
         <div class="content-topbar flex-sb-m h-full container">
           <div class="left-top-bar">
-            Free shipping for standard order over $100
+            exclusive deals
           </div>
 
           <div class="right-top-bar flex-w h-full">
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
-              Help & FAQs
-            </a>
 
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
-              My Account
-            </a>
-
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
-              EN
-            </a>
-
-            <a href="#" class="flex-c-m trans-04 p-lr-25">
-              USD
-            </a>
           </div>
         </div>
       </div>
@@ -92,11 +78,6 @@
             <ul class="main-menu">
               <li class="active-menu">
                 <a href="/home">Home</a>
-                <ul class="sub-menu">
-                  <li><a href="index.html">Homepage 1</a></li>
-                  <li><a href="home-02.html">Homepage 2</a></li>
-                  <li><a href="home-03.html">Homepage 3</a></li>
-                </ul>
               </li>
 
               <li>
@@ -108,8 +89,8 @@
               </li>
 
               <li>
-								<a href="/order">Order</a>
-							</li>
+                <a href="/order">Order</a>
+              </li>
 
               <li>
                 <a href="/about">About</a>
@@ -121,11 +102,11 @@
 
 
               <li>
-                <a href="/userprofile"> 
-                    <i class="fas fa-user"></i> 
-                 
+                <a href="/userprofile">
+                  <i class="fas fa-user"></i>
+
                 </a>
-            </li>
+              </li>
 
 
             </ul>
@@ -152,20 +133,20 @@
 
 
           <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-         
+
 
           </div>
 
 
           <a href="/cart">
-						<div class="icon-header-item cl2 p-r-11 p-l-10">
-							<i class="zmdi zmdi-shopping-cart"></i>
-						</div>
-					</a>
-					
-					<a href="/wishlist" class="dis-block icon-header-item cl2 p-l-22 p-r-11">
-						<i class="zmdi zmdi-favorite-outline"></i>
-					</a>
+            <div class="icon-header-item cl2 p-r-11 p-l-10">
+              <i class="zmdi zmdi-shopping-cart"></i>
+            </div>
+          </a>
+
+          <a href="/wishlist" class="dis-block icon-header-item cl2 p-l-22 p-r-11">
+            <i class="zmdi zmdi-favorite-outline"></i>
+          </a>
       </div>
       </nav>
     </div>
@@ -173,37 +154,128 @@
 
 
 
- 
+
+    <!-- Header Mobile -->
+    <div class="wrap-header-mobile">
+      <!-- Logo moblie -->
+      <div>
+        <a href="#" class="logo">
+          <img src="user/images/icons/logo-01.png" alt="IMG-LOGO">
+        </a>
+      </div>
+
+
+      <!-- Icon header -->
+      <div class="wrap-icon-header flex-w flex-r-m m-r-15">
+
+
+        <a href="/cart">
+          <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10  ">
+            <i class="zmdi zmdi-shopping-cart"></i>
+          </div>
+        </a>
+        <a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
+          <i class="zmdi zmdi-favorite-outline"></i>
+        </a>
+      </div>
+
+
+
+
+      <!-- Button show menu -->
+      <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </div>
+    </div>
+
+
+
+
+    <!-- Menu Mobile -->
+    <div class="menu-mobile">
+
+
+      <ul class="main-menu-m">
+        <li>
+          <a href="home">Home</a>
+        </li>
+
+        <li>
+          <a href="/shop">Shop</a>
+        </li>
+
+        <li>
+          <a href="/cart">Cart</a>
+        </li>
+
+        <li>
+          <a href="/order">Order</a>
+        </li>
+
+        <li>
+          <a href="/about">About</a>
+        </li>
+
+        <li>
+          <a href="/contact">Contact</a>
+        </li>
+
+
+        <li>
+          <a href="/userprofile">
+            <i class="fas fa-user"></i>
+
+          </a>
+        </li>
+
+
+      </ul>
+    </div>
+
+
+
   </header>
 
   <!-- ////////// -->
-<br><br>
-
-  <div class="container mt-5">
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAddressModal" style="background-color: black; color: white;">Add Address</button>
-  </div>
- <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  
   <style>
-    .container-menu-desktop {
-      position: relative;
-      z-index: 9999; /* Adjust the value as needed */
+    .modal-backdrop.show {
+      z-index: 1050;
     }
-  </style>  
 
-<!-- Add Address Modal -->
-<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
-      </div>
-      <div class="modal-body">
-        <form action="/addAddress" class="billing-form" method="post">
-          <div class="mb-3">
-            <label for="address" class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" required>
-          </div>
+    .modal.show {
+      z-index: 1060;
+    }
+
+    .navbar,
+    .container-menu-desktop {
+      z-index: 1000;
+    }
+  </style>
+
+  </style>
+
+  <!-- Add Address Modal -->
+  <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+        </div>
+        <div class="modal-body">
+          <form action="/addAddress" class="billing-form" method="post">
+            <div class="mb-3">
+              <label for="address" class="form-label">Name</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
 
             <div class="form-group">
               <label for="country">Country</label>
@@ -217,180 +289,172 @@
                   <option value="Philippines">Portugal</option>
                 </select>
               </div>
-            </div> 
+            </div>
 
             <div class="mb-3">
               <label for="city" class="form-label">Town/City</label>
               <input type="text" class="form-control" placeholder="" name="town" required>
             </div>
             <div class="w-100"></div>
-             <div class="col-12">
+            <div class="col-12">
               <div class="form-group">
                 <label for="streetaddress">address</label>
                 <input type="text" class="form-control" name="street" required>
-              </div> 
+              </div>
             </div>
             <div class="mb-3">
               <label for="state" class="form-label">phone</label>
               <input type="text" class="form-control" name="phone" required>
             </div>
-            <button type="submit" class="btn btn-primary" style="background-color: black; color: white;">Save Address</button>
+            <button type="submit" class="btn btn-primary" style="background-color: black; color: white;">Save
+              Address</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- address display -->
   <section class="ftco-section">
     <div class="container">
       <form action="" id="place-order">
         <div class="row justify-content-center">
-          <div class="col-xl-10 ftco-animate">
-            <div class="col-lg-8 col-md-6">
-              <% address.forEach((value)=>{ %>
-                <div class="form-check mb-2">
-                  <div class="row">
-                    <div class="col-10">
-                      <input class="form-check-input" name="address" type="radio"
-                        value=" <%= value.name%>,<%= value.street %>, <%= value.town %> <%= value.country %>, <%= value.postcode %>, <%= value.phone %>"
-                        id="flexCheckDefault" required>
-                      <label class="form-check-label" for="flexCheckDefault">
-                        <%= value.name%>,<br>
-                          <%= value.street %> ,
-                            <%= value.town %>,
-                              <%= value.country %>
-                                <%= value.postcode %> <br>
-                                  <%= value.phone %>
-                      </label>
-                    </div>
+          <div class="col-xl-10">
+            <h4 class="mb-4">Select Delivery Address</h4>
 
-                    <button disabled class=" ">
-                      <a href="/deleteaddress?id=<%=value._id%>"> Delete </a>
-                    </button>
+            <div class="row g-3">
+              <% address.forEach((value)=> { %>
+                <div class="col-md-6">
+                  <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="address"
+                          value="<%= value.name %>, <%= value.street %>, <%= value.town %>, <%= value.country %>, <%= value.postcode %>, <%= value.phone %>"
+                          id="address_<%= value._id %>" required>
+                        <label class="form-check-label" for="address_<%= value._id %>">
+                          <strong>
+                            <%= value.name %>
+                          </strong><br>
+                          <%= value.street %>, <%= value.town %><br>
+                              <%= value.country %> - <%= value.postcode %><br>
+                                  Phone: <%= value.phone %>
+                        </label>
+                      </div>
 
-                    <div class="col-2">
-                      <button onclick="location.href='/editaddress?id=<%=value._id%>'" type="button" class=""
-                        data-target="#Modal">
-                        Edit
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <%}) %>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="col-6 my-5">
-
-          <div class="input-group">
-
-            <input type="text" id="code" class="cart-detail cart-total bg-light p-3 p-md-4 form-control"
-              placeholder="Coupon Code" />
-              <div class="input-group-append">
-                <a class="btn btn-primary" onclick="applycoupan($(`#code`).val());"
-                   style="background-color: black; color: white;">
-                    <i class="fas fa-tags me-2"></i> Apply Coupon
-                </a>
-            </div>
-            
-
-
-          </div>
-
-        </div>
-        <div class="row mt-5 pt-3 d-flex">
-
-          <div class="col-md-6 d-flex">
-            <div class="cart-detail cart-total bg-light p-3 p-md-4 w-100">
-              <h3 class="billing-heading mb-4">Cart Total</h3>
-              <p class="d-flex">
-                <span>Subtotal :</span>
-                Rs:
-                <span id="total">
-                  <%= total%>
-                </span>
-              </p>
-              <p class="d-flex">
-                <span>Wallet :</span>
-                Rs:
-                <span id="wallet">
-                  <%= wallet%>
-                </span>
-              </p>
-              <p class="d-flex">
-                <span>Delivery :</span>
-                <span>Rs:0.00</span>
-              </p>
-
-              <div class="d-flex flex-row justify-content-between">
-                <span>Discount :</span>
-                <span id="coupondiscount" style="color:#e5380d"></span>
-                <p class="text-end"> <a href="/checkout"> Remove coupon </a></p>
-              </div>
-
-              <hr />
-              <p class="d-flex ">
-                <span>Total :</span>
-                Rs:
-                <span id="total-amount">
-                  <%=total%>
-                </span>
-              </p>
-
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="cart-detail bg-light p-3 p-md-4 h-100">
-              <h3 class="billing-heading mb-4">Payment Method</h3>
-              <div class="form-group">
-                <div class="col-md-12">
-                  <div class="radio">
-                    <label><input required type="radio" value="cod" name="payment" class="mr-2" />
-                      COD</label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <div class="col-md-12">
-                  <div class="radio">
-                    <label><input required type="radio" value="online" name="payment" class="mr-2" />
-                      Online </label>
-                    </div>
-                  </div>
-                  </div>
-                  <%if(wallet !==0){ %>
-                    <div class="form-group">
-                      <div class="col-md-12">
-                        <div class="radio " id="radio_div">
-                          <label><input required type="radio" value="cod" name="payment" class="mr-2"
-                              onclick="checkWallet()" />
-                            Wallet</label>
-                        </div>
+                      <div class="d-flex justify-content-between mt-3">
+                        <a href="/editaddress?id=<%= value._id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+                        <a href="/deleteaddress?id=<%= value._id %>" class="btn btn-sm btn-outline-danger">Delete</a>
                       </div>
                     </div>
-                    <% } %>
+                  </div>
                 </div>
+                <% }) %>
+            </div>
+
+            <div class="text-end mt-4">
+              <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addAddressModal">+ Add
+                Address</a>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-5">
+
+        <!-- Coupon and Total Section -->
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="text" id="code" class="form-control" placeholder="Coupon Code" />
+              <button class="btn btn-dark" type="button" onclick="applycoupan($('#code').val());">
+                <i class="fas fa-tags me-2"></i>Apply
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-6 text-end mt-3 mt-md-0">
+            <a href="/checkout" class="text-decoration-none text-danger">Remove Coupon</a>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <!-- Cart Summary -->
+          <div class="col-md-6">
+            <div class="bg-light p-4 rounded shadow-sm">
+              <h5 class="mb-4">Cart Summary</h5>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Subtotal:</span>
+                <strong>Rs <span id="total">
+                    <%= total %>
+                  </span></strong>
               </div>
-              <% if(typeof message !=='undefined' ){ %>
-                <p style="color:#fb4e37">
-                  <%= message %>
-                </p>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Wallet:</span>
+                <strong>Rs <span id="wallet">
+                    <%= wallet %>
+                  </span></strong>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Delivery:</span>
+                <strong>Rs 0.00</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-2">
+                <span>Discount:</span>
+                <strong id="coupondiscount" class="text-danger">Rs 0</strong>
+              </div>
+              <hr>
+              <div class="d-flex justify-content-between">
+                <span>Total:</span>
+                <strong>Rs <span id="total-amount">
+                    <%= total %>
+                  </span></strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Options -->
+          <div class="col-md-6">
+            <div class="bg-light p-4 rounded shadow-sm h-100">
+              <h5 class="mb-4">Payment Method</h5>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" value="cod" name="payment" id="cod" required>
+                <label class="form-check-label" for="cod">Cash on Delivery</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" value="online" name="payment" id="online" required>
+                <label class="form-check-label" for="online">Online Payment</label>
+              </div>
+              <% if (wallet !==0) { %>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" value="wallet" name="payment" id="walletPay"
+                    onclick="checkWallet()">
+                  <label class="form-check-label" for="walletPay">Use Wallet</label>
+                </div>
                 <% } %>
+                  <% if (typeof message !=='undefined' ) { %>
+                    <div class="text-danger mt-3">
+                      <%= message %>
+                    </div>
+                    <% } %>
+            </div>
+          </div>
+        </div>
 
-                <button type="submit" class="btn btn-primary" style="background-color: black; color: white;">Place an order</button>
-
+        <!-- Place Order Button -->
+        <div class="row mt-4">
+          <div class="col text-center">
+            <button type="submit" class="btn btn-dark px-5 py-2">Place Order</button>
+          </div>
+        </div>
       </form>
-    
     </div>
-    
   </section>
+
+
   <!--================End Cart Area =================-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<!-- Include Bootstrap JS library -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Include Bootstrap JS library -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -483,7 +547,7 @@
           address: address,
           payment: paymentMethod,
           wallet
-  
+
         },
         success: (response) => {
           console.log(response.order);
@@ -546,7 +610,7 @@
             window.location.href = "/orderplaced";
           } else if (response.onlineSuccess) {
             Swal.fire({
-              position:"center",
+              position: "center",
               icon: 'error',
               title: 'Payment has done',
               showConfirmButton: false,
@@ -563,5 +627,6 @@
 <br>
 <br>
 <br>
-<%- include('../user/partials/footer.ejs')  %>
+<%- include('../user/partials/footer.ejs') %>
+
 </html>

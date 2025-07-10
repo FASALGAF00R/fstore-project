@@ -7,10 +7,7 @@ const bodyParser = require('body-parser');
 //public folder
 const path=require('path')
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+mongoose.connect(process.env.MONGO_URI,)
 .then(() => {
   console.log('Database connected successfully!');
 })
@@ -19,10 +16,6 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 
-// mongoose.connect('mongodb://localhost:27017/ecommerce', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
 const app = express();
 
 app.use(session({
