@@ -907,10 +907,14 @@ const addtocart = async (req, res) => {
 const removewish = async (req, res) => {
       try {
             const id = req.body.id;
+            console.log(id,"uiiioi");
+            
             const data = await Wishlist.findOneAndUpdate(
                   { "product.productId": id },
                   { $pull: { product: { productId: id } } }
             );
+            console.log(data,"data");
+            
             if (data) {
                   res.json({ success: true });
             }

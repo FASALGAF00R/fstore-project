@@ -60,19 +60,19 @@
 </head>
 
 <style>
-  table.table-bordered {
-    border: 2px solid #191b1c;
-  }
+	table.table-bordered {
+		border: 2px solid #191b1c;
+	}
 
-  table.table-bordered th,
-  table.table-bordered td {
-    border: 3px solid #585454;
-    vertical-align: middle;
-  }
+	table.table-bordered th,
+	table.table-bordered td {
+		border: 3px solid #585454;
+		vertical-align: middle;
+	}
 
-  table thead {
-    background-color: #f8f9fa; 
-  }
+	table thead {
+		background-color: #f8f9fa;
+	}
 </style>
 
 
@@ -309,16 +309,19 @@
 											<%= product.productname %>
 										</td>
 										<td>
-											<a href="#" class="btn btn-outline-danger btn-sm"
+											<a href="" class="btn btn-sm"
+												style="color: white; background-color: #d82a1d;" id="delete"
 												onclick="deletewhishlist('<%= product.productId._id %>')">
 												🗑 Remove
 											</a>
 
 											<br><br>
-											<a href="#" class="btn btn-outline-success btn-sm mt-2"
+											<a href="" class="btn btn-sm" 
+												style="color: white; background-color: #2a2626; " id="add"	
 												onclick="addcart('<%= product.productId._id %>')">
 												🛒 Add to Cart
 											</a>
+											
 
 										</td>
 										<td>
@@ -357,8 +360,9 @@
 											<td colspan="3"></td>
 											<td>
 												<div class="checkout_btn_inner d-flex align-items-center">
-													<a class="btn btn-outline-primary" href="/shop">⬅ Continue
-														Shopping</a>
+													<a href="/shop"
+									         class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+											 ⬅ Continue Shopping</a>
 												</div>
 											</td>
 										</tr>
@@ -379,10 +383,8 @@
 
 
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 
 	<br>
@@ -440,7 +442,6 @@
 		}
 
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 </body>
 
 </html>
