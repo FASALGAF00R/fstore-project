@@ -223,12 +223,20 @@
         </li>
 
 
-        <li>
-          <a href="/userprofile">
-            <i class="fas fa-user"></i>
+        <% if (name) { %>
+          <li>
+            <a href="/userprofile">
+              <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+            </a>
+          </li>
+          <% } else{ %>
+            <li>
+              <a href="/userprofile">
+                <i class="fas fa-user"></i>
+              </a>
+            </li>
 
-          </a>
-        </li>
+            <% } %>
 
 
       </ul>
@@ -244,7 +252,7 @@
   <br>
   <br>
   <br>
-  
+
   <style>
     .modal-backdrop.show {
       z-index: 1050;
@@ -328,7 +336,7 @@
                   <div class="card shadow-sm border-0">
                     <div class="card-body">
                       <div class="form-check mb-2">
-                        <input class="form-check-input" type="radio" name="address"
+                        <input class="form-check-input bg-primary border-primary" type="radio" name="address"
                           value="<%= value.name %>, <%= value.street %>, <%= value.town %>, <%= value.country %>, <%= value.postcode %>, <%= value.phone %>"
                           id="address_<%= value._id %>" required>
                         <label class="form-check-label" for="address_<%= value._id %>">
@@ -416,16 +424,16 @@
             <div class="bg-light p-4 rounded shadow-sm h-100">
               <h5 class="mb-4">Payment Method</h5>
               <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" value="cod" name="payment" id="cod" required>
+                <input class="form-check-input bg-primary border-primary" type="radio" value="cod" name="payment" id="cod" required>
                 <label class="form-check-label" for="cod">Cash on Delivery</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" value="online" name="payment" id="online" required>
+                <input class="form-check-input bg-primary border-primary" type="radio" value="online" name="payment" id="online" required>
                 <label class="form-check-label" for="online">Online Payment</label>
               </div>
               <% if (wallet !==0) { %>
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="radio" value="wallet" name="payment" id="walletPay"
+                  <input class="form-check-input bg-primary border-primary" type="radio" value="wallet" name="payment" id="walletPay"
                     onclick="checkWallet()">
                   <label class="form-check-label" for="walletPay">Use Wallet</label>
                 </div>

@@ -19,10 +19,15 @@ mongoose.connect(process.env.MONGO_URI,)
 const app = express();
 
 app.use(session({
-secret:config.sessionSecret,
-resave:false,
-saveUninitialized:true
+  secret: config.sessionSecret,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 6, // 6 hours (you can change this)
+    httpOnly: true,
+  }
 }));
+
 
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'/views'))

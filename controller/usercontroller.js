@@ -47,18 +47,17 @@ const loadlogin = async (req, res) => {
 const verifylogin = async (req, res) => {
       try {
             const { email, password } = req.body;
+            console.log(req.body);
             const userData = await user.findOne({ email: email });
-
+            console.log(userData);
             if (userData) {
                   const passwordMatch = await bcrypt.compare(password, userData.password);
-
                   if (passwordMatch) {
                         if (userData.is_verified === 1) {
                               if (userData.block === false) {
                                     // Check if OTP reset process was completed
+                                    req.session.user_id = userData._id
                                     if (userData.otp === undefined && userData.expiry === undefined) {
-                                          req.session.user_id = userData._id;
-                                          console.log(req.session.user_id);
                                           res.redirect('/home');
                                     } else {
                                           res.render('user/login', { message: "Please complete the OTP reset process before logging in." });
@@ -205,7 +204,7 @@ const resetpassword = async (req, res) => {
 const otpverifysignup = async (req, res) => {
       try {
             const enteredOTP = req.body.otp;
-            const userId = req.session.userId;
+            const userId = req.session.user_id;
             let userDetial = await user.findOne({ _id: userId, otp: enteredOTP, expiry: { $gt: new Date() } })
             if (!userDetial) {
                   res.render('user/otpverify', {
@@ -214,7 +213,7 @@ const otpverifysignup = async (req, res) => {
                         message: 'Invalid OTP',
                   });
             } else {
-                  const userId = req.session.userId;
+                  const userId = req.session.user_id;
                   await user.updateOne({ _id: userId }, { $set: { is_verified: 1 }, $unset: { otp: '', expiry: '' } });
                   res.redirect('/login');
             }
@@ -226,12 +225,11 @@ const otpverifysignup = async (req, res) => {
 
 const resendOTP = async (req, res) => {
       try {
-            console.log('entering...............');
-            const userId = req.session.userId;
-            const userData = await user.findOne({ _id: userId.trim() });
+            console.log(req.session, 'entering...............');
+            const userId = req.session.user_id;
+            const userData = await user.findById({ _id: userId });
             console.log(userData, userId);
             if (userData) {
-
                   const otp = generateOTP(); // Generate a new OTP
                   const email = userData.email;
                   await sendOTPEmail(email, otp); // Send the new OTP via email
@@ -298,6 +296,7 @@ const loadsignup = async (req, res) => {
       }
 };
 
+
 //to handle user signup and send otp
 const insertuser = async (req, res) => {
       try {
@@ -328,13 +327,11 @@ const insertuser = async (req, res) => {
             });
 
             const userData = await User.save();
-            console.log(userData);
 
             if (userData) {
-                  const otp = generateOTP(); // Generate OTP
-                  await sendOTPEmail(email, otp); // Send OTP email with the dynamically generated OTP
-                  req.session.userId = userData._id;  // Store the user's ID in the session
-
+                  const otp = generateOTP();
+                  await sendOTPEmail(email, otp);
+                  req.session.user_id = userData._id;  // Store the user's ID in the session
                   const expiry = new Date();
                   expiry.setSeconds(expiry.getSeconds() + 60); // Set expiry time to 60 seconds from now
 
@@ -348,7 +345,7 @@ const insertuser = async (req, res) => {
                         if (userWithExpiredOTP) {
                               console.log('OTP has expired for user:', userWithExpiredOTP._id);
                         }
-                  }, 60000); // 60 seconds in milliseconds
+                  }, 60000);
                   res.render('user/otpverify', { message: 'Please enter your OTP.', otp: otp });
             } else {
                   res.render('user/signup', { message: 'Your registration has failed.' });
@@ -364,7 +361,13 @@ const insertuser = async (req, res) => {
 //user logout
 const logout = async (req, res) => {
       try {
-            req.session.destroy();
+            req.session.destroy((err) => {
+                  if (err) {
+                        console.log('Error destroying session:', err);
+                        return res.status(500).send('Something went wrong');
+                  }
+            })
+            res.clearCookie('connect.sid');
             res.redirect('/login')
       } catch (error) {
             console.log(error.message);
@@ -373,9 +376,14 @@ const logout = async (req, res) => {
 
 const loadhomepage = async (req, res, next) => {
       try {
+            let userid = req.session.user_id
+            let name
+            const finduser = await user.findById(userid)
+            if (finduser) {
+                  name = finduser.name
+            }
             const isloggedin = req.session.user_id ? true : false;
-            console.log('isloggedin:', isloggedin);
-            res.render('user/home', { isloggedin });
+            res.render('user/home', { isloggedin, name });
       } catch (error) {
             console.log(error.message);
             next(error)
@@ -387,6 +395,14 @@ const loadhomepage = async (req, res, next) => {
 
 const loadshop = async (req, res) => {
       try {
+
+            let userid = req.session.user_id
+            let name
+            const finduser = await user.findById(userid)
+            if (finduser) {
+                  name = finduser.name
+            }
+
             const baseCategory = await category.find()
 
             let search = req.query.search || "";
@@ -462,6 +478,8 @@ const loadshop = async (req, res) => {
                   }
             }
 
+            const isloggedin = req.session.user_id ? true : false;
+
 
             res.render("user/shop", {
                   user: data,
@@ -478,7 +496,8 @@ const loadshop = async (req, res) => {
                   minPrice,
                   maxPrice,
                   sortValue,
-
+                  isloggedin,
+                  name
 
 
             });
@@ -498,6 +517,12 @@ const loadshop = async (req, res) => {
 const singleproduct = async (req, res) => {
       try {
             const userData = req.session.user_id;
+            console.log(userData, "userdata");
+            let name
+            const finduser = await user.findById(userData)
+            if (finduser) {
+                  name = finduser.name
+            }
             const userCart = await cart.findOne({ userID: req.session.user_id });
             const wishlist = await Wishlist.findOne({ userID: req.session.user_id });
             if (wishlist) {
@@ -506,11 +531,11 @@ const singleproduct = async (req, res) => {
             }
 
             // Change the variable name 'singleproduct' to 'productData'
-            const productData = await product.findById({ _id: req.query.id }).populate('category');
+            const productData = await product.findById(req.query.id).populate('category')
             const productsData = await product.find();
 
             if (productData) {
-                  res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist });
+                  res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name });
             }
       } catch (error) {
             res.status(500).render('500')
@@ -519,42 +544,95 @@ const singleproduct = async (req, res) => {
 
 
 const loadcart = async (req, res) => {
-      try {
-            const usercart = await cart.findOne({ userID: req.session.user_id });
-            let products = [];
-            let count = 0;
+  try {
+    const userId = req.session.user_id;
 
-            if (usercart !== null) {
-                  const cartProducts = usercart.products;
-                  const userCartProductsId = cartProducts.map((values) => values.productID);
-                  products = await product.aggregate([
-                        {
-                              $match: {
-                                    _id: { $in: userCartProductsId },
-                              },
-                        },
-                        {
-                              $project: {
-                                    name: 1,
-                                    image: 1,
-                                    price: 1,
-                                    cartOrder: { $indexOfArray: [userCartProductsId, '$_id'] },
-                              },
-                        },
-                        { $sort: { cartOrder: 1 } },
-                  ]);
-                  count = products.length;
-            }
+    // CASE 1: User not logged in
+    if (!userId) {
+      return res.render("user/cart", {
+        products: [],
+        usercart: null,
+        count: 0,
+        isloggedin: false,
+        name: null
+      });
+    }
 
-            res.render('user/cart', { products, usercart, count });
-      } catch (error) {
-            console.log(error.message);
-      }
+    // Find user by ID
+    const findUser = await user.findById(userId);
+    if (!findUser) {
+      return res.render("user/cart", {
+        products: [],
+        usercart: null,
+        count: 0,
+        isloggedin: false,
+        name: null
+      });
+    }
+
+    const name = findUser.name;
+    const usercart = await cart.findOne({ userID: userId });
+    let products = [];
+    let count = 0;
+
+    // CASE 2: User logged in, but cart is empty or doesn't exist
+    if (!usercart || usercart.products.length === 0) {
+      return res.render("user/cart", {
+        products: [],
+        usercart: null,
+        count: 0,
+        isloggedin: true,
+        name
+      });
+    }
+
+    // CASE 3: User logged in, cart has products
+    const cartProducts = usercart.products;
+    const userCartProductsId = cartProducts.map(item => item.productID);
+
+    products = await product.aggregate([
+      {
+        $match: {
+          _id: { $in: userCartProductsId }
+        }
+      },
+      {
+        $project: {
+          name: 1,
+          image: 1,
+          price: 1,
+          cartOrder: { $indexOfArray: [userCartProductsId, '$_id'] }
+        }
+      },
+      { $sort: { cartOrder: 1 } }
+    ]);
+
+    count = products.length;
+
+    res.render("user/cart", {
+      products,
+      usercart,
+      count,
+      isloggedin: true,
+      name
+    });
+
+  } catch (error) {
+    console.log("Cart loading error:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
 };
+
 
 
 const addingtocart = async (req, res) => {
       try {
+            let userid = req.session.user_id
+            let name
+            const finduser = await user.findById(userid)
+            if (finduser) {
+                  name = finduser.name
+            }
             const singleproduct = await product.findOne({ _id: req.query.id });
             const usercart = await cart.findOne({ userID: req.session.user_id });
 
@@ -615,7 +693,7 @@ const addingtocart = async (req, res) => {
                         }
                   }
             } else {
-                  res.redirect('/shop');
+                  res.redirect('/shop', name);
             }
       } catch (error) {
             console.log("add to cart", error.message);
@@ -699,13 +777,16 @@ const loadwishlist = async (req, res) => {
       try {
             if (req.session.user_id) {
                   const User = await user.findOne({ _id: req.session.user_id });
+                  console.log(User, "user");
+
                   const id = User._id;
+                  const name = User.name
                   const wish = await Wishlist.findOne({ user: id });
                   if (wish) {
-
                         const wishData = await Wishlist.findOne({ user: id })
                               .populate("product.productId")
                               .lean();
+
                         if (wishData) {
                               // console.log(cartData);
                               let total;
@@ -739,21 +820,23 @@ const loadwishlist = async (req, res) => {
                                     const Total = total[0].total;
                                     wishData.product.forEach((element) => { });
                                     res.render("user/wishlist", {
-                                          user: req.session.name,
+                                          // user: req.session.name,
+                                          name,
                                           data: wishData.product,
                                           userId: id,
                                           total: Total,
+
                                           // cartData: cartData,
                                     });
                               } else {
-                                    res.render("user/wishlist", { user: req.session.name, data2: "hi" });
+                                    res.render("user/wishlist", { name, data2: "hi" });
                               }
                         } else {
-                              res.render("user/wishlist", { user: req.session.name, data2: "hi" });
+                              res.render("user/wishlist", { name, data2: "hi" });
                         }
                   } else {
                         res.render("user/wishlist", {
-                              user: req.session.name,
+                              name,
                               data2: "hi",
                         });
                   }
@@ -907,14 +990,14 @@ const addtocart = async (req, res) => {
 const removewish = async (req, res) => {
       try {
             const id = req.body.id;
-            console.log(id,"uiiioi");
-            
+            console.log(id, "uiiioi");
+
             const data = await Wishlist.findOneAndUpdate(
                   { "product.productId": id },
                   { $pull: { product: { productId: id } } }
             );
-            console.log(data,"data");
-            
+            console.log(data, "data");
+
             if (data) {
                   res.json({ success: true });
             }
@@ -930,6 +1013,7 @@ const loadcheckout = async (req, res) => {
             if (req.session.user_id) {
                   const User = await user.findOne({ _id: req.session.user_id });
                   const id = User._id;
+                  const name = User.name
                   const cartData = await cart.findOne({ userID: id }).populate(
                         "products.productID"
                   );
@@ -945,7 +1029,8 @@ const loadcheckout = async (req, res) => {
                               res.render("user/checkout", {
                                     address: User.address,
                                     total: Total,
-                                    wallet: User.wallet
+                                    wallet: User.wallet,
+                                    name
                               });
                         }
                   }
@@ -1183,10 +1268,13 @@ const postplaceorder = async (req, res) => {
 const confirmorder = async (req, res) => {
       try {
             const orderData = await Order.findOne().sort({ Date: -1 }).limit(1).populate('product.productID');
-
             const userId = orderData.user;
+            const User = await user.findOne({ _id: req.session.user_id });
+            const name = User.name
+            console.log(name, "name");
 
-            res.render("user/confirmorder", { user: orderData });
+
+            res.render("user/confirmorder", { user: orderData, name });
 
       } catch (error) {
             console.log(error.message);
@@ -1246,41 +1334,51 @@ const verifyPayment = async (req, res) => {
 
 const loadorder = async (req, res) => {
       try {
-            const mongoose = require("mongoose");
-
+            console.log(req.session, "lll");
+            const User = await user.findOne({ _id: req.session.user_id });
+            const name = User.name
             if (req.session.user_id) {
                   const userData = await user.findOne({ _id: req.session.user_id });
-
-                  const page = parseInt(req.query.page) || 1; // Get the page number from query parameters
-                  const perPage = 5; // Set the number of orders per page
-
+                  const page = parseInt(req.query.page) || 1;
+                  const perPage = 5;
                   const skip = (page - 1) * perPage;
 
-                  // Find the total number of orders for the user
                   const totalOrders = await Order.countDocuments({ user: userData._id });
+                  if (totalOrders) {
+                        const orderData = await Order.find({ user: userData._id })
+                              .skip(skip)
+                              .limit(perPage);
 
-                  // Find orders for the current page
-                  const orderData = await Order.find({ user: userData._id })
-                        .skip(skip)
-                        .limit(perPage);
+                        res.render("user/order", {
+                              _id: userData._id,
+                              data: orderData,
+                              currentPage: page,
+                              totalPages: Math.ceil(totalOrders / perPage),
+                              name: name,
+                        });
 
-                  res.render("user/order", {
-                        _id: userData._id,
-                        data: orderData,
-                        currentPage: page,
-                        totalPages: Math.ceil(totalOrders / perPage),
-                  });
+
+
+                  } else {
+                        res.redirect("/login");
+                  }
             } else {
                   res.redirect("/login");
             }
       } catch (error) {
             console.log(error);
+            res.status(500).send("Internal Server Error");
+
       }
 };
 
 
 const singleOrder = async (req, res) => {
       try {
+            let userid = req.session.user_id
+            let name
+            const finduser = await user.findById(userid)
+            name = finduser.name
             if (req.session.user_id) {
                   const id = req.query.id;
                   const orderData = await Order.findById(id).populate(
@@ -1290,6 +1388,7 @@ const singleOrder = async (req, res) => {
                         res.render("user/singleorder", {
                               data: orderData.product,
                               orderData,
+                              name
                         });
                   }
 
@@ -1303,11 +1402,25 @@ const singleOrder = async (req, res) => {
 
 
 const loadabout = async (req, res) => {
-      res.render("user/about")
+      const isloggedin = req.session.user_id ? true : false;
+      let userid = req.session.user_id
+      let name
+      const finduser = await user.findById(userid)
+      if (finduser) {
+            name = finduser.name
+      }
+      res.render("user/about", { isloggedin, name })
 }
 
 const loadcontact = async (req, res) => {
-      res.render("user/contact")
+      const isloggedin = req.session.user_id ? true : false;
+      let userid = req.session.user_id
+      let name
+      const finduser = await user.findById(userid)
+      if (finduser) {
+            name = finduser.name
+      }
+      res.render("user/contact", { isloggedin, name })
 }
 
 
@@ -1369,11 +1482,10 @@ const userprofile = async (req, res) => {
       try {
             if (req.session.user_id) {
                   let userdata = await user.findOne({ _id: req.session.user_id });
+                  const name = userdata.name
                   let datawallet = await user.find({ _id: req.session.user_id })
-                  console.log(datawallet, "wallet");
                   const [{ wallehistory }] = datawallet
-
-                  res.render("user/userprofile", { data: userdata, wallet: wallehistory })
+                  res.render("user/userprofile", { data: userdata, wallet: wallehistory, name })
             } else {
                   res.redirect("/login")
             }

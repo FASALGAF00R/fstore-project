@@ -27,7 +27,7 @@ const isLogout = async (req, res, next) => {
 const checkblockedstatus = async (req,res,next)=>{
     try {
 
-     if(req.session.user_id && (req.url === '/home' || req.url === '/shop' || req.url === '/cart' || req.url ==='/wishlist')) {
+     if((req.url === '/home' || req.url === '/shop' || req.url === '/cart' || req.url ==='/wishlist')) {
         const userId = req.session.user_id;
         const userData = await user.findById(userId);
         if (userData && userData.block) {

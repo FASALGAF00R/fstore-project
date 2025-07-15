@@ -94,7 +94,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li>
 								<a href="/home">Home</a>
 							</li>
 
@@ -118,12 +118,20 @@
 								<a href="/contact">Contact</a>
 							</li>
 
-							<li>
-								<a href="/userprofile">
-									<i class="fas fa-user"></i>
+						<% if (name) { %>
+                            <li>
+                                <a href="/userprofile">
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
+                                </a>
+                            </li>
+                        <%  } else{ %>
+                            <li>
+                                <a href="/userprofile">
+                                <i class="fas fa-user"></i>
+                                </a>
+                            </li>
 
-								</a>
-							</li>
+                      <%  } %>
 
 
 
@@ -154,12 +162,9 @@
 					</div>
 
 					<style>
-						/* Add this CSS to remove all hover effects */
 						.icon-header-item:hover {
 							text-decoration: none;
-							/* Remove underline on hover (optional) */
 							cursor: default;
-							/* Remove pointer cursor on hover (optional) */
 						}
 					</style>
 
@@ -223,7 +228,7 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="home">Home</a>
+					<a href="/home">Home</a>
 				</li>
 
 				<li>
@@ -354,6 +359,13 @@
 	<!-- /////// -->
 
 
+<!-- <script>
+	const user = <%- JSON.stringify(data.orderData) %>;
+	console.log(user, "userf");
+</script> -->
+
+
+
 	<!-- Footer -->
 	<br>
 	<br>
@@ -373,4 +385,6 @@
 	<br>
 	<br>
 	<br>
+
+	</body>
 	<%- include('../user/partials/footer.ejs') %>

@@ -80,6 +80,8 @@
 <body>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
@@ -130,12 +132,20 @@
 								<li>
 									<a href="/contact">Contact</a>
 								</li>
-								<li>
-									<a href="/userprofile">
-										<i class="fas fa-user"></i>
+								<% if (name) { %>
+									<li>
+										<a href="/userprofile">
+											<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+										</a>
+									</li>
+									<% } else{ %>
+										<li>
+											<a href="/userprofile">
+												<i class="fas fa-user"></i>
+											</a>
+										</li>
 
-									</a>
-								</li>
+										<% } %>
 
 
 
@@ -254,14 +264,13 @@
 				<li>
 					<a href="/contact">Contact</a>
 				</li>
-
-
 				<li>
 					<a href="/userprofile">
 						<i class="fas fa-user"></i>
 
 					</a>
 				</li>
+
 
 
 			</ul>
@@ -309,19 +318,19 @@
 											<%= product.productname %>
 										</td>
 										<td>
-											<a href="" class="btn btn-sm"
+											<button  class="btn btn-sm"
 												style="color: white; background-color: #d82a1d;" id="delete"
 												onclick="deletewhishlist('<%= product.productId._id %>')">
 												🗑 Remove
-											</a>
+											</button>
 
 											<br><br>
-											<a href="" class="btn btn-sm" 
-												style="color: white; background-color: #2a2626; " id="add"	
+										
+											<button class="btn btn-sm" style="color: white; background-color: #2a2626; " id="add"
 												onclick="addcart('<%= product.productId._id %>')">
 												🛒 Add to Cart
-											</a>
-											
+											</button>
+
 
 										</td>
 										<td>
@@ -361,8 +370,8 @@
 											<td>
 												<div class="checkout_btn_inner d-flex align-items-center">
 													<a href="/shop"
-									         class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-											 ⬅ Continue Shopping</a>
+														class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
+														⬅ Continue Shopping</a>
 												</div>
 											</td>
 										</tr>
@@ -370,7 +379,7 @@
 						</table>
 						<% } else { %>
 							<div class="text-center py-5">
-								<h2>Your Wishlist is Empty</h2>
+								<h2>Your wishlist is empty !</h2>
 							</div>
 							<% } %>
 				</div>
@@ -381,14 +390,12 @@
 
 
 
-
-
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 
 	<br>
 	<br>
+
 	<script>
 		const addcart = function (id) {
 			console.log(id, "kk");
@@ -401,14 +408,9 @@
 				},
 				success: function (response) {
 					if (response.success) {
-
-						Swal.fire(
-							'Saved cart!',
-							'You clicked the button!',
-							'success'
-						)
+						swal('Saved cart!', 'You clicked the button!', 'success');
 					} else {
-						swal.fire("please Login to your account")
+						swal("Please login to your account");
 					}
 
 				}
@@ -417,13 +419,6 @@
 			})
 		}
 
-
-
-
-
-	</script>
-
-	<script>
 
 		function deletewhishlist(id) {
 			$.ajax({

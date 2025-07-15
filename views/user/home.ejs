@@ -77,7 +77,7 @@
                     <!-- Menu desktop -->
                     <div class="menu-desktop">
                         <ul class="main-menu">
-                            <li class="active-menu">
+                            <li>
                                 <a href="/home">Home</a>
                             </li>
 
@@ -101,12 +101,20 @@
                                 <a href="/contact">Contact</a>
                             </li>
 
+                            <% if (name) { %>
                             <li>
                                 <a href="/userprofile">
-                                    <i class="fas fa-user"></i>
-
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
                                 </a>
                             </li>
+                        <%  } else{ %>
+                            <li>
+                                <a href="/userprofile">
+                                <i class="fas fa-user"></i>
+                                </a>
+                            </li>
+
+                      <%  } %>
                         </ul>
                     </div>
 
@@ -114,7 +122,7 @@
 
                     <!-- Icon header -->
                     <div class="wrap-icon-header flex-w flex-r-m">
-                        <% if ( isloggedin) { %>
+                        <% if (isloggedin) { %>
                             <li>
                                 <a href="/logout" style="color: #ff0000;">Logout</a>
                             </li>
@@ -130,10 +138,10 @@
                     </div>
 
 
-	<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 
 
-					</div>
+                    </div>
 
                     <a href="/cart">
                         <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10  ">
@@ -300,7 +308,7 @@
                             <div class="layer-slick1 animated visible-false" data-appear="rotateInDownLeft"
                                 data-delay="0">
                                 <span class="ltext-101 cl2 respon2">
-                                    Men Collection 2023
+                                    Men Collection 2025
                                 </span>
                             </div>
 

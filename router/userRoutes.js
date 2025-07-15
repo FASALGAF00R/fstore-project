@@ -22,7 +22,7 @@ userRoutes.get('/signup',auth.isLogout,usercontroller.loadsignup);
 userRoutes.post('/signup',usercontroller.insertuser);
 userRoutes.get('/login',auth.isLogout,usercontroller.loadlogin)
 userRoutes.post('/login',usercontroller.verifylogin)
-userRoutes.get('/home',auth.isLogin,auth.checkblockedstatus,usercontroller.loadhomepage)
+userRoutes.get('/home',usercontroller.loadhomepage)
 userRoutes.get('/logout',usercontroller.logout)
 
 userRoutes.get('/otpverify',usercontroller.otpverifysignup)
@@ -48,7 +48,7 @@ userRoutes.get('/wishlist',auth.checkblockedstatus,usercontroller.loadwishlist)
 userRoutes.get('/addwishlist',usercontroller.addtowishlist)
 userRoutes.post('/removewish',usercontroller.removewish)
 userRoutes.get("/addtocart", usercontroller.addtocart);
-userRoutes.post("/addtocart", usercontroller.addtocart);
+// userRoutes.post("/addtocart", usercontroller.addtocart);
 
 userRoutes.get('/checkout',usercontroller.loadcheckout)
 userRoutes.post('/addAddress', usercontroller.postAddress);

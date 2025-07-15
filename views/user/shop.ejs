@@ -92,6 +92,7 @@
 
 <body>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 	<!-- Header -->
 	<header>
@@ -124,7 +125,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li>
 								<a href="/home">Home</a>
 
 							</li>
@@ -149,12 +150,20 @@
 								<a href="/contact">Contact</a>
 							</li>
 
-							<li>
-								<a href="/userprofile">
-									<i class="fas fa-user"></i>
+						<% if (name) { %>
+                            <li>
+                                <a href="/userprofile">
+                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
+                                </a>
+                            </li>
+                        <%  } else{ %>
+                            <li>
+                                <a href="/userprofile">
+                                <i class="fas fa-user"></i>
+                                </a>
+                            </li>
 
-								</a>
-							</li>
+                      <%  } %>
 
 
 						</ul>
@@ -162,7 +171,7 @@
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<% if ( typeof isloggedin) { %>
+						<% if (isloggedin) { %>
 							<li>
 								<a href="/logout" style="color: #ff0000;">Logout</a>
 							</li>
@@ -505,7 +514,6 @@
 
 	</nav>
 
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<script>
 		const addwish = function (id) {
@@ -517,7 +525,7 @@
 				},
 				success: function (response) {
 					if (response.status) {
-						Swal.fire(
+						swal(
 							'Added to Wishlist!',
 							'The product has been added to your wishlist.',
 							'success'
@@ -525,20 +533,14 @@
 						console.log("producted added to wish list");
 
 					} else {
-						Swal.fire(
-							'Error',
-							response.message || 'An error occurred.',
-							'error'
-						);
+						      swal("Login Required", "Please login to your account", "error");
+
 					}
 				},
 				error: function (xhr, status, error) {
 					console.error(error);
-					Swal.fire(
-						'Error',
-						'An error occurred while adding to wishlist.',
-						'error'
-					);
+				    swal("Error!", "Unable to add to cart. Try again later.", "error");
+
 				}
 			});
 		}

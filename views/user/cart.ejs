@@ -110,7 +110,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li>
 								<a href="/home">Home</a>
 							</li>
 
@@ -133,12 +133,20 @@
 							<li>
 								<a href="/contact">Contact</a>
 							</li>
-							<li>
-								<a href="/userprofile">
-									<i class="fas fa-user"></i>
+							<% if (name) { %>
+								<li>
+									<a href="/userprofile">
+										<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+									</a>
+								</li>
+								<% } else{ %>
+									<li>
+										<a href="/userprofile">
+											<i class="fas fa-user"></i>
+										</a>
+									</li>
 
-								</a>
-							</li>
+									<% } %>
 
 
 
@@ -147,7 +155,7 @@
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<% if (typeof isloggedin) { %>
+						<% if ( isloggedin) { %>
 							<li>
 								<a href="/logout" style="color: #ff0000;">Logout</a>
 							</li>
@@ -429,7 +437,7 @@
 			</div>
 			</div>
 			</div>
-			<% }else{ %>
+	<% }else{ %>
 				<br>
 				<br>
 
