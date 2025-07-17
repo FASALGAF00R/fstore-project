@@ -116,20 +116,20 @@
 							<li>
 								<a href="/contact">Contact</a>
 							</li>
-						<% if (name) { %>
-                            <li>
-                                <a href="/userprofile">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
-                                </a>
-                            </li>
-                        <%  } else{ %>
-                            <li>
-                                <a href="/userprofile">
-                                <i class="fas fa-user"></i>
-                                </a>
-                            </li>
+							<% if (name) { %>
+								<li>
+									<a href="/userprofile">
+										<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+									</a>
+								</li>
+								<% } else{ %>
+									<li>
+										<a href="/userprofile">
+											<i class="fas fa-user"></i>
+										</a>
+									</li>
 
-                      <%  } %>
+									<% } %>
 
 
 
@@ -160,6 +160,11 @@
 					</div>
 
 
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+
+					</div>
+
+
 					<style>
 						.icon-header-item:hover {
 							text-decoration: none;
@@ -181,6 +186,9 @@
 			</nav>
 		</div>
 		</div>
+
+
+
 
 
 
@@ -271,13 +279,20 @@
 					<a href="/contact">Contact</a>
 				</li>
 
+				<% if (name) { %>
+					<li>
+						<a href="/userprofile">
+							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+						</a>
+					</li>
+					<% } else{ %>
+						<li>
+							<a href="/userprofile">
+								<i class="fas fa-user"></i>
+							</a>
+						</li>
 
-				<li>
-					<a href="/userprofile">
-						<i class="fas fa-user"></i>
-
-					</a>
-				</li>
+						<% } %>
 
 
 			</ul>

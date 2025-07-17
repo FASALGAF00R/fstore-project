@@ -42,7 +42,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 </head>
-
+<style>
+  header a {
+    text-decoration: none;
+  }
+</style>
 
 <body>
 
@@ -76,7 +80,7 @@
           <!-- Menu desktop -->
           <div class="menu-desktop">
             <ul class="main-menu">
-              <li class="active-menu">
+              <li>
                 <a href="/home">Home</a>
               </li>
 
@@ -100,13 +104,20 @@
                 <a href="/contact">Contact</a>
               </li>
 
+              <% if (name) { %>
+                <li>
+                  <a href="/userprofile">
+                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+                  </a>
+                </li>
+                <% } else{ %>
+                  <li>
+                    <a href="/userprofile">
+                      <i class="fas fa-user"></i>
+                    </a>
+                  </li>
 
-              <li>
-                <a href="/userprofile">
-                  <i class="fas fa-user"></i>
-
-                </a>
-              </li>
+                  <% } %>
 
 
             </ul>
@@ -114,21 +125,21 @@
 
           <!-- Icon header -->
           <div class="wrap-icon-header flex-w flex-r-m">
-            <ul>
-              <% if (typeof isloggedin) { %>
+
+            <% if (typeof isloggedin) { %>
+              <li>
+                <a href="/logout" style="color: #ff0000;">Logout</a>
+              </li>
+              <% } else { %>
                 <li>
-                  <a href="/logout" style="color: #ff0000;">Logout</a>
+                  <b>
+                    <a href="/login">
+                      <h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
+                    </a>
+                  </b>
                 </li>
-                <% } else { %>
-                  <li>
-                    <b>
-                      <a href="/login">
-                        <h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
-                      </a>
-                    </b>
-                  </li>
-            </ul>
-            <% } %>
+
+                <% } %>
           </div>
 
 
@@ -292,9 +303,7 @@
                   <span class="ion-ios-arrow-down"></span>
                 </div>
                 <select id="" class="form-control" name="country" required>
-                  <option value="France">India</option>
-                  <option value="India">njn</option>
-                  <option value="Philippines">Portugal</option>
+                  <option value="india">India</option>
                 </select>
               </div>
             </div>
@@ -307,8 +316,12 @@
             <div class="col-12">
               <div class="form-group">
                 <label for="streetaddress">address</label>
-                <input type="text" class="form-control" name="street" required>
+                <input type="text" class="form-control" name="address" required>
               </div>
+            </div>
+              <div class="mb-3">
+              <label for="state" class="form-label">postcode</label>
+              <input type="text" class="form-control" name="postcode" required>
             </div>
             <div class="mb-3">
               <label for="state" class="form-label">phone</label>
@@ -333,7 +346,7 @@
             <div class="row g-3">
               <% address.forEach((value)=> { %>
                 <div class="col-md-6">
-                  <div class="card shadow-sm border-0">
+                  <div class="card shadow-lg border-0">
                     <div class="card-body">
                       <div class="form-check mb-2">
                         <input class="form-check-input bg-primary border-primary" type="radio" name="address"
@@ -343,15 +356,15 @@
                           <strong>
                             <%= value.name %>
                           </strong><br>
-                          <%= value.street %>, <%= value.town %><br>
+                          <%= value.address %>, <%= value.town %><br>
                               <%= value.country %> - <%= value.postcode %><br>
                                   Phone: <%= value.phone %>
                         </label>
                       </div>
 
                       <div class="d-flex justify-content-between mt-3">
-                        <a href="/editaddress?id=<%= value._id %>" class="btn btn-sm btn-outline-primary">Edit</a>
-                        <a href="/deleteaddress?id=<%= value._id %>" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <a href="/editaddress?id=<%= value._id %>" class="btn btn-primary btn-md">Edit</a>
+                        <a href="/deleteaddress?id=<%= value._id %>" class="btn btn-danger btn-md">Delete</a>
                       </div>
                     </div>
                   </div>
@@ -360,7 +373,7 @@
             </div>
 
             <div class="text-end mt-4">
-              <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addAddressModal">+ Add
+              <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addAddressModal">Add
                 Address</a>
             </div>
           </div>
@@ -424,17 +437,19 @@
             <div class="bg-light p-4 rounded shadow-sm h-100">
               <h5 class="mb-4">Payment Method</h5>
               <div class="form-check mb-2">
-                <input class="form-check-input bg-primary border-primary" type="radio" value="cod" name="payment" id="cod" required>
+                <input class="form-check-input bg-primary border-primary" type="radio" value="cod" name="payment"
+                  id="cod" required>
                 <label class="form-check-label" for="cod">Cash on Delivery</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input bg-primary border-primary" type="radio" value="online" name="payment" id="online" required>
+                <input class="form-check-input bg-primary border-primary" type="radio" value="online" name="payment"
+                  id="online" required>
                 <label class="form-check-label" for="online">Online Payment</label>
               </div>
               <% if (wallet !==0) { %>
                 <div class="form-check mb-2">
-                  <input class="form-check-input bg-primary border-primary" type="radio" value="wallet" name="payment" id="walletPay"
-                    onclick="checkWallet()">
+                  <input class="form-check-input bg-primary border-primary" type="radio" value="wallet" name="payment"
+                    id="walletPay" onclick="checkWallet()">
                   <label class="form-check-label" for="walletPay">Use Wallet</label>
                 </div>
                 <% } %>

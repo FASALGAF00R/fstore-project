@@ -544,83 +544,84 @@ const singleproduct = async (req, res) => {
 
 
 const loadcart = async (req, res) => {
-  try {
-    const userId = req.session.user_id;
+      try {
+            const userId = req.session.user_id;
 
-    // CASE 1: User not logged in
-    if (!userId) {
-      return res.render("user/cart", {
-        products: [],
-        usercart: null,
-        count: 0,
-        isloggedin: false,
-        name: null
-      });
-    }
+            // CASE 1: User not logged in
+            if (!userId) {
+                  return res.render("user/cart", {
+                        products: [],
+                        usercart: null,
+                        count: 0,
+                        isloggedin: false,
+                        name: null
+                  });
+            }
 
-    // Find user by ID
-    const findUser = await user.findById(userId);
-    if (!findUser) {
-      return res.render("user/cart", {
-        products: [],
-        usercart: null,
-        count: 0,
-        isloggedin: false,
-        name: null
-      });
-    }
+            // Find user by ID
+            const findUser = await user.findById(userId);
+            if (!findUser) {
+                  return res.render("user/cart", {
+                        products: [],
+                        usercart: null,
+                        count: 0,
+                        isloggedin: false,
+                        name: null
+                  });
+            }
 
-    const name = findUser.name;
-    const usercart = await cart.findOne({ userID: userId });
-    let products = [];
-    let count = 0;
+            const name = findUser.name;
+            const usercart = await cart.findOne({ userID: userId });
+            let products = [];
+            let count = 0;
 
-    // CASE 2: User logged in, but cart is empty or doesn't exist
-    if (!usercart || usercart.products.length === 0) {
-      return res.render("user/cart", {
-        products: [],
-        usercart: null,
-        count: 0,
-        isloggedin: true,
-        name
-      });
-    }
+            // CASE 2: User logged in, but cart is empty or doesn't exist
+            if (!usercart || usercart.products.length === 0) {
+                  return res.render("user/cart", {
+                        products: [],
+                        usercart: null,
+                        count: 0,
+                        isloggedin: true,
+                        name
+                  });
+            }
 
-    // CASE 3: User logged in, cart has products
-    const cartProducts = usercart.products;
-    const userCartProductsId = cartProducts.map(item => item.productID);
+            // CASE 3: User logged in, cart has products
+            const cartProducts = usercart.products;
+            const userCartProductsId = cartProducts.map(item => item.productID);
 
-    products = await product.aggregate([
-      {
-        $match: {
-          _id: { $in: userCartProductsId }
-        }
-      },
-      {
-        $project: {
-          name: 1,
-          image: 1,
-          price: 1,
-          cartOrder: { $indexOfArray: [userCartProductsId, '$_id'] }
-        }
-      },
-      { $sort: { cartOrder: 1 } }
-    ]);
+            products = await product.aggregate([
+                  {
+                        $match: {
+                              _id: { $in: userCartProductsId }
+                        }
+                  },
+                  {
+                        $project: {
+                              name: 1,
+                              image: 1,
+                              price: 1,
+                              cartOrder: { $indexOfArray: [userCartProductsId, '$_id'] }
+                        }
+                  },
+                  { $sort: { cartOrder: 1 } }
+            ]);
 
-    count = products.length;
+            count = products.length;
 
-    res.render("user/cart", {
-      products,
-      usercart,
-      count,
-      isloggedin: true,
-      name
-    });
+            res.render("user/cart", {
+                  products,
+                  usercart,
+                  count,
+                  isloggedin: true,
+                  name,
+                  
+            });
 
-  } catch (error) {
-    console.log("Cart loading error:", error.message);
-    res.status(500).send("Internal Server Error");
-  }
+      } catch (error) {
+            console.log("Cart loading error:", error.message);
+            res.status(500).send("Internal Server Error");
+      }
 };
 
 
@@ -1014,6 +1015,8 @@ const loadcheckout = async (req, res) => {
                   const User = await user.findOne({ _id: req.session.user_id });
                   const id = User._id;
                   const name = User.name
+                  console.log(name, "namedddddddddddddd");
+
                   const cartData = await cart.findOne({ userID: id }).populate(
                         "products.productID"
                   );
@@ -1046,7 +1049,7 @@ const loadcheckout = async (req, res) => {
 const postAddress = async (req, res) => {
       try {
             if (req.session.user_id) {
-                  const { name, country, town, district, postcode, phone } = req.body;
+                  const { name, country, town, address, postcode, phone } = req.body;
                   const id = req.session.user_id;
                   const data = await user.findOneAndUpdate(
                         { _id: id },
@@ -1056,7 +1059,7 @@ const postAddress = async (req, res) => {
                                           name: name,
                                           country: country,
                                           town: town,
-                                          district: district,
+                                          address: address,
                                           postcode: postcode,
                                           phone: phone,
                                     },
@@ -1080,8 +1083,9 @@ const editaddress = async (req, res) => {
                         _id: req.session.user_id,
                         "address._id": req.query.id,
                   }).lean();
-                  console.log('ppppppppppp', data);
-                  res.render("user/editaddress", { user: data.address });
+                  const User = await user.findOne({ _id: req.session.user_id });
+                  const name = User.name
+                  res.render("user/editaddress", { user: data.address ,name});
             }
       } catch (error) {
             console.log(error);

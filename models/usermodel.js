@@ -47,16 +47,16 @@ const  userSchema=new mongoose.Schema({
             phone:{
                 type:String,
             },
-            conutry:{
+            country:{
                 type:String,
             },
             town:{
                 type:String,
             },
-            street: {
-                type: String,
-            },
-            district:{
+            // street: {
+            //     type: String,
+            // },
+            address:{
                 type:String,
             },
             postcode:{

@@ -264,13 +264,20 @@
 				<li>
 					<a href="/contact">Contact</a>
 				</li>
-				<li>
-					<a href="/userprofile">
-						<i class="fas fa-user"></i>
+				<% if (name) { %>
+					<li>
+						<a href="/userprofile">
+							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+						</a>
+					</li>
+					<% } else{ %>
+						<li>
+							<a href="/userprofile">
+								<i class="fas fa-user"></i>
+							</a>
+						</li>
 
-					</a>
-				</li>
-
+						<% } %>
 
 
 			</ul>
@@ -318,7 +325,7 @@
 											<%= product.productname %>
 										</td>
 										<td>
-											<button  class="btn btn-sm"
+											<button  class="btn btn-md"
 												style="color: white; background-color: #d82a1d;" id="delete"
 												onclick="deletewhishlist('<%= product.productId._id %>')">
 												🗑 Remove
@@ -326,7 +333,7 @@
 
 											<br><br>
 										
-											<button class="btn btn-sm" style="color: white; background-color: #2a2626; " id="add"
+											<button class="btn btn-md" style="color: white; background-color: #2a2626; " id="add"
 												onclick="addcart('<%= product.productId._id %>')">
 												🛒 Add to Cart
 											</button>

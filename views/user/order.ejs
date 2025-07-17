@@ -64,6 +64,20 @@
 
 <body>
 
+	<style>
+  .pagination .page-link {
+    color: inherit;              
+    background-color: transparent;
+    border: none;
+  }
+
+  .pagination .page-item.active .page-link {
+    font-weight: bold;
+    text-decoration: underline; 
+    background-color: transparent;
+    color: inherit;
+  }
+</style>
 
 	<!-- Header -->
 	<header>
@@ -118,20 +132,20 @@
 								<a href="/contact">Contact</a>
 							</li>
 
-						<% if (name) { %>
-                            <li>
-                                <a href="/userprofile">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
-                                </a>
-                            </li>
-                        <%  } else{ %>
-                            <li>
-                                <a href="/userprofile">
-                                <i class="fas fa-user"></i>
-                                </a>
-                            </li>
+							<% if (name) { %>
+								<li>
+									<a href="/userprofile">
+										<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+									</a>
+								</li>
+								<% } else{ %>
+									<li>
+										<a href="/userprofile">
+											<i class="fas fa-user"></i>
+										</a>
+									</li>
 
-                      <%  } %>
+									<% } %>
 
 
 
@@ -252,12 +266,20 @@
 				</li>
 
 
-				<li>
-					<a href="/userprofile">
-						<i class="fas fa-user"></i>
+				<% if (name) { %>
+					<li>
+						<a href="/userprofile">
+							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+						</a>
+					</li>
+					<% } else{ %>
+						<li>
+							<a href="/userprofile">
+								<i class="fas fa-user"></i>
+							</a>
+						</li>
 
-					</a>
-				</li>
+						<% } %>
 
 
 			</ul>
@@ -279,8 +301,8 @@
 		<div class="row pt-4 g-4">
 			<div class="col-12">
 				<div class="bg-light rounded h-100 p-4">
-					<% if (data && data.length > 0) { %>
-					<table class="table" id="categorytable">
+					<% if (data && data.length> 0) { %>
+						<table class="table" id="categorytable">
 							<thead>
 								<tr>
 									<th scope="col">#</th>
@@ -331,35 +353,38 @@
 													<%} %>
 
 														<% })%>
-							         </tbody>
-					                     </table>
+							</tbody>
+						</table>
 
 
-					<% }else{ %>
-						<div class="text-center mt-5">
-							<h2>No orders found !</h2>
-						</div>
-						<% }%>
+						<% }else{ %>
+							<div class="text-center mt-5">
+								<h2>No orders found !</h2>
+							</div>
+							<% }%>
 
 				</div>
 			</div>
 
 			<!-- Pagination controls -->
-			<ul class="pagination">
-				<% for (let i=1; i <=totalPages; i++) { %>
-					<li class="page-item <%= currentPage === i ? 'active' : '' %>">
-						<a class="page-link" href="?page=<%= i %>">
-							<%= i %>
-						</a>
-					</li>
-					<% } %>
-			</ul>
+			<div class="d-flex justify-content-center mt-4">
+				<ul class="pagination">
+					<% for (let i=1; i <=totalPages; i++) { %>
+						<li class="page-item <%= currentPage === i ? 'active' : '' %>">
+							<a class="page-link" href="?page=<%= i %>">
+								<%= i %>
+							</a>
+						</li>
+						<% } %>
+				</ul>
+			</div>
+
 		</div>
 	</div>
 	<!-- /////// -->
 
 
-<!-- <script>
+	<!-- <script>
 	const user = <%- JSON.stringify(data.orderData) %>;
 	console.log(user, "userf");
 </script> -->
@@ -386,5 +411,5 @@
 	<br>
 	<br>
 
-	</body>
-	<%- include('../user/partials/footer.ejs') %>
+</body>
+<%- include('../user/partials/footer.ejs') %>

@@ -277,13 +277,20 @@
 				</li>
 
 
-				<li>
-					<a href="/userprofile">
-						<i class="fas fa-user"></i>
+					<% if (name) { %>
+					<li>
+						<a href="/userprofile">
+							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+						</a>
+					</li>
+					<% } else{ %>
+						<li>
+							<a href="/userprofile">
+								<i class="fas fa-user"></i>
+							</a>
+						</li>
 
-					</a>
-				</li>
-
+						<% } %>
 
 			</ul>
 		</div>

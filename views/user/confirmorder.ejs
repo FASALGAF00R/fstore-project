@@ -73,26 +73,10 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						Free shipping for standard order over $100
+						exclusive deals
 					</div>
 
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							USD
-						</a>
-					</div>
+	
 				</div>
 			</div>
 
@@ -108,7 +92,7 @@
 					<!-- Menu desktop -->
 					<div class="menu-desktop">
 						<ul class="main-menu">
-							<li class="active-menu">
+							<li >
 								<a href="/home">Home</a>
 							</li>
 
@@ -168,8 +152,8 @@
 					</div>
 
 
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 
 					</div>
 
@@ -189,119 +173,177 @@
 		</div>
 
 
+
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->
+			<div>
+				<a href="#" class="logo">
+					<img src="user/images/icons/logo-01.png" alt="IMG-LOGO">
+				</a>
+			</div>
+
+
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
+
+
+				<a href="/cart">
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10  ">
+						<i class="zmdi zmdi-shopping-cart"></i>
+					</div>
+				</a>
+				<a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
+					<i class="zmdi zmdi-favorite-outline"></i>
+				</a>
+			</div>
+
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+
+
+			<ul class="main-menu-m">
+				<li>
+					<a href="home">Home</a>
+				</li>
+
+				<li>
+					<a href="/shop">Shop</a>
+				</li>
+
+				<li>
+					<a href="/cart">Cart</a>
+				</li>
+
+				<li>
+					<a href="/order">Order</a>
+				</li>
+
+				<li>
+					<a href="/about">About</a>
+				</li>
+
+				<li>
+					<a href="/contact">Contact</a>
+				</li>
+
+
+				<% if (name) { %>
+					<li>
+						<a href="/userprofile">
+							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+						</a>
+					</li>
+					<% } else{ %>
+						<li>
+							<a href="/userprofile">
+								<i class="fas fa-user"></i>
+							</a>
+						</li>
+
+						<% } %>
+
+
+			</ul>
+		</div>
+
+
+
 	</header>
 	<!--================Order Details Area =================-->
 	<br>
 	<br>
 
-	<section class="order_details section_gap">
+	<section class="order_details section_gap py-5">
 		<div class="container" id="order">
 
-			<div class="row order_d_inner">
-				<div class="col-lg-4">
-					<br>
-					<br>
-					<div class="details_item">
-						<h4>Order Info</h4>
-						<ul class="list">
-							<li><span>Order number</span> :<%=user._id %>
+			<!-- Order Info -->
+			<div class="row mb-4">
+				<div class="col-lg-6 mx-auto">
+					<div class="card shadow-lg p-4">
+						<h4 class="mb-3 billing-heading">🧾 Order Information</h4>
+						<ul class="list-group list-group-flush">
+							<li class="list-group-item"><strong>Date:</strong>
+								<%= user.Date %>
 							</li>
-							<li><span>Date</span>
-								<%=user.Date %>
+							<li class="list-group-item"><strong>Total:</strong> ₹<%= user.totalAmount %>
 							</li>
-							<li><span>Total</span>:<%=user.totalAmount %>
-							</li>
-							<li><span>Payment method </span> :<%=user.paymentMethod %>
+							<li class="list-group-item"><strong>Payment Method:</strong>
+								<%= user.paymentMethod %>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="col-lg-4">
-
-				</div>
 			</div>
-			<br>
-			<br>
-			<div class="order_details_table">
-				<h2>Order Details</h2>
+
+			<!-- Order Products -->
+			<div class="card shadow-sm p-4">
+				<h4 class="mb-4 text-success">📦 Order Items</h4>
 				<div class="table-responsive">
-					<table class="table">
-						<thead>
+					<table class="table table-bordered align-middle text-center">
+						<thead class="table-light">
 							<tr>
-								<th scope="col">Product</th>
-								<th scope="col">Quantity</th>
-								<th scope="col">Total</th>
+								<th>Product</th>
+								<th>Quantity</th>
+								<th>Total</th>
 							</tr>
 						</thead>
 						<tbody>
 							<% user.product.forEach((product)=> { %>
 								<tr>
 									<td>
-										<p>
-											<%= product.productID.productname %>
-										</p>
+										<%= product.productID.productname %>
 									</td>
-									<td>
-										<h5>x <%= product.quantity %>
-										</h5>
+									<td>x<%= product.quantity %>
 									</td>
-									<td>
-										<p>Rs:<%=product.productID.price%>
-										</p>
+									<td>₹<%= product.productID.price %>
 									</td>
 								</tr>
 								<% }) %>
+
+									<!-- After discount -->
 									<tr>
-										<td>
-											<h4>after discount</h4>
-										</td>
-										<td>
-											<h5></h5>
-										</td>
-										<td>
-											<p>Rs:<%= user.totalAmount %>
-											</p>
+										<td><strong>After Discount</strong></td>
+										<td></td>
+										<td>₹<%= user.totalAmount %>
 										</td>
 									</tr>
 									<tr>
-										<td>
-											<h4>Shipping</h4>
-										</td>
-										<td>
-											<h5></h5>
-										</td>
-										<td>
-											<p>Free</p>
-										</td>
+										<td><strong>Shipping</strong></td>
+										<td></td>
+										<td>Free</td>
 									</tr>
-									<tr>
-										<td>
-											<h4>Total</h4>
-										</td>
-										<td>
-											<h5></h5>
-										</td>
-										<td>
-											<p>Rs:<%= user.totalAmount %>
-											</p>
-										</td>
+									<tr class="table-success">
+										<td><strong>Total</strong></td>
+										<td></td>
+										<td><strong>₹<%= user.totalAmount %></strong></td>
 									</tr>
 						</tbody>
 					</table>
-					<br>
-					<h3 class="title_confirmation">Thank you. Your order has been received.</h3>
-					<br>
+				</div>
 
+				<!-- Confirmation -->
+				<div class="text-center mt-4">
+					<h5 class="text-success">✅ Thank you. Your order has been received.</h5>
+					<button onclick="downloadPDF()"
+						class="mt-4 stext-101 cl0 size-104 bg3  hov-btn3 p-lr-15 trans-04 pointer">Download
+						Invoice</button>
 				</div>
 			</div>
-
-
-
-		</div>
-		<div class="">
-			<button type="button" onclick="downloadPDF()" class="btn btn-success m-2">download invoice</button>
 		</div>
 	</section>
+
 	<!--================End Order Details Area =================-->
 
 

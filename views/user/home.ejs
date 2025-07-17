@@ -102,19 +102,19 @@
                             </li>
 
                             <% if (name) { %>
-                            <li>
-                                <a href="/userprofile">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
-                                </a>
-                            </li>
-                        <%  } else{ %>
-                            <li>
-                                <a href="/userprofile">
-                                <i class="fas fa-user"></i>
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="/userprofile">
+                                        <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+                                    </a>
+                                </li>
+                                <% } else{ %>
+                                    <li>
+                                        <a href="/userprofile">
+                                            <i class="fas fa-user"></i>
+                                        </a>
+                                    </li>
 
-                      <%  } %>
+                                    <% } %>
                         </ul>
                     </div>
 
@@ -225,13 +225,20 @@
                     <a href="/contact">Contact</a>
                 </li>
 
+                <% if (name) { %>
+                    <li>
+                        <a href="/userprofile">
+                            <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+                        </a>
+                    </li>
+                    <% } else{ %>
+                        <li>
+                            <a href="/userprofile">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        </li>
 
-                <li>
-                    <a href="/userprofile">
-                        <i class="fas fa-user"></i>
-
-                    </a>
-                </li>
+                        <% } %>
 
 
             </ul>
