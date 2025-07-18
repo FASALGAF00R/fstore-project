@@ -1,19 +1,19 @@
+const mongoose = require("mongoose");
 const user = require('../models/usermodel');
-const bcrypt = require('bcrypt');
 const category = require('../models/categorymodel')
 const product = require('../models/productmodel')
 const cart = require('../models/cartmodel')
 const Wishlist = require('../models/wishlistmodel')
 const Coupon = require('../models/coupanmodel')
 const Order = require("../models/ordermodels");
+const bcrypt = require('bcrypt');
 const validator = require('validator')
 const passwordvalidator = require("password-validator")
 const nodemailer = require('nodemailer');
 const Razorpay = require('razorpay')
 const crypto = require('crypto')
 
-const { ObjectId } = require("mongodb");
-const { default: mongoose } = require('mongoose');
+const ObjectId = mongoose.Types.ObjectId;
 
 var instance = new Razorpay({
       key_id: 'rzp_test_zGl9okssXiNDIF',
@@ -614,7 +614,7 @@ const loadcart = async (req, res) => {
                   count,
                   isloggedin: true,
                   name,
-                  
+
             });
 
       } catch (error) {
@@ -777,8 +777,6 @@ const loadwishlist = async (req, res) => {
       try {
             if (req.session.user_id) {
                   const User = await user.findOne({ _id: req.session.user_id });
-                  console.log(User, "user");
-
                   const id = User._id;
                   const name = User.name
                   const wish = await Wishlist.findOne({ user: id });
@@ -985,24 +983,37 @@ const addtocart = async (req, res) => {
       }
 };
 
+// const objectId = new ObjectId(req.body.id);
 
 
 const removewish = async (req, res) => {
       try {
             const id = req.body.id;
             console.log(id, "uiiioi");
+            console.log(req.session);
+            
+            const userId = req.session.user_id;
+            console.log(userId, "llllll");
 
+            if (!ObjectId.isValid(id)) {
+                  return res.status(400).json({ success: false, message: "Invalid product ID" });
+            }
+
+            const objectId = new mongoose.Types.ObjectId(String(id));
+            console.log(objectId,"kkkk");
+            
             const data = await Wishlist.findOneAndUpdate(
-                  { "product.productId": id },
-                  { $pull: { product: { productId: id } } }
+                  {"product.productId": objectId },
+                  { $pull: { product: { productId: objectId } } }
+
             );
             console.log(data, "data");
-
-            if (data) {
+            if (data===null) {
                   res.json({ success: true });
             }
       } catch (error) {
-            console.log(error.message);
+            console.error("Error in removewish:", error);
+            res.status(500).json({ success: false, message: "Server error" });
       }
 };
 
@@ -1084,7 +1095,7 @@ const editaddress = async (req, res) => {
                   }).lean();
                   const User = await user.findOne({ _id: req.session.user_id });
                   const name = User.name
-                  res.render("user/editaddress", { user: data.address ,name});
+                  res.render("user/editaddress", { user: data.address, name });
             }
       } catch (error) {
             console.log(error);
@@ -1340,7 +1351,7 @@ const loadorder = async (req, res) => {
             console.log("ethi");
             const User = await user.findOne({ _id: req.session.user_id });
             const name = User.name
-        const isloggedin = req.session.user_id ? true : false;
+            const isloggedin = req.session.user_id ? true : false;
 
             if (req.session.user_id) {
                   const userData = await user.findOne({ _id: req.session.user_id });
@@ -1361,13 +1372,13 @@ const loadorder = async (req, res) => {
                               totalPages: Math.ceil(totalOrders / perPage),
                               name: name,
                               isloggedin,
-                               message: ""
+                              message: ""
                         });
 
 
 
                   } else {
-                      return  res.render("user/order",{name,isloggedin,data:null,message:""});
+                        return res.render("user/order", { name, isloggedin, data: null, message: "" });
                   }
             } else {
                   res.redirect("/login");

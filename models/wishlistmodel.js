@@ -4,14 +4,14 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const wishlistSchema = new mongoose.Schema({
   user: {
     type: ObjectId,
-    ref: 'User', // Make sure you have a 'User' model too
+    ref: 'User', 
     required: true,
   },
   product: [
     {
       productId: {
         type: ObjectId,
-        ref: 'product', // Reference the 'Product' model
+        ref: 'product', 
         required: true,
       },
       productname:{

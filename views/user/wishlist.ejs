@@ -108,7 +108,7 @@
 						<!-- Menu desktop -->
 						<div class="menu-desktop">
 							<ul class="main-menu">
-								<li class="active-menu">
+								<li>
 									<a href="/home">Home</a>
 								</li>
 
@@ -316,7 +316,7 @@
 							</thead>
 							<tbody>
 								<% data.forEach((product, index)=> { %>
-		                      <tr id="wishlist-<%= product.productId._id %>">
+									<tr>
 										<td>
 											<img width="100px" src="/productimages/<%= product.productId.image[0] %>"
 												alt="">
@@ -325,11 +325,10 @@
 											<%= product.productname %>
 										</td>
 										<td>
-												<button class="btn btn-md"
-													style="color: white; background-color: #d82a1d;" id="delete"
-													onclick="deletewhishlist('<%= product.productId._id %>')">
-													🗑 Remove
-												</button>
+											<button class="btn btn-md" style="color: white; background-color: #d82a1d;"
+												id="delete" onclick="deletewhishlist('<%= product.productId._id %>')">
+												🗑 Remove
+											</button>
 
 											<br><br>
 
@@ -385,7 +384,7 @@
 							</tbody>
 						</table>
 						<% } else { %>
-							<div class="text-center py-5">
+							<div class="text-center  py-5" style="color: #ff0000;">
 								<h2>Your wishlist is empty !</h2>
 							</div>
 							<% } %>
@@ -427,28 +426,24 @@
 		}
 
 
-	function deletewhishlist(id) {
-	swal({
-		title: "Are you sure?",
-		text: "This item will be removed from your wishlist.",
-		icon: "warning",
-		buttons: true,
-		dangerMode: true,
-	}).then((willDelete) => {
-		if (willDelete) {
+		function deletewhishlist(id) {
 			$.ajax({
 				url: "/removewish",
 				method: "post",
-				data: { id: id }
+				data: {
+					id: id
+				}
 			}).done((data) => {
+				console.log(data, ";kkk");
 				if (data.success === true) {
-					$(`#wishlist-${id}`).remove();
-					swal("Removed!", "Item has been removed.", "success");
+					swal("Removed!", "Item has been removed.", "success")
+						.then(() => {
+							window.location.reload();
+						});
 				}
 			});
 		}
-	});
-}
+
 
 
 	</script>
