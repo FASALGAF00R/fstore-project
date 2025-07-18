@@ -47,7 +47,6 @@ const loadlogin = async (req, res) => {
 const verifylogin = async (req, res) => {
       try {
             const { email, password } = req.body;
-            console.log(req.body);
             const userData = await user.findOne({ email: email });
             console.log(userData);
             if (userData) {
@@ -1338,9 +1337,11 @@ const verifyPayment = async (req, res) => {
 
 const loadorder = async (req, res) => {
       try {
-            console.log(req.session, "lll");
+            console.log("ethi");
             const User = await user.findOne({ _id: req.session.user_id });
             const name = User.name
+        const isloggedin = req.session.user_id ? true : false;
+
             if (req.session.user_id) {
                   const userData = await user.findOne({ _id: req.session.user_id });
                   const page = parseInt(req.query.page) || 1;
@@ -1359,12 +1360,14 @@ const loadorder = async (req, res) => {
                               currentPage: page,
                               totalPages: Math.ceil(totalOrders / perPage),
                               name: name,
+                              isloggedin,
+                               message: ""
                         });
 
 
 
                   } else {
-                        res.redirect("/login");
+                      return  res.render("user/order",{name,isloggedin,data:null,message:""});
                   }
             } else {
                   res.redirect("/login");

@@ -80,7 +80,6 @@
 <body>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 	<!-- Header -->
 	<header>
@@ -299,6 +298,7 @@
 	<br>
 	<br>
 	<br>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 	<section class="cart_area">
 		<div class="container">
@@ -316,7 +316,7 @@
 							</thead>
 							<tbody>
 								<% data.forEach((product, index)=> { %>
-									<tr>
+		                      <tr id="wishlist-<%= product.productId._id %>">
 										<td>
 											<img width="100px" src="/productimages/<%= product.productId.image[0] %>"
 												alt="">
@@ -325,16 +325,16 @@
 											<%= product.productname %>
 										</td>
 										<td>
-											<button  class="btn btn-md"
-												style="color: white; background-color: #d82a1d;" id="delete"
-												onclick="deletewhishlist('<%= product.productId._id %>')">
-												🗑 Remove
-											</button>
+												<button class="btn btn-md"
+													style="color: white; background-color: #d82a1d;" id="delete"
+													onclick="deletewhishlist('<%= product.productId._id %>')">
+													🗑 Remove
+												</button>
 
 											<br><br>
-										
-											<button class="btn btn-md" style="color: white; background-color: #2a2626; " id="add"
-												onclick="addcart('<%= product.productId._id %>')">
+
+											<button class="btn btn-md" style="color: white; background-color: #2a2626; "
+												id="add" onclick="addcart('<%= product.productId._id %>')">
 												🛒 Add to Cart
 											</button>
 
@@ -427,21 +427,29 @@
 		}
 
 
-		function deletewhishlist(id) {
+	function deletewhishlist(id) {
+	swal({
+		title: "Are you sure?",
+		text: "This item will be removed from your wishlist.",
+		icon: "warning",
+		buttons: true,
+		dangerMode: true,
+	}).then((willDelete) => {
+		if (willDelete) {
 			$.ajax({
 				url: "/removewish",
 				method: "post",
-				encoded: true,
-				data: {
-					id: id
-				}
+				data: { id: id }
 			}).done((data) => {
-				console.log(data);
 				if (data.success === true) {
-					window.location.reload()
+					$(`#wishlist-${id}`).remove();
+					swal("Removed!", "Item has been removed.", "success");
 				}
-			})
+			});
 		}
+	});
+}
+
 
 	</script>
 </body>

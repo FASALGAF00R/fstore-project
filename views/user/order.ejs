@@ -65,19 +65,19 @@
 <body>
 
 	<style>
-  .pagination .page-link {
-    color: inherit;              
-    background-color: transparent;
-    border: none;
-  }
+		.pagination .page-link {
+			color: inherit;
+			background-color: transparent;
+			border: none;
+		}
 
-  .pagination .page-item.active .page-link {
-    font-weight: bold;
-    text-decoration: underline; 
-    background-color: transparent;
-    color: inherit;
-  }
-</style>
+		.pagination .page-item.active .page-link {
+			font-weight: bold;
+			text-decoration: underline;
+			background-color: transparent;
+			color: inherit;
+		}
+	</style>
 
 	<!-- Header -->
 	<header>
@@ -154,9 +154,9 @@
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<% if ( typeof isloggedin) { %>
+						<% if (isloggedin) { %>
 							<li>
-								<a href="/logout" style="color: #ff0000;">Logout</a>
+								<a href="/logout" style="color: #f00808">Logout</a>
 							</li>
 							<% } else { %>
 								<li>
@@ -338,7 +338,7 @@
 
 
 										<td><a href="/singleOrder?id=<%= value._id %>"><button
-													class="btn btn-danger">view</button></a></td>
+													class="btn btn-success" >view</button></a></td>
 										<%if(value.status=='Delivered' ){ %>
 
 											<td><a href="/returnOrder?id=<%= value._id %>"
@@ -357,7 +357,20 @@
 						</table>
 
 
-						<% }else{ %>
+						<!-- Pagination controls -->
+						<div class="d-flex justify-content-center mt-4">
+							<ul class="pagination">
+								<% for (let i=1; i <=totalPages; i++) { %>
+									<li class="page-item <%= currentPage === i ? 'active' : '' %>">
+										<a class="page-link" href="?page=<%= i %>">
+											<%= i %>
+										</a>
+									</li>
+									<% } %>
+							</ul>
+						</div>
+
+					<% }else{ %>
 							<div class="text-center mt-5">
 								<h2>No orders found !</h2>
 							</div>
@@ -366,50 +379,45 @@
 				</div>
 			</div>
 
-			<!-- Pagination controls -->
-			<div class="d-flex justify-content-center mt-4">
-				<ul class="pagination">
-					<% for (let i=1; i <=totalPages; i++) { %>
-						<li class="page-item <%= currentPage === i ? 'active' : '' %>">
-							<a class="page-link" href="?page=<%= i %>">
-								<%= i %>
-							</a>
-						</li>
-						<% } %>
-				</ul>
-			</div>
+
 
 		</div>
 	</div>
-	<!-- /////// -->
 
 
-	<!-- <script>
-	const user = <%- JSON.stringify(data.orderData) %>;
-	console.log(user, "userf");
-</script> -->
+  <div class="text-center mt-5 " style="color: #f00808;">
+    <h2><%= message %></h2>
+  </div>
 
 
 
-	<!-- Footer -->
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
+
+			<!-- /////// -->
+
+ <script>
+const userid= "<%=message%>"
+ console.log("userid:", userid)
+</script>
+
+			<!-- Footer -->
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
 
 </body>
 <%- include('../user/partials/footer.ejs') %>

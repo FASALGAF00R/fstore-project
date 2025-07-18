@@ -10,6 +10,30 @@ const isLogin = async (req, res, next) => {
         console.log(error.message);
     }
 };
+
+const isLoginorder = async (req, res, next) => {
+    try {
+        //     if(req.session.user_id){
+        //    const userId= req.session.user_id
+        // const userData = await user.findById(userId);
+        // const name =userData.name
+        //     return res.render('user/order',{name,message:null})
+        //         }
+
+        if (!req.session.user_id) {
+            return res.render('user/order',{userid:null ,message:"No user found..",name:null,isloggedin:false,data:null})
+        }
+        if(req.session.user_id){
+        } else {
+            return res.redirect('/login');
+        }
+        next();
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
+
 const isLogout = async (req, res, next) => {
     try {
         if (req.session.user_id) {
@@ -43,12 +67,10 @@ const checkblockedstatus = async (req,res,next)=>{
 
 
 
-
-
-
 module.exports = {
     isLogin,
     isLogout,
-    checkblockedstatus
+    checkblockedstatus,
+    isLoginorder
 
 }

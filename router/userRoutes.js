@@ -18,7 +18,7 @@ const auth=require('../middleware/auth')
 
 
 userRoutes.get('/',usercontroller.loadhomepage)
-userRoutes.get('/signup',auth.isLogout,usercontroller.loadsignup);
+userRoutes.get('/signup',usercontroller.loadsignup);
 userRoutes.post('/signup',usercontroller.insertuser);
 userRoutes.get('/login',auth.isLogout,usercontroller.loadlogin)
 userRoutes.post('/login',usercontroller.verifylogin)
@@ -60,7 +60,7 @@ userRoutes.post("/placeorder", usercontroller.postplaceorder);
 userRoutes.get("/orderplaced", usercontroller.confirmorder);
 userRoutes.post("/verifyPayment", usercontroller.verifyPayment);
 
-userRoutes.get("/order",auth.isLogin, usercontroller.loadorder);
+userRoutes.get("/order",auth.isLoginorder, usercontroller.loadorder);
 userRoutes.get("/singleOrder", usercontroller.singleOrder);
 userRoutes.get("/returnOrder", ordercontroller.returnOrder)
 userRoutes.get('/cancelOrder', ordercontroller.cancelOrder)
