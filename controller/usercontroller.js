@@ -516,7 +516,6 @@ const loadshop = async (req, res) => {
 const singleproduct = async (req, res) => {
       try {
             const userData = req.session.user_id;
-            console.log(userData, "userdata");
             let name
             const finduser = await user.findById(userData)
             if (finduser) {
@@ -525,16 +524,17 @@ const singleproduct = async (req, res) => {
             const userCart = await cart.findOne({ userID: req.session.user_id });
             const wishlist = await Wishlist.findOne({ userID: req.session.user_id });
             if (wishlist) {
-                  const userProducts = wishlist.products;
+                  const userProducts = wishlist.product;
                   var wishlistExist = userProducts.find(obj => obj.productID == req.query.id);
             }
 
             // Change the variable name 'singleproduct' to 'productData'
             const productData = await product.findById(req.query.id).populate('category')
             const productsData = await product.find();
+            const isloggedin = req.session.user_id ? true : false;
 
             if (productData) {
-                  res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name });
+                  res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name ,isloggedin});
             }
       } catch (error) {
             res.status(500).render('500')
@@ -991,7 +991,7 @@ const removewish = async (req, res) => {
             const id = req.body.id;
             console.log(id, "uiiioi");
             console.log(req.session);
-            
+
             const userId = req.session.user_id;
             console.log(userId, "llllll");
 
@@ -1000,15 +1000,15 @@ const removewish = async (req, res) => {
             }
 
             const objectId = new mongoose.Types.ObjectId(String(id));
-            console.log(objectId,"kkkk");
-            
+            console.log(objectId, "kkkk");
+
             const data = await Wishlist.findOneAndUpdate(
-                  {"product.productId": objectId },
+                  { "product.productId": objectId },
                   { $pull: { product: { productId: objectId } } }
 
             );
             console.log(data, "data");
-            if (data===null) {
+            if (data === null) {
                   res.json({ success: true });
             }
       } catch (error) {
@@ -1025,7 +1025,7 @@ const loadcheckout = async (req, res) => {
                   const User = await user.findOne({ _id: req.session.user_id });
                   const id = User._id;
                   const name = User.name
-                  console.log(name, "namedddddddddddddd");
+                              const isloggedin = req.session.user_id ? true : false;
 
                   const cartData = await cart.findOne({ userID: id }).populate(
                         "products.productID"
@@ -1043,7 +1043,8 @@ const loadcheckout = async (req, res) => {
                                     address: User.address,
                                     total: Total,
                                     wallet: User.wallet,
-                                    name
+                                    name,
+                                    isloggedin
                               });
                         }
                   }
@@ -1095,7 +1096,11 @@ const editaddress = async (req, res) => {
                   }).lean();
                   const User = await user.findOne({ _id: req.session.user_id });
                   const name = User.name
-                  res.render("user/editaddress", { user: data.address, name });
+                              const isloggedin = req.session.user_id ? true : false;
+
+
+
+                  res.render("user/editaddress", { user: data.address, name,isloggedin });
             }
       } catch (error) {
             console.log(error);
@@ -1286,9 +1291,10 @@ const confirmorder = async (req, res) => {
             const User = await user.findOne({ _id: req.session.user_id });
             const name = User.name
             console.log(name, "name");
+            const isloggedin = req.session.user_id ? true : false;
 
 
-            res.render("user/confirmorder", { user: orderData, name });
+            res.render("user/confirmorder", { user: orderData, name,isloggedin });
 
       } catch (error) {
             console.log(error.message);
@@ -1348,7 +1354,6 @@ const verifyPayment = async (req, res) => {
 
 const loadorder = async (req, res) => {
       try {
-            console.log("ethi");
             const User = await user.findOne({ _id: req.session.user_id });
             const name = User.name
             const isloggedin = req.session.user_id ? true : false;
@@ -1374,9 +1379,6 @@ const loadorder = async (req, res) => {
                               isloggedin,
                               message: ""
                         });
-
-
-
                   } else {
                         return res.render("user/order", { name, isloggedin, data: null, message: "" });
                   }
@@ -1395,9 +1397,11 @@ const singleOrder = async (req, res) => {
       try {
             let userid = req.session.user_id
             let name
-            const finduser = await user.findById(userid)
-            name = finduser.name
+
+            const isloggedin = req.session.user_id ? true : false;
             if (req.session.user_id) {
+                  const finduser = await user.findById(userid)
+                  name = finduser.name
                   const id = req.query.id;
                   const orderData = await Order.findById(id).populate(
                         "product.productID"
@@ -1406,7 +1410,8 @@ const singleOrder = async (req, res) => {
                         res.render("user/singleorder", {
                               data: orderData.product,
                               orderData,
-                              name
+                              name,
+                              isloggedin
                         });
                   }
 
@@ -1499,11 +1504,12 @@ const contactpost = async (req, res) => {
 const userprofile = async (req, res) => {
       try {
             if (req.session.user_id) {
+               const isloggedin = req.session.user_id ? true : false;
                   let userdata = await user.findOne({ _id: req.session.user_id });
                   const name = userdata.name
                   let datawallet = await user.find({ _id: req.session.user_id })
                   const [{ wallehistory }] = datawallet
-                  res.render("user/userprofile", { data: userdata, wallet: wallehistory, name })
+                  res.render("user/userprofile", { data: userdata, wallet: wallehistory, name,isloggedin })
             } else {
                   res.redirect("/login")
             }

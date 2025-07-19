@@ -46,6 +46,19 @@
   header a {
     text-decoration: none;
   }
+    .modal-backdrop.show {
+      z-index: 1050;
+    }
+
+    .modal.show {
+      z-index: 1060;
+    }
+
+    .navbar,
+    .container-menu-desktop {
+      z-index: 1000;
+    }
+
 </style>
 
 <body>
@@ -164,8 +177,6 @@
     </div>
 
 
-
-
     <!-- Header Mobile -->
     <div class="wrap-header-mobile">
       <!-- Logo moblie -->
@@ -188,6 +199,27 @@
         <a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
           <i class="zmdi zmdi-favorite-outline"></i>
         </a>
+
+
+        <% if ( isloggedin) { %>
+          <div style="margin: 0 20px;">
+
+            <li>
+              <a href="/logout" style="color: #ff0000;">Logout</a>
+            </li>
+          </div>
+          <% } else { %>
+
+            <li>
+              <div style="margin: 0 20px;">
+                <a href="/login">
+                  <h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
+                </a>
+              </div>
+            </li>
+            <% } %>
+
+
       </div>
 
 
@@ -264,22 +296,7 @@
   <br>
   <br>
 
-  <style>
-    .modal-backdrop.show {
-      z-index: 1050;
-    }
 
-    .modal.show {
-      z-index: 1060;
-    }
-
-    .navbar,
-    .container-menu-desktop {
-      z-index: 1000;
-    }
-  </style>
-
-  </style>
 
   <!-- Add Address Modal -->
   <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
@@ -319,7 +336,7 @@
                 <input type="text" class="form-control" name="address" required>
               </div>
             </div>
-              <div class="mb-3">
+            <div class="mb-3">
               <label for="state" class="form-label">postcode</label>
               <input type="text" class="form-control" name="postcode" required>
             </div>

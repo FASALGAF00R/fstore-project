@@ -154,18 +154,6 @@
 								<% } %>
 					</div>
 
-
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-
-
-					</div>
-
-
-					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
-
-					</div>
-
-
 					<style>
 						.icon-header-item:hover {
 							text-decoration: none;
@@ -235,6 +223,27 @@
 				<a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
 					<i class="zmdi zmdi-favorite-outline"></i>
 				</a>
+
+				<% if ( isloggedin) { %>
+					<div style="margin: 0 20px;">
+
+						<li>
+							<a href="/logout" style="color: #ff0000;">Logout</a>
+						</li>
+					</div>
+					<% } else { %>
+
+						<li>
+							<div style="margin: 0 20px;">
+								<a href="/login">
+									<h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
+								</a>
+							</div>
+						</li>
+						<% } %>
+
+
+
 			</div>
 
 

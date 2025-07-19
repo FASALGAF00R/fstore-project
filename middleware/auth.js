@@ -13,13 +13,7 @@ const isLogin = async (req, res, next) => {
 
 const isLoginorder = async (req, res, next) => {
     try {
-        //     if(req.session.user_id){
-        //    const userId= req.session.user_id
-        // const userData = await user.findById(userId);
-        // const name =userData.name
-        //     return res.render('user/order',{name,message:null})
-        //         }
-
+     
         if (!req.session.user_id) {
             return res.render('user/order',{userid:null ,message:"No user found..",name:null,isloggedin:false,data:null})
         }

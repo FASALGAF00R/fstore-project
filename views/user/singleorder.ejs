@@ -173,15 +173,115 @@
 
 
 
-		<!-- Modal Search -->
+        <!-- Header Mobile -->
+        <div class="wrap-header-mobile">
+            <!-- Logo moblie -->
+            <div>
+                <a href="#" class="logo">
+                    <img src="user/images/icons/logo-01.png" alt="IMG-LOGO">
+                </a>
+            </div>
 
-		</div>
-	</header>
+
+            <!-- Icon header -->
+            <div class="wrap-icon-header flex-w flex-r-m m-r-15">
+
+
+                <a href="/cart">
+                    <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10  ">
+                        <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+                </a>
+                <a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
+                    <i class="zmdi zmdi-favorite-outline"></i>
+                </a>
+
+                <% if ( isloggedin) { %>
+					<div style="margin: 0 20px;">
+
+						<li>
+							<a href="/logout" style="color: #ff0000;">Logout</a>
+						</li>
+					</div>
+					<% } else { %>
+
+						<li>
+							<div style="margin: 0 20px;">
+								<a href="/login">
+									<h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
+								</a>
+							</div>
+						</li>
+						<% } %>
+            </div>
+
+
+
+
+            <!-- Button show menu -->
+            <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </div>
+        </div>
+
+
+        <!-- Menu Mobile -->
+        <div class="menu-mobile">
+            <ul class="main-menu-m">
+                <li>
+                    <a href="home">Home</a>
+                </li>
+
+                <li>
+                    <a href="/shop">Shop</a>
+                </li>
+
+                <li>
+                    <a href="/cart">Cart</a>
+                </li>
+
+                <li>
+                    <a href="/order">Order</a>
+                </li>
+
+                <li>
+                    <a href="/about">About</a>
+                </li>
+
+                <li>
+                    <a href="/contact">Contact</a>
+                </li>
+
+                <% if (name) { %>
+                    <li>
+                        <a href="/userprofile">
+                            <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+                        </a>
+                    </li>
+                    <% } else{ %>
+                        <li>
+                            <a href="/userprofile">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        </li>
+
+                        <% } %>
+
+
+            </ul>
+        </div>
+
+
+    </header>
+
+	
 
 	<!-- /////// -->
 	<br>
 	<br>
-	
+
 
 	<section class="contact spad m-4">
 		<br>
@@ -234,5 +334,13 @@
 
 
 
-
 	</section>
+
+<script src="/user/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="/user/js/main.js"></script>
+
+	</body>
+<br>
+<br>
+<br>
+	<%- include('../user/partials/footer.ejs')  %> 

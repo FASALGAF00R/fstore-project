@@ -182,13 +182,6 @@
 		</div>
 
 
-		<!-- Button show menu -->
-		<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-			<span class="hamburger-box">
-				<span class="hamburger-inner"></span>
-			</span>
-		</div>
-		</div>
 
 
 		<!-- Header Mobile -->
@@ -213,6 +206,23 @@
 				<a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 ">
 					<i class="zmdi zmdi-favorite-outline"></i>
 				</a>
+				<% if ( isloggedin) { %>
+					<div style="margin: 0 20px;">
+
+						<li>
+							<a href="/logout" style="color: #ff0000;">Logout</a>
+						</li>
+					</div>
+					<% } else { %>
+
+						<li>
+							<div style="margin: 0 20px;">
+								<a href="/login">
+									<h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
+								</a>
+							</div>
+						</li>
+						<% } %>
 			</div>
 
 
@@ -231,8 +241,6 @@
 
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
-
-
 			<ul class="main-menu-m">
 				<li>
 					<a href="home">Home</a>
@@ -274,10 +282,8 @@
 
 						<% } %>
 
-
 			</ul>
 		</div>
-
 	</header>
 	<br>
 	<br>
@@ -354,4 +360,9 @@
 
 		</div>
 	</section>
+	<script src="/user/vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="/user/js/main.js"></script>
+
+<%- include('../user/partials/footer.ejs') %>
+
 </body>
