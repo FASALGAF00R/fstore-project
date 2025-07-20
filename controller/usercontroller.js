@@ -154,11 +154,12 @@ const verifyforgototp = async (req, res) => {
       }
 };
 
-
+// newpassword
 const resetpassword = async (req, res) => {
       try {
             const { userId, password, confirmPassword } = req.body;
-            console.log(userId);
+            console.log(userId,"userid");
+            
             // validate password
             if (!Schema.validate(confirmPassword)) {
                   return res.render('user/resetpassword', { userId: userId, message: 'Your password must be strong.' });

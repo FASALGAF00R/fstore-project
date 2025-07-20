@@ -384,8 +384,30 @@
 							</tbody>
 						</table>
 						<% } else { %>
-							<div class="text-center  py-5" style="color: #ff0000;">
-								<h2>Your wishlist is empty !</h2>
+							<div class="container-fluid ">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="card">
+											<div class="card-body cart">
+												<div class="col-sm-12 empty-cart-cls text-center">
+													<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+														fill="currentColor" class="bi bi-heart-fill"
+														viewBox="0 0 16 16">
+														<path fill-rule="evenodd"
+															d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+													</svg>
+													<h3 style="color: #d82a1d;">Your wishlist is Empty</h3><br>
+													<h4>Add items to it now</h4>
+													<div class="d-flex justify-content-center">
+														<a href="/shop" class="btn btn-dark cart-btn-transform m-3 "
+															data-abc="true">continue
+															shopping</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<% } %>
 				</div>
