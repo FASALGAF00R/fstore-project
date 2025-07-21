@@ -40,25 +40,32 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
 <style>
   header a {
     text-decoration: none;
   }
-    .modal-backdrop.show {
-      z-index: 1050;
-    }
 
-    .modal.show {
-      z-index: 1060;
-    }
+  .modal-backdrop.show {
+    z-index: 1050;
+  }
 
-    .navbar,
-    .container-menu-desktop {
-      z-index: 1000;
-    }
+  .modal.show {
+    z-index: 1060;
+  }
 
+  .navbar,
+  .container-menu-desktop {
+    z-index: 1000;
+  }
+
+
+  .big-radio {
+    transform: scale(1.4);
+    cursor: pointer;
+  }
 </style>
 
 <body>
@@ -287,6 +294,9 @@
 
 
 
+
+
+
   </header>
 
   <!-- ////////// -->
@@ -366,7 +376,8 @@
                   <div class="card shadow-lg border-0">
                     <div class="card-body">
                       <div class="form-check mb-2">
-                        <input class="form-check-input bg-primary border-primary" type="radio" name="address"
+
+                        <input class="big-radio bg-dark border-primary" type="radio" name="address"
                           value="<%= value.name %>, <%= value.street %>, <%= value.town %>, <%= value.country %>, <%= value.postcode %>, <%= value.phone %>"
                           id="address_<%= value._id %>" required>
                         <label class="form-check-label" for="address_<%= value._id %>">
@@ -380,8 +391,9 @@
                       </div>
 
                       <div class="d-flex justify-content-between mt-3">
-                        <a href="/editaddress?id=<%= value._id %>" class="btn btn-primary btn-md">Edit</a>
-                        <a href="/deleteaddress?id=<%= value._id %>" class="btn btn-danger btn-md">Delete</a>
+                        <a href="/editaddress?id=<%= value._id %>" class="btn btn btn-dark">Edit</a>
+                        <a href="/deleteaddress?id=<%= value._id %>" class="btn btn btn-md"
+                          style="background-color: #ff0000;color: white;">Delete</a>
                       </div>
                     </div>
                   </div>
@@ -410,8 +422,11 @@
           </div>
 
           <div class="col-md-6 text-end mt-3 mt-md-0">
-            <a href="/checkout" class="text-decoration-none text-danger">Remove Coupon</a>
+            <a href="/checkout" class="btn btn-outline text-danger rounded-pill px-4 py-2 shadow-lg fw-semibold" style="background-color: rgb(192, 148, 148);">
+              <i class="fas fa-times-circle me-2"></i>Remove Coupon
+            </a>
           </div>
+
         </div>
 
         <div class="row mt-5">
@@ -454,12 +469,12 @@
             <div class="bg-light p-4 rounded shadow-sm h-100">
               <h5 class="mb-4">Payment Method</h5>
               <div class="form-check mb-2">
-                <input class="form-check-input bg-primary border-primary" type="radio" value="cod" name="payment"
-                  id="cod" required>
+                <input class="form-check-input bg-dark border-primary" type="radio" value="cod" name="payment" id="cod"
+                  required>
                 <label class="form-check-label" for="cod">Cash on Delivery</label>
               </div>
               <div class="form-check mb-2">
-                <input class="form-check-input bg-primary border-primary" type="radio" value="online" name="payment"
+                <input class="form-check-input bg-dark border-primary" type="radio" value="online" name="payment"
                   id="online" required>
                 <label class="form-check-label" for="online">Online Payment</label>
               </div>

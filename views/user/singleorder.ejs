@@ -300,12 +300,18 @@
 								<h5 class="mb-1">
 									<%= value.productID.productname %>
 								</h5>
-								<p class="mb-1"><strong>Quantity:</strong>
+									<h5 class="mb-1">Brand : 
+									<%= value.productID.brand %>
+								</h5>
+									<h5 class="mb-1">Amount : 
+									₹ <%= value.productID.price%>
+								</h5>
+								<h5 class="mb-1"><strong>Quantity:</strong>
 									<%= value.quantity %>
-								</p>
-								<p class="mb-1"><strong>Total Amount:</strong> ₹<%= orderData.totalAmount *
+								</h5>
+								<h5 class="mb-1"><strong>Total Amount:</strong> ₹ <%= value.productID.price *
 										value.quantity %>
-								</p>
+								</h5>
 								<p class="text-muted small">
 									<%= value.productID.description %>
 								</p>
@@ -324,7 +330,7 @@
 								<hr>
 								<p class="d-flex justify-content-between fw-bold fs-5">
 									<span>Total:</span>
-									<span>₹<%= orderData.totalAmount %></span>
+									<span>₹ <%= orderData.totalAmount %></span>
 								</p>
 							</div>
 						</div>

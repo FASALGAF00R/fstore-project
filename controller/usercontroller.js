@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const user = require('../models/usermodel');
 const category = require('../models/categorymodel')
@@ -260,12 +261,12 @@ const sendOTPEmail = async (email, otp) => {
             const transporter = nodemailer.createTransport({
                   service: 'gmail',
                   auth: {
-                        user: 'fasalgafoor2080@gmail.com',
-                        pass: 'ebgj vwvw qdhc ousv',
+                        user:process.env.EMAIL_HOSTUSER,
+                        pass:process.env.EMAIL_HOSTPASS,
                   },
             });
             const mailOptions = {
-                  from: 'fasalgafoor2080@gmail.com',
+                  from:process.env.EMAIL_HOSTUSER ,
                   to: email,
                   subject: 'OTP Verification',
                   text: `Your OTP: ${otp}`,
@@ -586,6 +587,7 @@ const loadcart = async (req, res) => {
 
             // CASE 3: User logged in, cart has products
             const cartProducts = usercart.products;
+     
             const userCartProductsId = cartProducts.map(item => item.productID);
             console.log(userCartProductsId, "usercarts productsid");
             products = await product.aggregate([
@@ -607,12 +609,22 @@ const loadcart = async (req, res) => {
 
             count = products.length;
 
+                   let totalAmount = 0;
+
+            for (let i = 0; i < cartProducts.length; i++) {
+                  const productInfo = products[i];
+                  const quantity = cartProducts[i].quantity;
+                  totalAmount += productInfo.price * quantity;
+            }
+
+
             res.render("user/cart", {
                   products,
                   usercart,
                   count,
                   isloggedin: true,
                   name,
+                  totalAmount 
 
             });
 
@@ -763,8 +775,8 @@ const removefromcart = async (req, res) => {
       try {
             const userCart = await cart.findOne({ userID: req.session.user_id })
             const removedProduct = userCart.products.find(item => item.productID == req.query.id)
-            console.log(removedProduct,"removedProduct");
-            
+            console.log(removedProduct, "removedProduct");
+
             const updateCart = await cart.findByIdAndUpdate(
                   { _id: userCart._id },
                   {
@@ -830,7 +842,6 @@ const loadwishlist = async (req, res) => {
                                     const Total = total[0].total;
                                     wishData.product.forEach((element) => { });
                                     res.render("user/wishlist", {
-                                          // user: req.session.name,
                                           name,
                                           data: wishData.product,
                                           userId: id,
@@ -929,6 +940,7 @@ const addtocart = async (req, res) => {
                   const userdata = await user.findById(req.session.user_id);
                   const userId = userdata._id;
                   const productData = await product.findById(productId);
+
                   const userCart = await cart.findOne({ userID: userId });
 
                   if (userCart) {
@@ -942,16 +954,17 @@ const addtocart = async (req, res) => {
 
                               await cart.findOneAndUpdate(
                                     { userID: userId, "products.productId": productId }, // Use 'userID' as per your schema
-                                    { $inc: { "products.$.quantity": 1,'products.$.price':productData.price,Total:productData.price } }
+                                    { $inc: { "products.$.quantity": 1, 'products.$.price': productData.price, Total: productData.price } }
                               );
 
                               console.log("Quantity updated successfully.");
                         } else {
                               console.log("Product does not exist in the cart. Adding a new product...");
 
-                        await cart.findOneAndUpdate(
-                                    { userID: userId ,
-                                          
+                              await cart.findOneAndUpdate(
+                                    {
+                                          userID: userId,
+
                                     }, // Use 'userID' as per your schema
                                     {
                                           $push: {
@@ -962,7 +975,7 @@ const addtocart = async (req, res) => {
                                                       quantity: 1,
                                                 },
                                           },
-                                          Total:productData.price ,
+                                          Total: productData.price,
                                     }
                               );
 
@@ -981,7 +994,7 @@ const addtocart = async (req, res) => {
                                           quantity: 1,
                                     },
                               ],
-                              Total:productData.price
+                              Total: productData.price
                         });
 
                         await data.save();
@@ -1422,6 +1435,8 @@ const singleOrder = async (req, res) => {
                   const orderData = await Order.findById(id).populate(
                         "product.productID"
                   );
+                  console.log(orderData,"orderdata");
+                  
                   if (orderData) {
                         res.render("user/singleorder", {
                               data: orderData.product,
@@ -1459,7 +1474,7 @@ const loadcontact = async (req, res) => {
       if (finduser) {
             name = finduser.name
       }
-      res.render("user/contact", { isloggedin, name })
+      res.render("user/contact", { isloggedin, name ,message:''})
 }
 
 
@@ -1468,8 +1483,8 @@ const loadcontact = async (req, res) => {
 const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-            user: "fasalgafoor2080@gmail.com",
-            pass: "qtap pzez uruo dggk",
+            user: process.env.EMAIL_HOSTUSER,
+            pass:process.env.EMAIL_HOSTPASS,
       }
 });
 
@@ -1477,7 +1492,7 @@ const transporter = nodemailer.createTransport({
 function sendEmail(email, message) {
       const mailOptions = {
             from: email,
-            to: 'fasalgafoor2080@gmail.com',
+            to: process.env.EMAIL_HOSTUSER,
             subject: "Contact message",
             text: `message: ${message}`,
 
@@ -1495,20 +1510,18 @@ function sendEmail(email, message) {
 
 const contactpost = async (req, res) => {
       try {
-            console.log("postttttttttt");
             const { email, message } = req.body
-            console.log(email, message);
             const User = await user.findOne({ email });
 
             if (!User) {
                   return res.status(404).json({ error: "User not found." });
             }
             sendEmail(email, message);
-            res.send("message send succesfully")
             User.messages.push({
                   senderEmail: email,
                   message: message
             })
+        res.render('user/contact', { name:"",isloggedin:"" ,message:"Email has been sended"});
 
             await User.save();
       } catch (error) {
