@@ -315,6 +315,7 @@
 	<br>
 
 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	<% if(count>0){ %>
 		<!-- Shoping Cart -->
@@ -333,7 +334,9 @@
 											<th class="column-2">Name</th>
 											<th class="column-3">Price</th>
 											<th class="column-4">Quantity</th>
-											<th class="column-5">Total</th>
+											<th class="column-5">Change quantity</th>
+											<th class="column-5">TotalAmount</th>
+											<th class="column-5" style="color: red;">Delete</th>
 										</tr>
 										<% for(let i=0 ; i<usercart.products.length ; i++) {%>
 											<tr class="table_row">
@@ -344,20 +347,25 @@
 													<div class="how-itemcart1">
 														<img src="/productimages/<%= products[i].image[0] %>" alt="IMG">
 													</div>
+													<%= usercart.products[i].productname %>
 												</td>
 												<td class="column-2">
-													<%= products[i].name %>
+													<%= usercart.products[i].price %>
 												</td>
 												<td class="column-3">
-													<%= products[i].price %>
+													<%= usercart.products[i].quantity %>
 
 												</td>
 												<td class="column-4">
 													<div class="wrap-num-product flex-w m-l-auto m-r-0">
-														<div
-															class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
-															<button id="minusButton" type="button"
-																onclick="changeQuantity('<%=usercart._id%>','<%=products[i]._id%>' ,-1, '<%=usercart.products[i]._id %>'  )">-</button>
+
+														<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
+															<button id="minusButton" type="button" onclick="changeQuantity(
+																'<%=usercart._id%>',
+																'<%=products[i]._id%>' ,
+																-1,
+																 '<%=usercart.products[i]._id %>',
+																 '<%= products[i].price %>'  )">-</button>
 														</div>
 														<span
 															class="mtext-104 cl3 num-product text-center d-flex align-items-center justify-content-center"
@@ -368,8 +376,13 @@
 
 
 														<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
-															<button type="button"
-																onclick="changeQuantity  ( '<%= usercart._id%>' , '<%=products[i]._id%>' ,1, '<%=usercart.products[i]._id %>'  )">+</button>
+															<button type="button" onclick="changeQuantity  ( 
+																'<%= usercart._id%>' ,
+																 '<%=products[i]._id%>' ,
+																 1,
+																  '<%=usercart.products[i]._id %>',
+																  '<%= products[i].price %>' 
+																   )">+</button>
 														</div>
 													</div>
 								</div>
@@ -392,7 +405,6 @@
 							<% } %>
 								</table>
 						</div>
-
 
 
 
@@ -501,10 +513,23 @@
 
 		<script src="assets/vendor/jquery/jquery-3.2.1.min.js"></script>
 		<script>
+			function showOutOfStockMessage() {
+				const alertBox = document.getElementById('stockAlert')
+				alertBox.style.display = 'block'
 
-			function changeQuantity(cartID, productID, count, userProductID) {
+				// Auto-hide after 3 seconds (optional)
+				setTimeout(() => {
+					alertBox.style.display = 'none'
+				}, 3000)
+			}
+
+
+
+
+			function changeQuantity(cartID, productID, count, userProductID, unitPrice) {
 				let quantity = parseInt(document.getElementById(productID).innerHTML)
 				let currentTotal = parseInt(document.getElementById(userProductID).innerHTML)
+
 				count = parseInt(count)
 				$.ajax({
 					url: '/changeproductquantity',
@@ -517,13 +542,24 @@
 					},
 					method: 'post',
 					success: (response) => {
+						if (response.outOfStock) {
+							Swal.fire({
+								icon: 'warning',
+								title: 'Out of Stock',
+								text: 'You have reached the maximum available stock for this product.',
+								confirmButtonColor: '#d33'
+							});
+							return;
+						}
+
 						if (response.empty) {
 							location.reload()
 						} else {
-							document.getElementById(productID).innerHTML = quantity + count
-							document.getElementById(userProductID).innerHTML = response.currentTotal
-							document.getElementById('usercartTotal').innerHTML = "Rs " + response.sum
-							document.getElementById('usercartTotal2').innerHTML = "Rs " + response.sum
+							const newQuantity = quantity + count
+							document.getElementById(productID).innerHTML = newQuantity
+							document.getElementById(userProductID).innerHTML = unitPrice * newQuantity
+							document.getElementById('userCartTotal').innerHTML = "Rs " + response.sum
+							document.getElementById('userCartTotal2').innerHTML = "Rs " + response.sum
 						}
 					}
 				})
@@ -533,14 +569,6 @@
 		<br>
 		<br>
 		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
-		<br>
+
 
 		<%- include('../user/partials/footer.ejs') %>

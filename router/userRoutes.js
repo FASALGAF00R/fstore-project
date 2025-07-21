@@ -42,12 +42,12 @@ userRoutes.get('/shop',auth.checkblockedstatus,usercontroller.loadshop)
 userRoutes.get('/singleproduct',usercontroller.singleproduct)
 userRoutes.get('/cart',auth.checkblockedstatus,usercontroller.loadcart)
 userRoutes.get('/addcart',usercontroller.addingtocart)
-userRoutes.post('/changeproductquantity',usercontroller.changeQuantity)
+userRoutes.get("/addtocart", usercontroller.addtocart);
 userRoutes.get('/removecart',usercontroller.removefromcart)
+userRoutes.post('/changeproductquantity',usercontroller.changeQuantity)
 userRoutes.get('/wishlist',auth.checkblockedstatus,usercontroller.loadwishlist)
 userRoutes.get('/addwishlist',usercontroller.addtowishlist)
 userRoutes.post('/removewish',usercontroller.removewish)
-userRoutes.get("/addtocart", usercontroller.addtocart);
 // userRoutes.post("/addtocart", usercontroller.addtocart);
 
 userRoutes.get('/checkout',usercontroller.loadcheckout)

@@ -158,8 +158,8 @@ const verifyforgototp = async (req, res) => {
 const resetpassword = async (req, res) => {
       try {
             const { userId, password, confirmPassword } = req.body;
-            console.log(userId,"userid");
-            
+            console.log(userId, "userid");
+
             // validate password
             if (!Schema.validate(confirmPassword)) {
                   return res.render('user/resetpassword', { userId: userId, message: 'Your password must be strong.' });
@@ -535,7 +535,7 @@ const singleproduct = async (req, res) => {
             const isloggedin = req.session.user_id ? true : false;
 
             if (productData) {
-                  res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name ,isloggedin});
+                  res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name, isloggedin });
             }
       } catch (error) {
             res.status(500).render('500')
@@ -544,9 +544,9 @@ const singleproduct = async (req, res) => {
 
 
 const loadcart = async (req, res) => {
+      console.log("loadcart");
       try {
             const userId = req.session.user_id;
-
             // CASE 1: User not logged in
             if (!userId) {
                   return res.render("user/cart", {
@@ -557,7 +557,6 @@ const loadcart = async (req, res) => {
                         name: null
                   });
             }
-
             // Find user by ID
             const findUser = await user.findById(userId);
             if (!findUser) {
@@ -569,7 +568,6 @@ const loadcart = async (req, res) => {
                         name: null
                   });
             }
-
             const name = findUser.name;
             const usercart = await cart.findOne({ userID: userId });
             let products = [];
@@ -589,7 +587,7 @@ const loadcart = async (req, res) => {
             // CASE 3: User logged in, cart has products
             const cartProducts = usercart.products;
             const userCartProductsId = cartProducts.map(item => item.productID);
-
+            console.log(userCartProductsId, "usercarts productsid");
             products = await product.aggregate([
                   {
                         $match: {
@@ -627,6 +625,8 @@ const loadcart = async (req, res) => {
 
 
 const addingtocart = async (req, res) => {
+      console.log("adding to cart");
+      console.log(req.query.id, "query");
       try {
             let userid = req.session.user_id
             let name
@@ -639,12 +639,13 @@ const addingtocart = async (req, res) => {
 
             const newproduct = {
                   productID: req.query.id,
-                  name: singleproduct.name,
+                  productname: singleproduct.productname,
                   price: singleproduct.price,
                   quantity: 1,
             };
-
             let wishExist = await Wishlist.findOne({ userID: req.session.user_id, 'products.productID': req.query.id });
+            console.log(wishExist, "wishexisit");
+
 
             if (wishExist) {
                   await Wishlist.findOneAndUpdate(
@@ -701,6 +702,8 @@ const addingtocart = async (req, res) => {
       }
 };
 
+
+
 const changeQuantity = async (req, res) => {
       try {
             const productData = await product.findOne({ _id: req.body.product });
@@ -709,6 +712,9 @@ const changeQuantity = async (req, res) => {
             let currentTotal = parseInt(req.body.currentTotal);
             let empty = false;
 
+            if (count === 1 && quantity >= productData.quantity) {
+                  return res.json({ outOfStock: true });
+            }
             if (count === -1 && quantity === 1) {
                   // Remove the product from the cart
                   await cart.updateOne({ _id: req.body.cart },
@@ -734,6 +740,7 @@ const changeQuantity = async (req, res) => {
                   empty = false;
             }
 
+
             // Recalculate cart total
             const userCart = await cart.findOne({ _id: req.body.cart });
             const sum = userCart.products.reduce((acc, cur) => acc + cur.price, 0);
@@ -756,6 +763,8 @@ const removefromcart = async (req, res) => {
       try {
             const userCart = await cart.findOne({ userID: req.session.user_id })
             const removedProduct = userCart.products.find(item => item.productID == req.query.id)
+            console.log(removedProduct,"removedProduct");
+            
             const updateCart = await cart.findByIdAndUpdate(
                   { _id: userCart._id },
                   {
@@ -776,6 +785,8 @@ const removefromcart = async (req, res) => {
 
 const loadwishlist = async (req, res) => {
       try {
+            console.log("loadwishlist");
+
             if (req.session.user_id) {
                   const User = await user.findOne({ _id: req.session.user_id });
                   const id = User._id;
@@ -911,17 +922,17 @@ const addtowishlist = async (req, res) => {
 
 const addtocart = async (req, res) => {
       try {
+            console.log("addto cart from wishlist");
+
             if (req.session.user_id) {
                   const productId = req.query.id;
                   const userdata = await user.findById(req.session.user_id);
                   const userId = userdata._id;
                   const productData = await product.findById(productId);
-                  const userCart = await cart.findOne({ userID: userId }); // Use 'userID' as per your schema
-                  console.log(userCart, "gggg");
+                  const userCart = await cart.findOne({ userID: userId });
 
                   if (userCart) {
                         console.log("User cart exists:", userCart);
-
                         const productExist = userCart.products.findIndex(
                               (product) => product.productID == productId
                         );
@@ -931,24 +942,27 @@ const addtocart = async (req, res) => {
 
                               await cart.findOneAndUpdate(
                                     { userID: userId, "products.productId": productId }, // Use 'userID' as per your schema
-                                    { $inc: { "products.$.quantity": 1 } }
+                                    { $inc: { "products.$.quantity": 1,'products.$.price':productData.price,Total:productData.price } }
                               );
 
                               console.log("Quantity updated successfully.");
                         } else {
                               console.log("Product does not exist in the cart. Adding a new product...");
 
-                              await cart.findOneAndUpdate(
-                                    { userID: userId }, // Use 'userID' as per your schema
+                        await cart.findOneAndUpdate(
+                                    { userID: userId ,
+                                          
+                                    }, // Use 'userID' as per your schema
                                     {
                                           $push: {
                                                 products: {
-                                                      productID:
-                                                            productId,
+                                                      productID: productId,
+                                                      productname: productData.productname,
                                                       price: productData.price,
-                                                      quantity: 1, // Initialize quantity to 1 for a new product
+                                                      quantity: 1,
                                                 },
                                           },
+                                          Total:productData.price ,
                                     }
                               );
 
@@ -958,15 +972,16 @@ const addtocart = async (req, res) => {
                         console.log("User cart does not exist. Creating a new cart...");
 
                         const data = new cart({
-                              userID: userId, // Use 'userID' as per your schema
+                              userID: userId,
                               products: [
                                     {
-                                          productID:
-                                                productId,
+                                          productID: productId,
+                                          productname: productData.productname,
                                           price: productData.price,
-                                          quantity: 1, // Initialize quantity to 1 for a new product
+                                          quantity: 1,
                                     },
                               ],
+                              Total:productData.price
                         });
 
                         await data.save();
@@ -984,7 +999,7 @@ const addtocart = async (req, res) => {
       }
 };
 
-// const objectId = new ObjectId(req.body.id);
+
 
 
 const removewish = async (req, res) => {
@@ -1026,7 +1041,7 @@ const loadcheckout = async (req, res) => {
                   const User = await user.findOne({ _id: req.session.user_id });
                   const id = User._id;
                   const name = User.name
-                              const isloggedin = req.session.user_id ? true : false;
+                  const isloggedin = req.session.user_id ? true : false;
 
                   const cartData = await cart.findOne({ userID: id }).populate(
                         "products.productID"
@@ -1097,11 +1112,11 @@ const editaddress = async (req, res) => {
                   }).lean();
                   const User = await user.findOne({ _id: req.session.user_id });
                   const name = User.name
-                              const isloggedin = req.session.user_id ? true : false;
+                  const isloggedin = req.session.user_id ? true : false;
 
 
 
-                  res.render("user/editaddress", { user: data.address, name,isloggedin });
+                  res.render("user/editaddress", { user: data.address, name, isloggedin });
             }
       } catch (error) {
             console.log(error);
@@ -1295,7 +1310,7 @@ const confirmorder = async (req, res) => {
             const isloggedin = req.session.user_id ? true : false;
 
 
-            res.render("user/confirmorder", { user: orderData, name,isloggedin });
+            res.render("user/confirmorder", { user: orderData, name, isloggedin });
 
       } catch (error) {
             console.log(error.message);
@@ -1505,12 +1520,12 @@ const contactpost = async (req, res) => {
 const userprofile = async (req, res) => {
       try {
             if (req.session.user_id) {
-               const isloggedin = req.session.user_id ? true : false;
+                  const isloggedin = req.session.user_id ? true : false;
                   let userdata = await user.findOne({ _id: req.session.user_id });
                   const name = userdata.name
                   let datawallet = await user.find({ _id: req.session.user_id })
                   const [{ wallehistory }] = datawallet
-                  res.render("user/userprofile", { data: userdata, wallet: wallehistory, name,isloggedin })
+                  res.render("user/userprofile", { data: userdata, wallet: wallehistory, name, isloggedin })
             } else {
                   res.redirect("/login")
             }
