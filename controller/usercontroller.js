@@ -283,8 +283,8 @@ const Schema = new passwordvalidator();
 Schema
       .is().min(5)
       .is().max(10)
-// .has().uppercase()
-// .has().lowercase()
+.has().uppercase()
+.has().lowercase()
 // .has().digits()
 // .has().not().spaces();
 
@@ -407,7 +407,6 @@ const loadshop = async (req, res) => {
             const baseCategory = await category.find()
 
             let search = req.query.search || "";
-
             let filter2 = req.query.filter || "ALL";
             let categoryId = req.query.categoryId;
 
@@ -428,11 +427,8 @@ const loadshop = async (req, res) => {
                   sortValue = req.query.sortValue
             }
 
-
-
             if (categoryId) {
                   query.category = categoryId
-
             }
 
             let sort = req.query.sort || "0";

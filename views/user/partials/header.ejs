@@ -60,6 +60,12 @@
 
 </head>
 
+<style>
+	.icon-header-item:hover {
+		text-decoration: none;
+		cursor: default;
+	}
+</style>
 
 <body>
 
@@ -138,28 +144,25 @@
 
 					<!-- Icon header -->
 
-					<div class="wrap-icon-header flex-w flex-r-m">
+					<div class="wrap-icon-header flex-w flex-r-m  " style="font-style:normal;">
 						<% if ( isloggedin) { %>
 							<li>
-								<a href="/logout" style="color: #f30808;">Logout</a>
+								<a href="/logout" style="color: rgb(255, 0, 0);">Logout</a>
 							</li>
 							<% } else { %>
 								<li>
-									<b>
-										<a href="/login">
-											<h5 style="color:rgb(99, 101, 110);"><B>Login</B></h5>
-										</a>
-									</b>
+									<a href="/login">
+										<h5 style="color:rgb(99, 101, 110);  "><B>Login</B></h5>
+									</a>
 								</li>
 								<% } %>
 					</div>
 
-					<style>
-						.icon-header-item:hover {
-							text-decoration: none;
-							cursor: default;
-						}
-					</style>
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
+
+
+					</div>
+
 
 					<a href="/cart">
 						<div class="icon-header-item cl2 p-r-11 p-l-10">
@@ -175,10 +178,6 @@
 			</nav>
 		</div>
 		</div>
-
-
-
-
 
 
 

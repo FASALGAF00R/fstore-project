@@ -76,23 +76,78 @@
 
 	}
 
-		.image-container {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				overflow: hidden;
-			}
+	.image-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+	}
 
-			.product-image {
-				width: 100%;
-				height: auto;
-				object-fit: cover;
-			}
+	.product-image {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+	}
+
+	.main-categories {
+  list-style: none;
+  padding-left: 0;
+}
+
+.main-nav-list {
+  margin-bottom: 10px;
+}
+
+.category-link {
+  display: block;
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.category-link:hover {
+  background-color: #e0f7fa;
+  color: #003979;
+}
+
+.price-filter-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.price-filter-list li {
+  margin-bottom: 10px;
+}
+
+.price-filter-link {
+  display: block;
+  padding: 10px 15px;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.price-filter-link:hover {
+  background-color: #e0f7fa;
+  color: #00796b;
+}
+
+
 </style>
 
 <body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 	<!-- Header -->
 	<header>
@@ -150,20 +205,20 @@
 								<a href="/contact">Contact</a>
 							</li>
 
-						<% if (name) { %>
-                            <li>
-                                <a href="/userprofile">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
-                                </a>
-                            </li>
-                        <%  } else{ %>
-                            <li>
-                                <a href="/userprofile">
-                                <i class="fas fa-user"></i>
-                                </a>
-                            </li>
+							<% if (name) { %>
+								<li>
+									<a href="/userprofile">
+										<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+									</a>
+								</li>
+								<% } else{ %>
+									<li>
+										<a href="/userprofile">
+											<i class="fas fa-user"></i>
+										</a>
+									</li>
 
-                      <%  } %>
+									<% } %>
 
 
 						</ul>
@@ -294,7 +349,7 @@
 				</li>
 
 
-					<% if (name) { %>
+				<% if (name) { %>
 					<li>
 						<a href="/userprofile">
 							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
@@ -347,17 +402,33 @@
 
 					<!-- Search product -->
 					<div class="dis-none panel-search w-full p-t-10 p-b-15">
-						<form action="">
+						<form action="/shop">
 							<div class="bor8 dis-flex p-l-15">
-								<button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-									<i class="zmdi zmdi-search"></i>
-								</button>
 
 
 								<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search"
-									placeholder="search">
+									placeholder="Type and Search products...">
+								<button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+									<i class="zmdi zmdi-search"style="font-size: 24px;"></i>
+								</button>
 							</div>
+
+							<div style="display: flex; gap: 10px; margin-bottom: 15px;">
+								<input type="number" name="minPrice" placeholder="Min Price"
+									style="flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+								<input type="number" name="maxPrice" placeholder="Max Price"
+									style="flex: 1; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+								<input type="hidden" value="<%= filter %>" name="filter">
+								<input type="hidden" value="<%= sort %>" name="sort">
+							</div>
+							<button type="submit"
+								style="width: 50%; padding: 10px; background-color: #1d201e; color: white; border: none; border-radius: 4px; font-size: 16px;display: block; margin: 0 auto;">
+								Apply Filters
+							</button>
+
+
 						</form>
+
 					</div>
 				</div>
 
@@ -390,18 +461,18 @@
 							<div id="collapseThree" class="collapse show" data-parent="#accordionExample">
 								<div class="card-body">
 									<div class="shop_sidebar_price">
-										<ul>
-											<li><a href="?minPrice=0&maxPrice=499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+										<ul class="price-filter-list">
+											<li><a class="price-filter-link " href="?minPrice=0&maxPrice=499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">under Rs 500</a></li>
-											<li><a href="?minPrice=500&maxPrice=999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link"  href="?minPrice=500&maxPrice=999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 500 - 999</a></li>
-											<li><a href="?minPrice=1000&maxPrice=1999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link" href="?minPrice=1000&maxPrice=1999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 1000 - Rs 1999</a></li>
-											<li><a href="?minPrice=2000&maxPrice=2499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link" href="?minPrice=2000&maxPrice=2499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 2000 - Rs 2499</a></li>
-											<li><a href="?minPrice=2500&maxPrice=4999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link" href="?minPrice=2500&maxPrice=4999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 2500 - Rs 4999</a></li>
-											<li><a href="?minPrice=5000&maxPrice=10000&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link" href="?minPrice=5000&maxPrice=10000&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">above Rs 5000</a></li>
 										</ul>
 
@@ -417,38 +488,23 @@
 								categories
 							</div>
 
-							<div class="head"></div>
+							
 							<ul class="main-categories">
 								<% if(data2.length> 0) { %>
 									<% data2.forEach(function(data2, index) { %>
-										<li class="main-nav-list"><a style="color: black;"
-												href='/shop?filter=<%= data2._id %>&search=<%= search %>&sort=<%= sort %>'>
+										<li class="main-nav-list">
+											<a style="color: black;"
+												href='/shop?filter=<%= data2._id %>&search=<%= search %>&sort=<%= sort %>' class="category-link">
 												<%= data2.name %>
 											</a>
 										</li>
 										<% }); %>
 											<% } else { %>
-												<tr>
-													<td>Category Not Found</td>
-												</tr>
+											    <li style="color: #999;">Category Not Found</li>
 												<% } %>
 							</ul>
 						</div>
-						<div class="filter-col2 p-r-15 p-b-27">
-							<div class="shop__sidebar__search w-100">
-								<form class="w-100" action="/shop">
-									<input type="text" name="search" placeholder="Search...">
-
-									<button type="submit"><span style="margin-left: 197px;"
-											class="fa fa-search"></span></button>
-									<input type="number" name="minPrice" placeholder="Min Price">
-									<input type="number" name="maxPrice" placeholder="Max Price">
-									<input type="hidden" value="<%= filter %>" name="filter">
-									<input type="hidden" value="<%= sort %>" name="sort">
-
-								</form>
-							</div>
-						</div>
+					
 					</div>
 				</div>
 			</div>
@@ -492,9 +548,11 @@
 											<a onclick="addwish('<%= product._id %>')"
 												class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
 												<img class="icon-heart1 dis-block trans-04"
-													src="user/images/icons/icon-heart-01.png" alt="ICON">
+													src="user/images/icons/icon-heart-01.png" alt="ICON"
+													style="width: 25px; height: 25px;">
 												<img class="icon-heart2 dis-block trans-04 ab-t-l"
-													src="user/images/icons/icon-heart-02.png" alt="ICON">
+													src="user/images/icons/icon-heart-02.png" alt="ICON"
+													style="width: 25px; height: 25px;">
 											</a>
 										</div>
 									</div>
@@ -512,26 +570,26 @@
 				</div>
 			</div>
 		</div>
-			<nav aria-label="..." class="d-flex justify-content-center">
+		<nav aria-label="..." class="d-flex justify-content-center">
 
-		<div class="pagination">
-			<li class="page-item">
-				<a class="page-link" href="/shop?page=<%= currentPage - 1 %>">Previous</a>
-			</li>
-			<% for(let i=0; i < total; i++){ %>
-				<li class="page-item">
-					<a class="page-link" href="/shop?page=<%= i + 1 %>&filter=<%= filter %>&search=<%= search %>">
-						<%= i + 1 %>
-							<span class="sr-only">(current)</span>
-					</a>
+			<div class ="pagination">
+				<li class="page-item" >
+					<a style="color: #1d201e;" class="page-link" href="/shop?page=<%= currentPage - 1 %>">Previous</a>
 				</li>
-				<% } %>
+				<% for(let i=0; i < total; i++){ %>
 					<li class="page-item">
-						<a class="page-link" href="/shop?page=<%= currentPage  %>">Next</a>
+						<a style="color: #1d201e;" class="page-link" href="/shop?page=<%= i + 1 %>&filter=<%= filter %>&search=<%= search %>">
+							<%= i + 1 %>
+								<span class="sr-only">(current)</span>
+						</a>
 					</li>
-		</div>
+					<% } %>
+						<li class="page-item">
+							<a  style="color: #1d201e;" class="page-link" href="/shop?page=<%= currentPage  %>">Next</a>
+						</li>
+			</div>
 
-	</nav>
+		</nav>
 	</div>
 
 
@@ -555,13 +613,13 @@
 						console.log("producted added to wish list");
 
 					} else {
-						      swal("Login Required", "Please login to your account", "error");
+						swal("Login Required", "Please login to your account", "error");
 
 					}
 				},
 				error: function (xhr, status, error) {
 					console.error(error);
-				    swal("Error!", "Unable to add to cart. Try again later.", "error");
+					swal("Error!", "Unable to add to cart. Try again later.", "error");
 
 				}
 			});
