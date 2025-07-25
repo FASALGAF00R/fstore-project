@@ -127,13 +127,13 @@
               <% if (name) { %>
                 <li>
                   <a href="/userprofile">
-                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+                    <i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
                   </a>
                 </li>
                 <% } else{ %>
                   <li>
                     <a href="/userprofile">
-                      <i class="fas fa-user"></i>
+                      <i class="fas fa-user" title="User profile"></i>
                     </a>
                   </li>
 
@@ -276,13 +276,13 @@
         <% if (name) { %>
           <li>
             <a href="/userprofile">
-              <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+              <i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
             </a>
           </li>
           <% } else{ %>
             <li>
               <a href="/userprofile">
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user" title="User profile"></i>
               </a>
             </li>
 
@@ -467,7 +467,7 @@
           <!-- Payment Options -->
           <div class="col-md-6">
             <div class="bg-light p-4 rounded shadow-sm h-100">
-              <h5 class="mb-4">Payment Method</h5>
+              <h5 class="mb-4">Select Payment Method</h5>
               <div class="form-check mb-2">
                 <input class="form-check-input bg-dark border-primary" type="radio" value="cod" name="payment" id="cod"
                   required>
@@ -480,7 +480,7 @@
               </div>
               <% if (wallet !==0) { %>
                 <div class="form-check mb-2">
-                  <input class="form-check-input bg-primary border-primary" type="radio" value="wallet" name="payment"
+                  <input class="form-check-input bg-dark border-primary" type="radio" value="wallet" name="payment"
                     id="walletPay" onclick="checkWallet()">
                   <label class="form-check-label" for="walletPay">Use Wallet</label>
                 </div>

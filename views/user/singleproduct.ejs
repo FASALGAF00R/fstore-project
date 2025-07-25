@@ -119,13 +119,13 @@
 							<% if (name) { %>
 								<li>
 									<a href="/userprofile">
-										<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+										<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
 									</a>
 								</li>
 								<% } else{ %>
 									<li>
 										<a href="/userprofile">
-											<i class="fas fa-user"></i>
+											<i class="fas fa-user" title="User profile"></i>
 										</a>
 									</li>
 
@@ -138,7 +138,7 @@
 
 					<!-- Icon header -->
 					<div class="wrap-icon-header flex-w flex-r-m">
-						<% if ( typeof isloggedin) { %>
+						<% if (isloggedin) { %>
 							<li>
 								<a href="/logout" style="color: #ff0000;">Logout</a>
 							</li>
@@ -269,13 +269,13 @@
 				<% if (name) { %>
 					<li>
 						<a href="/userprofile">
-							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+							<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
 						</a>
 					</li>
 					<% } else{ %>
 						<li>
 							<a href="/userprofile">
-								<i class="fas fa-user"></i>
+								<i class="fas fa-user" title="User profile"></i>
 							</a>
 						</li>
 

@@ -135,13 +135,13 @@
 							<% if (name) { %>
 								<li>
 									<a href="/userprofile">
-										<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+										<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
 									</a>
 								</li>
 								<% } else{ %>
 									<li>
 										<a href="/userprofile">
-											<i class="fas fa-user"></i>
+											<i class="fas fa-user" title="User profile"></i>
 										</a>
 									</li>
 
@@ -286,13 +286,13 @@
 				<% if (name) { %>
 					<li>
 						<a href="/userprofile">
-							<i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+							<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
 						</a>
 					</li>
 					<% } else{ %>
 						<li>
 							<a href="/userprofile">
-								<i class="fas fa-user"></i>
+								<i class="fas fa-user" title="User profile"></i>
 							</a>
 						</li>
 
@@ -405,7 +405,7 @@
 
 
   <div class="text-center mt-5 " style="color: #f00808;">
-    <h2><%= message %></h2>
+    <h3><%= message %></h3>
   </div>
 
 
@@ -413,10 +413,7 @@
 
 			<!-- /////// -->
 
- <script>
-const userid= "<%=message%>"
- console.log("userid:", userid)
-</script>
+
 
 			<!-- Footer -->
 			<br>

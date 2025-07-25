@@ -23,7 +23,7 @@ const cartSchema = new mongoose.Schema({
 
  userID: {
         type: ObjectId,
-        required: true
+        // required: true
     },
     products: [productSchema],
     Total: {

@@ -36,41 +36,39 @@ userRoutes.get('/resetpassword',usercontroller.resetpassword)
 userRoutes.post('/resetpassword', usercontroller.resetpassword);
 
 
-
-
 userRoutes.get('/shop',auth.checkblockedstatus,usercontroller.loadshop)
 userRoutes.get('/singleproduct',usercontroller.singleproduct)
-userRoutes.get('/cart',auth.checkblockedstatus,usercontroller.loadcart)
-userRoutes.get('/addcart',usercontroller.addingtocart)
+userRoutes.get('/cart',auth.islogincart,auth.checkblockedstatus,usercontroller.loadcart)
+userRoutes.get('/addcart',auth.isLogin,usercontroller.addingtocart)
 userRoutes.get("/addtocart", usercontroller.addtocart);
 userRoutes.get('/removecart',usercontroller.removefromcart)
 userRoutes.post('/changeproductquantity',usercontroller.changeQuantity)
-userRoutes.get('/wishlist',auth.checkblockedstatus,usercontroller.loadwishlist)
+userRoutes.get('/wishlist',auth.isLogin,auth.checkblockedstatus,usercontroller.loadwishlist)
 userRoutes.get('/addwishlist',usercontroller.addtowishlist)
 userRoutes.post('/removewish',usercontroller.removewish)
 // userRoutes.post("/addtocart", usercontroller.addtocart);
 
-userRoutes.get('/checkout',usercontroller.loadcheckout)
+userRoutes.get('/checkout',auth.checkblockedstatus,usercontroller.loadcheckout)
 userRoutes.post('/addAddress', usercontroller.postAddress);
-userRoutes.get('/editaddress',usercontroller.editaddress)
+userRoutes.get('/editaddress',auth.checkblockedstatus,usercontroller.editaddress)
 userRoutes.post("/posteditaddress",usercontroller.editpostaddress)
 userRoutes.get("/deleteaddress", usercontroller.deleteAddress);
 userRoutes.post('/applycoupan', usercontroller.applycoupan)
 userRoutes.post("/placeorder", usercontroller.postplaceorder);
-userRoutes.get("/orderplaced", usercontroller.confirmorder);
+userRoutes.get("/orderplaced",auth.checkblockedstatus, usercontroller.confirmorder);
 userRoutes.post("/verifyPayment", usercontroller.verifyPayment);
 
-userRoutes.get("/order",auth.isLoginorder, usercontroller.loadorder);
+userRoutes.get("/order",auth.isLoginorder,auth.checkblockedstatus, usercontroller.loadorder);
 userRoutes.get("/singleOrder", usercontroller.singleOrder);
 userRoutes.get("/returnOrder", ordercontroller.returnOrder)
 userRoutes.get('/cancelOrder', ordercontroller.cancelOrder)
 
-userRoutes.get("/about",usercontroller.loadabout)
-userRoutes.get("/contact",usercontroller.loadcontact)
+userRoutes.get("/about",auth.checkblockedstatus,usercontroller.loadabout)
+userRoutes.get("/contact",auth.checkblockedstatus,usercontroller.loadcontact)
 userRoutes.post("/contact",usercontroller.contactpost)
 
 
-userRoutes.get("/userprofile",usercontroller.userprofile)
+userRoutes.get("/userprofile",auth.isLogin,auth.checkblockedstatus,usercontroller.userprofile)
 userRoutes.post("/verifyuserprofile",usercontroller.verifyuserprofile)
 userRoutes.post('/checkWallet',ordercontroller.checkWallet)
 

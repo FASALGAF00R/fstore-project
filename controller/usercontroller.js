@@ -47,9 +47,8 @@ const loadlogin = async (req, res) => {
 
 const verifylogin = async (req, res) => {
       try {
-            const { email, password } = req.body;
+            const { email, password } = req.body;            
             const userData = await user.findOne({ email: email });
-            console.log(userData);
             if (userData) {
                   const passwordMatch = await bcrypt.compare(password, userData.password);
                   if (passwordMatch) {
@@ -530,6 +529,8 @@ const singleproduct = async (req, res) => {
             const productData = await product.findById(req.query.id).populate('category')
             const productsData = await product.find();
             const isloggedin = req.session.user_id ? true : false;
+            console.log(isloggedin,"ll");
+            
 
             if (productData) {
                   res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name, isloggedin });
@@ -551,8 +552,8 @@ const loadcart = async (req, res) => {
                         usercart: null,
                         count: 0,
                         isloggedin: false,
-                        name: null
-                  });
+                        name: null,
+message:""                  });
             }
             // Find user by ID
             const findUser = await user.findById(userId);
@@ -562,8 +563,8 @@ const loadcart = async (req, res) => {
                         usercart: null,
                         count: 0,
                         isloggedin: false,
-                        name: null
-                  });
+                        name: null,
+message:""                  });
             }
             const name = findUser.name;
             const usercart = await cart.findOne({ userID: userId });
@@ -577,8 +578,8 @@ const loadcart = async (req, res) => {
                         usercart: null,
                         count: 0,
                         isloggedin: true,
-                        name
-                  });
+                        name,
+message:""                  });
             }
 
             // CASE 3: User logged in, cart has products
@@ -644,6 +645,8 @@ const addingtocart = async (req, res) => {
             }
             const singleproduct = await product.findOne({ _id: req.query.id });
             const usercart = await cart.findOne({ userID: req.session.user_id });
+            
+            
 
             const newproduct = {
                   productID: req.query.id,

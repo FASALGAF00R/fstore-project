@@ -119,12 +119,20 @@
 								<a href="/contact">Contact</a>
 							</li>
 
-							<li>
-								<a href="/userprofile">
-									<i class="fas fa-user"></i>
+							<% if (name) { %>
+								<li>
+									<a href="/userprofile">
+										<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+									</a>
+								</li>
+								<% } else{ %>
+									<li>
+										<a href="/userprofile">
+											<i class="fas fa-user" title="User profile"></i>
+										</a>
+									</li>
 
-								</a>
-							</li>
+									<% } %>
 
 
 						</ul>
@@ -156,12 +164,9 @@
 
 
 					<style>
-						/* Add this CSS to remove all hover effects */
 						.icon-header-item:hover {
 							text-decoration: none;
-							/* Remove underline on hover (optional) */
 							cursor: default;
-							/* Remove pointer cursor on hover (optional) */
 						}
 					</style>
 
@@ -284,13 +289,13 @@
 			<% if (name) { %>
                             <li>
                                 <a href="/userprofile">
-                                    <i class="fas fa-user"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
+                                    <i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>                         
                                 </a>
                             </li>
                         <%  } else{ %>
                             <li>
                                 <a href="/userprofile">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-user" title="User profile"></i>
                                 </a>
                             </li>
 
