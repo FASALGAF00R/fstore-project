@@ -902,7 +902,7 @@ const addtowishlist = async (req, res) => {
                                           },
                                     }
                               );
-                              res.json({ status: true, message: "Product added to the wishlist." });
+                              res.json({ status: true, message: "Product added to the wishlist."});
                         }
                   } else {
                         // Wishlist doesn't exist, create a new one and add the product
@@ -1017,25 +1017,17 @@ const addtocart = async (req, res) => {
 const removewish = async (req, res) => {
       try {
             const id = req.body.id;
-            console.log(id, "uiiioi");
-            console.log(req.session);
-
             const userId = req.session.user_id;
-            console.log(userId, "llllll");
-
             if (!ObjectId.isValid(id)) {
                   return res.status(400).json({ success: false, message: "Invalid product ID" });
             }
-
             const objectId = new mongoose.Types.ObjectId(String(id));
-            console.log(objectId, "kkkk");
 
             const data = await Wishlist.findOneAndUpdate(
                   { "product.productId": objectId },
                   { $pull: { product: { productId: objectId } } }
 
             );
-            console.log(data, "data");
             if (data === null) {
                   res.json({ success: true });
             }

@@ -15,16 +15,7 @@
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 	<!-- verifyotp -->
 
-	<!-- sign in link for admin bootstrap -->
-
 	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-	<link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-	<link rel="stylesheet" href="../assets/libs/css/style.css">
-	<link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-
-
-
 	<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="user/images/icons/favicon.png" />
 	<!--===============================================================================================-->
@@ -90,64 +81,61 @@
 	}
 
 	.main-categories {
-  list-style: none;
-  padding-left: 0;
-}
+		list-style: none;
+		padding-left: 0;
+	}
 
-.main-nav-list {
-  margin-bottom: 10px;
-}
+	.main-nav-list {
+		margin-bottom: 10px;
+	}
 
-.category-link {
-  display: block;
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-  background-color: #f9f9f9;
-  transition: background-color 0.2s, color 0.2s;
-}
+	.category-link {
+		display: block;
+		padding: 10px 15px;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		text-decoration: none;
+		color: #333;
+		font-weight: 500;
+		background-color: #f9f9f9;
+		transition: background-color 0.2s, color 0.2s;
+	}
 
-.category-link:hover {
-  background-color: #e0f7fa;
-  color: #003979;
-}
+	.category-link:hover {
+		background-color: #e0f7fa;
+		color: #003979;
+	}
 
-.price-filter-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
+	.price-filter-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
 
-.price-filter-list li {
-  margin-bottom: 10px;
-}
+	.price-filter-list li {
+		margin-bottom: 10px;
+	}
 
-.price-filter-link {
-  display: block;
-  padding: 10px 15px;
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  color: #333;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
+	.price-filter-link {
+		display: block;
+		padding: 10px 15px;
+		background-color: #f4f4f4;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		color: #333;
+		font-weight: 500;
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
 
-.price-filter-link:hover {
-  background-color: #e0f7fa;
-  color: #00796b;
-}
-
-
+	.price-filter-link:hover {
+		background-color: #e0f7fa;
+		color: #00796b;
+	}
 </style>
 
 <body>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 	<!-- Header -->
 	<header>
@@ -208,7 +196,8 @@
 							<% if (name) { %>
 								<li>
 									<a href="/userprofile">
-										<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+										<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name
+											%>
 									</a>
 								</li>
 								<% } else{ %>
@@ -409,7 +398,7 @@
 								<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search"
 									placeholder="Type and Search products...">
 								<button type="submit" class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
-									<i class="zmdi zmdi-search"style="font-size: 24px;"></i>
+									<i class="zmdi zmdi-search" style="font-size: 24px;"></i>
 								</button>
 							</div>
 
@@ -462,17 +451,23 @@
 								<div class="card-body">
 									<div class="shop_sidebar_price">
 										<ul class="price-filter-list">
-											<li><a class="price-filter-link " href="?minPrice=0&maxPrice=499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link "
+													href="?minPrice=0&maxPrice=499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">under Rs 500</a></li>
-											<li><a class="price-filter-link"  href="?minPrice=500&maxPrice=999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link"
+													href="?minPrice=500&maxPrice=999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 500 - 999</a></li>
-											<li><a class="price-filter-link" href="?minPrice=1000&maxPrice=1999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link"
+													href="?minPrice=1000&maxPrice=1999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 1000 - Rs 1999</a></li>
-											<li><a class="price-filter-link" href="?minPrice=2000&maxPrice=2499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link"
+													href="?minPrice=2000&maxPrice=2499&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 2000 - Rs 2499</a></li>
-											<li><a class="price-filter-link" href="?minPrice=2500&maxPrice=4999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link"
+													href="?minPrice=2500&maxPrice=4999&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">Rs 2500 - Rs 4999</a></li>
-											<li><a class="price-filter-link" href="?minPrice=5000&maxPrice=10000&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
+											<li><a class="price-filter-link"
+													href="?minPrice=5000&maxPrice=10000&categoryId=<%= categoryId %>&sortValue=<%= sortValue %>"
 													style="color: black;">above Rs 5000</a></li>
 										</ul>
 
@@ -488,23 +483,24 @@
 								categories
 							</div>
 
-							
+
 							<ul class="main-categories">
 								<% if(data2.length> 0) { %>
 									<% data2.forEach(function(data2, index) { %>
 										<li class="main-nav-list">
 											<a style="color: black;"
-												href='/shop?filter=<%= data2._id %>&search=<%= search %>&sort=<%= sort %>' class="category-link">
+												href='/shop?filter=<%= data2._id %>&search=<%= search %>&sort=<%= sort %>'
+												class="category-link">
 												<%= data2.name %>
 											</a>
 										</li>
 										<% }); %>
 											<% } else { %>
-											    <li style="color: #999;">Category Not Found</li>
+												<li style="color: #999;">Category Not Found</li>
 												<% } %>
 							</ul>
 						</div>
-					
+
 					</div>
 				</div>
 			</div>
@@ -572,26 +568,26 @@
 		</div>
 		<nav aria-label="..." class="d-flex justify-content-center">
 
-			<div class ="pagination">
-				<li class="page-item" >
+			<div class="pagination">
+				<li class="page-item">
 					<a style="color: #1d201e;" class="page-link" href="/shop?page=<%= currentPage - 1 %>">Previous</a>
 				</li>
 				<% for(let i=0; i < total; i++){ %>
 					<li class="page-item">
-						<a style="color: #1d201e;" class="page-link" href="/shop?page=<%= i + 1 %>&filter=<%= filter %>&search=<%= search %>">
+						<a style="color: #1d201e;" class="page-link"
+							href="/shop?page=<%= i + 1 %>&filter=<%= filter %>&search=<%= search %>">
 							<%= i + 1 %>
 								<span class="sr-only">(current)</span>
 						</a>
 					</li>
 					<% } %>
 						<li class="page-item">
-							<a  style="color: #1d201e;" class="page-link" href="/shop?page=<%= currentPage  %>">Next</a>
+							<a style="color: #1d201e;" class="page-link" href="/shop?page=<%= currentPage  %>">Next</a>
 						</li>
 			</div>
 
 		</nav>
 	</div>
-
 
 
 
@@ -612,6 +608,15 @@
 						);
 						console.log("producted added to wish list");
 
+					} else if (response.message === "Product already exists in the wishlist.") {
+						swal(
+							'Already in Wishlist!',
+							'This product is already in your wishlist.',
+							'info'
+						);
+						console.log("Product already in wishlist");
+
+
 					} else {
 						swal("Login Required", "Please login to your account", "error");
 
@@ -626,7 +631,9 @@
 		}
 
 	</script>
+
 	<%- include('../user/partials/footer.ejs') %>
+
 </body>
 
 </html>

@@ -134,7 +134,8 @@
 								<% if (name) { %>
 									<li>
 										<a href="/userprofile">
-											<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%= name %>
+											<i class="fas fa-user" title="User profile"></i>&nbsp;&nbsp;&nbsp;&nbsp;<%=
+												name %>
 										</a>
 									</li>
 									<% } else{ %>
@@ -298,7 +299,6 @@
 	<br>
 	<br>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 
 	<section class="cart_area">
 		<div class="container">
@@ -325,12 +325,14 @@
 											<%= product.productname %>
 										</td>
 										<td>
-											<button class="btn btn-md" style="color: white; background-color: #d82a1d;"
-												id="delete" onclick="deletewhishlist('<%= product.productId._id %>')">
-												🗑 Remove
-											</button>
-
-											<br><br>
+											
+												<button class="btn btn-md"
+													style="color: white; background-color: #d82a1d;" id="delete"
+													onclick="deletewhishlist('<%= product.productId._id %>')">
+													🗑 Remove
+												</button>
+											<br>
+											<br>
 
 											<button class="btn btn-md" style="color: white; background-color: #2a2626; "
 												id="add" onclick="addcart('<%= product.productId._id %>')">
@@ -418,70 +420,73 @@
 
 
 
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 	<br>
 	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+
 
 	<script>
-		const addcart = function (id) {
-			console.log(id, "kk");
 
+		const addcart = function (id) {
 			$.ajax({
 				url: "/addtocart",
-				method: 'get',
-				data: {
-					id: id
-				},
+				method: "get",
+				data: { id: id },
 				success: function (response) {
 					if (response.success) {
-						swal('Saved cart!', 'You clicked the button!', 'success');
+						swal("Saved cart!", "You clicked the button!", "success");
 					} else {
 						swal("Please login to your account");
 					}
+				},
+			});
+		};
 
-				}
-
-
-			})
-		}
-
-
-		function deletewhishlist(id) {
-			$.ajax({
-				url: "/removewish",
-				method: "post",
-				data: {
-					id: id
-				}
-			}).done((data) => {
-				console.log(data, ";kkk");
-				if (data.success === true) {
-					swal("Removed!", "Item has been removed.", "success")
-						.then(() => {
-							window.location.reload();
-						});
+		const deletewhishlist = function (id) {
+			swal({
+				title: "Are you sure?",
+				text: "Do you want to remove this item?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			}).then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "/removewish",
+						method: "post",
+						data: { id: id },
+					}).done((data) => {
+						if (data.success === true) {
+							swal("Removed!", "Item has been removed.", "success")
+						
+						} else {
+							swal("Error!", "Something went wrong.", "error");
+						}
+					});
 				}
 			});
-		}
-
-
+		};
 
 	</script>
+
+
+
+
+
+	<%- include('../user/partials/footer.ejs') %>
+
+
+
 </body>
 
 </html>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
-<%- include('../user/partials/footer.ejs') %>

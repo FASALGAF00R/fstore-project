@@ -49,7 +49,7 @@ const islogincart=async (req,res,next)=>{
 
 
 
-
+// not using this middleware
 
 const isLogout = async (req, res, next) => {
     try {
@@ -67,8 +67,6 @@ const isLogout = async (req, res, next) => {
 
 const checkblockedstatus = async (req,res,next)=>{
     try {
-console.log("blocked");
-
      if((req.url === '/home' || req.url === '/shop' || req.url === '/cart' || req.url ==='/wishlist'|| req.url == "/checkout" ||req.url == "/editaddress" || req.url =="/orderplaced"
         || req.url == "/about" || req.url == "/contact" || req.url == "/userprofile" || req.url == "/order"
      )) {
