@@ -2,7 +2,6 @@ require('dotenv').config();
 const mongoose =require('mongoose');
 const express =require('express');
 const  session=require('express-session')
-const config =require('./config/config');
 const bodyParser = require('body-parser');
 //public folder
 const path=require('path')
