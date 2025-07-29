@@ -452,7 +452,8 @@
 			});
 		};
 
-		const deletewhishlist = function (id) {
+		const deletewhishlist = function (id) {	
+					
 			swal({
 				title: "Are you sure?",
 				text: "Do you want to remove this item?",
@@ -466,9 +467,10 @@
 						method: "post",
 						data: { id: id },
 					}).done((data) => {
-						if (data.success === true) {
-							swal("Removed!", "Item has been removed.", "success")
 						
+						if (data.success === true) {
+							location.reload(); 
+				
 						} else {
 							swal("Error!", "Something went wrong.", "error");
 						}

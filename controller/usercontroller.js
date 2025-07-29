@@ -47,7 +47,7 @@ const loadlogin = async (req, res) => {
 
 const verifylogin = async (req, res) => {
       try {
-            const { email, password } = req.body;            
+            const { email, password } = req.body;
             const userData = await user.findOne({ email: email });
             if (userData) {
                   const passwordMatch = await bcrypt.compare(password, userData.password);
@@ -260,12 +260,12 @@ const sendOTPEmail = async (email, otp) => {
             const transporter = nodemailer.createTransport({
                   service: 'gmail',
                   auth: {
-                        user:process.env.EMAIL_HOSTUSER,
-                        pass:process.env.EMAIL_HOSTPASS,
+                        user: process.env.EMAIL_HOSTUSER,
+                        pass: process.env.EMAIL_HOSTPASS,
                   },
             });
             const mailOptions = {
-                  from:process.env.EMAIL_HOSTUSER ,
+                  from: process.env.EMAIL_HOSTUSER,
                   to: email,
                   subject: 'OTP Verification',
                   text: `Your OTP: ${otp}`,
@@ -282,8 +282,8 @@ const Schema = new passwordvalidator();
 Schema
       .is().min(5)
       .is().max(10)
-.has().uppercase()
-.has().lowercase()
+      .has().uppercase()
+      .has().lowercase()
 // .has().digits()
 // .has().not().spaces();
 
@@ -529,8 +529,8 @@ const singleproduct = async (req, res) => {
             const productData = await product.findById(req.query.id).populate('category')
             const productsData = await product.find();
             const isloggedin = req.session.user_id ? true : false;
-            console.log(isloggedin,"ll");
-            
+            console.log(isloggedin, "ll");
+
 
             if (productData) {
                   res.render('user/singleproduct', { product: productData, productsData, userData, userCart, wishlist, wishlistExist, name, isloggedin });
@@ -553,7 +553,8 @@ const loadcart = async (req, res) => {
                         count: 0,
                         isloggedin: false,
                         name: null,
-message:""                  });
+                        message: ""
+                  });
             }
             // Find user by ID
             const findUser = await user.findById(userId);
@@ -564,7 +565,8 @@ message:""                  });
                         count: 0,
                         isloggedin: false,
                         name: null,
-message:""                  });
+                        message: ""
+                  });
             }
             const name = findUser.name;
             const usercart = await cart.findOne({ userID: userId });
@@ -579,12 +581,13 @@ message:""                  });
                         count: 0,
                         isloggedin: true,
                         name,
-message:""                  });
+                        message: ""
+                  });
             }
 
             // CASE 3: User logged in, cart has products
             const cartProducts = usercart.products;
-     
+
             const userCartProductsId = cartProducts.map(item => item.productID);
             console.log(userCartProductsId, "usercarts productsid");
             products = await product.aggregate([
@@ -606,7 +609,7 @@ message:""                  });
 
             count = products.length;
 
-                   let totalAmount = 0;
+            let totalAmount = 0;
 
             for (let i = 0; i < cartProducts.length; i++) {
                   const productInfo = products[i];
@@ -621,7 +624,7 @@ message:""                  });
                   count,
                   isloggedin: true,
                   name,
-                  totalAmount 
+                  totalAmount
 
             });
 
@@ -645,8 +648,8 @@ const addingtocart = async (req, res) => {
             }
             const singleproduct = await product.findOne({ _id: req.query.id });
             const usercart = await cart.findOne({ userID: req.session.user_id });
-            
-            
+
+
 
             const newproduct = {
                   productID: req.query.id,
@@ -902,7 +905,7 @@ const addtowishlist = async (req, res) => {
                                           },
                                     }
                               );
-                              res.json({ status: true, message: "Product added to the wishlist."});
+                              res.json({ status: true, message: "Product added to the wishlist." });
                         }
                   } else {
                         // Wishlist doesn't exist, create a new one and add the product
@@ -1028,9 +1031,9 @@ const removewish = async (req, res) => {
                   { $pull: { product: { productId: objectId } } }
 
             );
-            if (data === null) {
-                  res.json({ success: true });
-            }
+      
+            return res.json({ success: true });
+
       } catch (error) {
             console.error("Error in removewish:", error);
             res.status(500).json({ success: false, message: "Server error" });
@@ -1426,8 +1429,8 @@ const singleOrder = async (req, res) => {
                   const orderData = await Order.findById(id).populate(
                         "product.productID"
                   );
-                  console.log(orderData,"orderdata");
-                  
+                  console.log(orderData, "orderdata");
+
                   if (orderData) {
                         res.render("user/singleorder", {
                               data: orderData.product,
@@ -1465,7 +1468,7 @@ const loadcontact = async (req, res) => {
       if (finduser) {
             name = finduser.name
       }
-      res.render("user/contact", { isloggedin, name ,message:''})
+      res.render("user/contact", { isloggedin, name, message: '' })
 }
 
 
@@ -1475,7 +1478,7 @@ const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
             user: process.env.EMAIL_HOSTUSER,
-            pass:process.env.EMAIL_HOSTPASS,
+            pass: process.env.EMAIL_HOSTPASS,
       }
 });
 
@@ -1512,7 +1515,7 @@ const contactpost = async (req, res) => {
                   senderEmail: email,
                   message: message
             })
-        res.render('user/contact', { name:"",isloggedin:"" ,message:"Email has been sended"});
+            res.render('user/contact', { name: "", isloggedin: "", message: "Email has been sended" });
 
             await User.save();
       } catch (error) {
