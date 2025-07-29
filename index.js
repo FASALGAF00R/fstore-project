@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI,)
 const app = express();
 
 app.use(session({
-  secret: config.sessionSecret,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
